@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Roolet</string>
+    <string name="roolet">Roolet</string>
+    <string name="add_party_label">Press the \"Add\" Button to create a new Party</string>
 </resources>
