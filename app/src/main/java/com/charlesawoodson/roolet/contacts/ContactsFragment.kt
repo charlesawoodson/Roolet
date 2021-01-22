@@ -153,9 +153,9 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor>,
                         cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
                     )).toInt()
 
-
                     if (phoneNumber > 0) {
                         val cursorPhone = activity?.contentResolver?.query(
+
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
