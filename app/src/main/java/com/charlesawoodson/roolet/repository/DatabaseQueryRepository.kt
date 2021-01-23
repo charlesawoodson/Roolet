@@ -3,20 +3,22 @@ package com.charlesawoodson.roolet.repository
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.ContactsContract
-import androidx.lifecycle.LiveData
 
 import androidx.lifecycle.MutableLiveData
 
 
 class DatabaseQueryRepository {
 
-    fun newInstance(): DatabaseQueryRepository {
-        return DatabaseQueryRepository()
-    }
+//    fun newInstance(): DatabaseQueryRepository {
+//        return DatabaseQueryRepository()
+//    }
 
     private var queryHandler: QueryHandler? = null
 
-    private val TOKEN_QUERY = 0
+
+    companion object {
+        const val CONTACTS_QUERY_TOKEN = 0
+    }
 
     private val PROJECTION: Array<out String> = arrayOf(
         ContactsContract.Contacts._ID,
@@ -38,7 +40,7 @@ class DatabaseQueryRepository {
         queryHandler = QueryHandler(contentResolver)
 
         return query(
-            TOKEN_QUERY,
+            CONTACTS_QUERY_TOKEN,
             ContactsContract.Contacts.CONTENT_URI,
             PROJECTION,
             SELECTION,
