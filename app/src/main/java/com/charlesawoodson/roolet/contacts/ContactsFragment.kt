@@ -3,20 +3,24 @@ package com.charlesawoodson.roolet.contacts
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.R
+import com.charlesawoodson.roolet.mvrx.BaseFragment
+import kotlinx.android.synthetic.main.fragment_contacts.*
 
-class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
+class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
-    var phones: Map<Long, ArrayList<String>> = HashMap()
-    var contacts: ArrayList<Contact> = ArrayList()
-
+    private val viewModel: ContactsViewModel by fragmentViewModel()
 
     private val PROJECTION_NUMBERS: Array<out String> = arrayOf(
         ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
@@ -28,9 +32,6 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         ContactsContract.Contacts.DISPLAY_NAME,
         ContactsContract.CommonDataKinds.Phone.PHOTO_URI
     )
-
-    // private val SELECTION: String = "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} LIKE ?" SQL QUERY TABLE RETURNED
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +47,25 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         return inflater.inflate(R.layout.fragment_contacts, container, false)
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        // Called immediately after initLoader()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // todo: Start Loading
+        viewModel.selectSubscribe(ContactsState::contacts) { contacts ->
+            if (contacts is Uninitialized || contacts is Loading) {
+                progressSpinner.isVisible = true
+                Log.d("ContactList", progressSpinner.isVisible.toString())
+            } else if (contacts is Success) {
+                // todo: set recylcer w custom adapter
+                progressSpinner.isGone = true
+            } else if (contacts is Fail) {
+                // todo: show error dropdown
+                progressSpinner.isGone = true
+            }
+        }
+
+    }
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
 
         when (id) {
             0 -> {
@@ -78,17 +94,17 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         when (loader.id) {
             0 -> {
-                phones = HashMap()
+                viewModel.phones = HashMap()
                 if (data != null) {
                     while (!data.isClosed && data.moveToNext()) {
                         val contactId = data.getLong(0)
                         val phone = data.getString(1)
                         var list: ArrayList<String>
-                        if (phones.containsKey(contactId)) {
-                            list = phones.getValue(contactId)
+                        if (viewModel.phones.containsKey(contactId)) {
+                            list = viewModel.phones.getValue(contactId)
                         } else {
                             list = ArrayList()
-                            (phones as HashMap<Long, ArrayList<String>>)[contactId] = list
+                            (viewModel.phones as HashMap<Long, ArrayList<String>>)[contactId] = list
                         }
                         list.add(phone)
                     }
@@ -98,17 +114,19 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
             }
             1 -> {
                 if (data != null) {
+                    val contacts: ArrayList<Contact> = ArrayList()
                     while (!data.isClosed && data.moveToNext()) {
                         val contactId = data.getLong(0)
                         val name = data.getString(1)
                         val photo = data.getString(2)
-                        val contactPhones: List<String>? = phones[contactId]
+                        val contactPhones: List<String>? = viewModel.phones[contactId]
+
                         contactPhones?.forEach { phone ->
                             contacts.add(Contact(contactId, name, phone, photo))
                         }
                     }
+                    viewModel.setContacts(contacts.sortedBy { it.name })
                     data.close()
-                    // todo: load adapter
                 }
             }
         }
@@ -120,9 +138,7 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
      * @param loader The Loader that is being reset.
      */
     override fun onLoaderReset(loader: Loader<Cursor>) {
-        // Delete the reference to the existing Cursor
-        // cursorAdapter?.swapCursor(null)
-    }
 
+    }
 
 }
