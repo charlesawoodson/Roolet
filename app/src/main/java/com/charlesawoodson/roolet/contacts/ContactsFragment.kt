@@ -14,19 +14,19 @@ import com.charlesawoodson.roolet.R
 
 class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
-    var phones: Map<Long, List<String>> = HashMap()
-    var contacts: List<Contact> = ArrayList()
+    var phones: Map<Long, ArrayList<String>> = HashMap()
+    var contacts: ArrayList<Contact> = ArrayList()
 
 
     private val PROJECTION_NUMBERS: Array<out String> = arrayOf(
         ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-        ContactsContract.CommonDataKinds.Phone.NUMBER,
-        ContactsContract.CommonDataKinds.Phone.PHOTO_URI
+        ContactsContract.CommonDataKinds.Phone.NUMBER
     )
 
     private val PROJECTION_DETAILS: Array<out String> = arrayOf(
         ContactsContract.Contacts._ID,
-        ContactsContract.Contacts.DISPLAY_NAME
+        ContactsContract.Contacts.DISPLAY_NAME,
+        ContactsContract.CommonDataKinds.Phone.PHOTO_URI
     )
 
     // private val SELECTION: String = "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} LIKE ?" SQL QUERY TABLE RETURNED
@@ -76,44 +76,41 @@ class ContactsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-        // The loader framework calls onLoadFinished() when the Contacts Provider returns the results of the query
-        data?.also { cursor ->
-            if (cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                    val name =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                    val phoneNumber = (cursor.getString(
-                        cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
-                    )).toInt()
-
-
-                    if (phoneNumber > 0) {
-                        val cursorPhone = activity?.contentResolver?.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
-                            arrayOf(id),
-                            null
-                        )
-
-                        cursorPhone?.also {
-                            if (cursorPhone.count > 0) {
-                                while (cursorPhone.moveToNext()) {
-                                    val phoneNumValue = cursorPhone.getString(
-                                        cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                                    )
-                                }
-                            }
-                            cursorPhone.close()
+        when (loader.id) {
+            0 -> {
+                phones = HashMap()
+                if (data != null) {
+                    while (!data.isClosed && data.moveToNext()) {
+                        val contactId = data.getLong(0)
+                        val phone = data.getString(1)
+                        var list: ArrayList<String>
+                        if (phones.containsKey(contactId)) {
+                            list = phones.getValue(contactId)
+                        } else {
+                            list = ArrayList()
+                            (phones as HashMap<Long, ArrayList<String>>)[contactId] = list
+                        }
+                        list.add(phone)
+                    }
+                    data.close()
+                }
+                LoaderManager.getInstance(this).initLoader(1, null, this)
+            }
+            1 -> {
+                if (data != null) {
+                    while (!data.isClosed && data.moveToNext()) {
+                        val contactId = data.getLong(0)
+                        val name = data.getString(1)
+                        val photo = data.getString(2)
+                        val contactPhones: List<String>? = phones[contactId]
+                        contactPhones?.forEach { phone ->
+                            contacts.add(Contact(contactId, name, phone, photo))
                         }
                     }
-
+                    data.close()
+                    // todo: load adapter
                 }
-                cursor.close()
             }
-
-            // cursorAdapter?.swapCursor(cursor)
         }
     }
 
