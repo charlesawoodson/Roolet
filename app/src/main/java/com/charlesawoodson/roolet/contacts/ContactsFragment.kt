@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.mvrx.BaseFragment
@@ -21,6 +23,10 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
+
+    private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
+        ContactsAdapter()
+    }
 
     private val PROJECTION_NUMBERS: Array<out String> = arrayOf(
         ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
@@ -36,6 +42,23 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.selectSubscribe(ContactsState::contacts) { contacts ->
+            when (contacts) {
+                Uninitialized -> {
+                    progressSpinner.isVisible = true
+                }
+                is Loading -> {
+                }
+                is Success -> {
+                    progressSpinner.isGone = true
+                    adapter.updateData(contacts())
+                }
+                is Fail -> {
+
+                }
+            }
+        }
+
         LoaderManager.getInstance(this).initLoader(0, null, this)
     }
 
@@ -50,18 +73,13 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.selectSubscribe(ContactsState::contacts) { contacts ->
-            if (contacts is Uninitialized || contacts is Loading) {
-                progressSpinner.isVisible = true
-                Log.d("ContactList", progressSpinner.isVisible.toString())
-            } else if (contacts is Success) {
-                // todo: set recylcer w custom adapter
-                progressSpinner.isGone = true
-            } else if (contacts is Fail) {
-                // todo: show error dropdown
-                progressSpinner.isGone = true
-            }
-        }
+        contactsRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        contactsRecyclerView.adapter = adapter
+
+//        withState(viewModel) { state ->
+//            adapter.updateDataImmediate(state.filteredItems)
+//        }
 
     }
 
