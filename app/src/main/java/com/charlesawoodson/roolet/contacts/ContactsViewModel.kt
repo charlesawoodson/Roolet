@@ -1,8 +1,13 @@
 package com.charlesawoodson.roolet.contacts
 
-import com.airbnb.mvrx.*
+import com.airbnb.mvrx.BaseMvRxViewModel
+import com.airbnb.mvrx.MvRxState
 
-data class ContactsState(val contacts: Async<List<Contact>> = Uninitialized) : MvRxState
+data class ContactsState(
+    val contacts: List<Contact> = emptyList(),
+    val filteredContacts: List<Contact> = emptyList(),
+    val filter: String = " "
+) : MvRxState
 
 class ContactsViewModel(initialState: ContactsState) :
     BaseMvRxViewModel<ContactsState>(initialState, true) {
@@ -11,11 +16,27 @@ class ContactsViewModel(initialState: ContactsState) :
 
     init {
 
+        selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
+            val list = contacts.filter {
+                it.name.contains(filter)
+            }
+
+            setState {
+                copy(filteredContacts = list)
+            }
+        }
+
     }
 
     fun setContacts(contacts: List<Contact>) {
         setState {
-            copy(contacts = Success(contacts))
+            copy(contacts = contacts)
+        }
+    }
+
+    fun setFilter(filter: String) {
+        setState {
+            copy(filter = filter)
         }
     }
 

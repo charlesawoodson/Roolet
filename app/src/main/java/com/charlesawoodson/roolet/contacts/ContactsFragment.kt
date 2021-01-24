@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.R
+import com.charlesawoodson.roolet.extensions.removeItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
@@ -43,21 +44,9 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.selectSubscribe(ContactsState::contacts) { contacts ->
-            when (contacts) {
-                Uninitialized -> {
-                    progressSpinner.isVisible = true
-                }
-                is Loading -> {
-                }
-                is Success -> {
-                    progressSpinner.isGone = true
-                    adapter.updateData(contacts())
-                }
-                is Fail -> {
-
-                }
-            }
+        viewModel.selectSubscribe(ContactsState::filteredContacts) { contacts ->
+            progressSpinner.isGone = true
+            adapter.updateData(contacts)
         }
 
         LoaderManager.getInstance(this).initLoader(0, null, this)
@@ -82,6 +71,16 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
 //        withState(viewModel) { state ->
 //            adapter.updateDataImmediate(state.filteredItems)
 //        }
+
+
+        addGroupImageView.setOnClickListener {
+            viewModel.setFilter(" ")
+        }
+
+
+        settingsImageView.setOnClickListener {
+            viewModel.setFilter("N")
+        }
 
     }
 

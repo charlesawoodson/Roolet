@@ -1,26 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/off_white_smoke"
+    tools:context=".MainActivity">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row16"
+        android:background="@color/roolet_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/settingsImageView"
+        android:layout_width="@dimen/row05"
+        android:layout_height="@dimen/row05"
+        android:layout_marginStart="@dimen/row02"
+        android:layout_marginTop="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_outline_settings_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="@string/roolet"
+        android:textColor="@color/white"
+        android:textSize="@dimen/subhead2"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/addGroupImageView"
+        app:layout_constraintEnd_toStartOf="@id/addGroupImageView"
+        app:layout_constraintStart_toEndOf="@id/settingsImageView"
+        app:layout_constraintTop_toTopOf="@id/addGroupImageView" />
+
+    <ImageView
+        android:id="@+id/addGroupImageView"
+        android:layout_width="@dimen/row05"
+        android:layout_height="@dimen/row05"
+        android:layout_marginTop="@dimen/row02"
+        android:layout_marginEnd="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_outline_group_add_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contactsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/view"
+        tools:listitem="@layout/contact_list_item" />
 
     <ProgressBar
         android:id="@+id/progressSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@id/contactsRecyclerView"
-        app:layout_constraintEnd_toEndOf="@id/contactsRecyclerView"
-        app:layout_constraintStart_toStartOf="@id/contactsRecyclerView"
-        app:layout_constraintTop_toTopOf="@id/contactsRecyclerView" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view" />
+
+    <TextView
+        android:id="@+id/instructionsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row04"
+        android:layout_marginEnd="@dimen/row04"
+        android:gravity="center"
+        android:textSize="@dimen/caption10"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        tools:text="Instructions"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

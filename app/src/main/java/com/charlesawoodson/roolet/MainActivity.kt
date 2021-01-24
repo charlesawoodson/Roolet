@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.charlesawoodson.roolet.contacts.CreateGroupActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,12 +16,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<ImageView>(R.id.addGroupImageView).setOnClickListener {
-            when {
+        addGroupImageView.setOnClickListener {
+            when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     this,
                     Manifest.permission.READ_CONTACTS
-                ) == PackageManager.PERMISSION_GRANTED -> {
+                ) -> {
                     Intent(this, CreateGroupActivity::class.java).apply {
                         startActivity(this)
                     }
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity() {
                 /*shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
 
                 }*/
-
                 else -> {
                     requestPermissions(
                         arrayOf(Manifest.permission.READ_CONTACTS),
