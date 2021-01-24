@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nameTextView"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/row06"
-    android:gravity="center"
-    android:clickable="true"
-    android:focusable="true"
-    tools:text="Yo" />
+    android:layout_height="@dimen/row08"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/contactImageView"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/row01"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/row06"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/row02"
+        android:layout_marginEnd="@dimen/row02"
+        android:layout_weight="1"
+        android:gravity="start|center"
+        android:textColor="@color/black_80"
+        android:textSize="@dimen/caption7"
+        tools:text="Someone with a really long name" />
+
+</LinearLayout>

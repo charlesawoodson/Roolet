@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
@@ -72,14 +73,16 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
 //            adapter.updateDataImmediate(state.filteredItems)
 //        }
 
-
-        addGroupImageView.setOnClickListener {
+        saveGroupTextView.setOnClickListener {
             viewModel.setFilter(" ")
         }
 
+        backImageView.setOnClickListener {
+            requireActivity().finish()
+        }
 
-        settingsImageView.setOnClickListener {
-            viewModel.setFilter("N")
+        filterEditText.doOnTextChanged { text, start, before, count ->
+            viewModel.setFilter(text.toString())
         }
 
     }

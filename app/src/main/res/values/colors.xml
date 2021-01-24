@@ -10,4 +10,48 @@
 
     <color name="roolet_blue">#1CCAFF</color>
     <color name="off_white_smoke">#f5f5f5</color>
+
+    <color name="black_05">#0D000000</color>
+    <color name="black_10">#1A000000</color>
+    <color name="black_15">#26000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_25">#40000000</color>
+    <color name="black_30">#4D000000</color>
+    <color name="black_35">#59000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_45">#73000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_55">#8C000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_65">#A6000000</color>
+    <color name="black_70">#B3000000</color>
+    <color name="black_75">#BF000000</color>
+    <color name="black_80">#CC000000</color>
+    <color name="black_85">#D9000000</color>
+    <color name="black_90">#E6000000</color>
+    <color name="black_95">#F2000000</color>
+    <color name="black_100">#000000</color>
+
+    <color name="white_05">#0DFFFFFF</color>
+    <color name="white_10">#1AFFFFFF</color>
+    <color name="white_15">#26FFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_25">#4FFFFFF0</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="white_35">#59FFFFFF</color>
+    <color name="white_40">#66FFFFFF</color>
+    <color name="white_45">#73FFFFFF</color>
+    <color name="white_50">#8FFFFFF0</color>
+    <color name="white_55">#8CFFFFFF</color>
+    <color name="white_60">#99FFFFFF</color>
+    <color name="white_65">#A6FFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_75">#BFFFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_85">#D9FFFFFF</color>
+    <color name="white_90">#E6FFFFFF</color>
+    <color name="white_95">#F2FFFFFF</color>
+    <color name="white_100">#FFFFFF</color>
+
+    <color name="light_gray">#DEDEDE</color>
 </resources>
