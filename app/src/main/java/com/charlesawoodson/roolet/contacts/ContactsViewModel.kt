@@ -6,7 +6,7 @@ import com.airbnb.mvrx.MvRxState
 data class ContactsState(
     val contacts: List<Contact> = emptyList(),
     val filteredContacts: List<Contact> = emptyList(),
-    val filter: String = " "
+    val filter: String = ""
 ) : MvRxState
 
 class ContactsViewModel(initialState: ContactsState) :

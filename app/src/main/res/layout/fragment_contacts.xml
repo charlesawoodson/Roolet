@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/off_white_smoke"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupMembersRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/filterFrameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupNameEditText" />
 
     <View
         android:id="@+id/view"
@@ -82,7 +93,9 @@
             android:background="@drawable/rounded_bg"
             android:drawableStart="@drawable/ic_baseline_search_24"
             android:drawablePadding="@dimen/row01"
+            android:focusable="true"
             android:hint="@string/search_contacts"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="@dimen/row01"
             android:paddingEnd="@dimen/row01"
@@ -106,6 +119,7 @@
         android:id="@+id/contactsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/white_100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

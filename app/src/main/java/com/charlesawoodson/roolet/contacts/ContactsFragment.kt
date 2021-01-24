@@ -1,5 +1,6 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -85,6 +87,21 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
             viewModel.setFilter(text.toString())
         }
 
+        filterEditText.setOnFocusChangeListener { v, hasFocus ->
+            cancelTextView.isVisible = hasFocus
+        }
+
+        cancelTextView.setOnClickListener {
+            filterEditText.text.clear()
+            filterEditText.clearFocus()
+
+            requireActivity().currentFocus?.let { v ->
+                val imm =
+                    activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(v.windowToken, 0)
+            }
+        }
+
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
@@ -147,7 +164,9 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
                             contacts.add(Contact(contactId, name, phone, photo))
                         }
                     }
-                    viewModel.setContacts(contacts.sortedBy { it.name })
+                    if (contacts.size != 0) {
+                        viewModel.setContacts(contacts.sortedBy { it.name })
+                    }
                     data.close()
                 }
             }
