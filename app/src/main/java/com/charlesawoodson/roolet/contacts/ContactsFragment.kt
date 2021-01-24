@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.*
@@ -75,6 +76,7 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
         contactsRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        contactsRecyclerView.itemAnimator = DefaultItemAnimator()
         contactsRecyclerView.adapter = adapter
 
 //        withState(viewModel) { state ->
