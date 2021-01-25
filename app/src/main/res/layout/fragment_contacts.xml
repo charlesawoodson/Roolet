@@ -9,15 +9,6 @@
     android:focusableInTouchMode="true"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/groupMembersRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/filterFrameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/groupNameEditText" />
-
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -26,6 +17,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupMembersRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/row01"
+        android:layout_marginBottom="@dimen/row0025"
+        app:layout_constraintBottom_toTopOf="@id/filterFrameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupNameEditText"
+        tools:itemCount="2"
+        tools:listitem="@layout/selected_contact_group_item" />
 
     <ImageView
         android:id="@+id/backImageView"

@@ -25,12 +25,13 @@ import com.charlesawoodson.roolet.extensions.removeItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
-class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
+class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
+    ContactsAdapter.OnContactsItemClickListener {
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
-        ContactsAdapter()
+        ContactsAdapter(this)
     }
 
     private val PROJECTION_NUMBERS: Array<out String> = arrayOf(
@@ -52,6 +53,10 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
             adapter.updateData(contacts)
         }
 
+        viewModel.selectSubscribe(ContactsState::selectedContacts) { selectedContacts ->
+            Log.d("ContactsFragment", selectedContacts.toString())
+        }
+
         LoaderManager.getInstance(this).initLoader(0, null, this)
     }
 
@@ -71,9 +76,9 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
         contactsRecyclerView.itemAnimator = DefaultItemAnimator()
         contactsRecyclerView.adapter = adapter
 
-//        withState(viewModel) { state ->
-//            adapter.updateDataImmediate(state.filteredItems)
-//        }
+        withState(viewModel) { state ->
+            adapter.updateData(state.filteredContacts)
+        }
 
         saveGroupTextView.setOnClickListener {
             viewModel.setFilter(" ")
@@ -83,11 +88,11 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
             requireActivity().finish()
         }
 
-        filterEditText.doOnTextChanged { text, start, before, count ->
+        filterEditText.doOnTextChanged { text, _, _, _ ->
             viewModel.setFilter(text.toString())
         }
 
-        filterEditText.setOnFocusChangeListener { v, hasFocus ->
+        filterEditText.setOnFocusChangeListener { _, hasFocus ->
             cancelTextView.isVisible = hasFocus
         }
 
@@ -180,6 +185,10 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor> {
      */
     override fun onLoaderReset(loader: Loader<Cursor>) {
 
+    }
+
+    override fun toggleSelection(contact: Contact) {
+        viewModel.addSelectedContact(contact)
     }
 
 }

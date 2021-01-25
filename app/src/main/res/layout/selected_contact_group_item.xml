@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/row09"
+    android:layout_height="@dimen/row09">
+
+    <ImageView
+        android:id="@+id/selectedContactImageView"
+        android:layout_width="@dimen/row05"
+        android:layout_height="@dimen/row05"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/selectedContactNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selectedContactImageView"
+        tools:text="Aaron King" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

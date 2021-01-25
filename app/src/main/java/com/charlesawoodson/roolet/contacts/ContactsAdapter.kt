@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.charlesawoodson.roolet.R
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
-class ContactsAdapter() : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
+class ContactsAdapter(private val listener: OnContactsItemClickListener) :
+    RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
 
     private val data = ArrayList<Contact>()
 
@@ -17,7 +18,7 @@ class ContactsAdapter() : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.contact_list_item, parent, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view, listener, data)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,13 +35,20 @@ class ContactsAdapter() : RecyclerView.Adapter<ContactsAdapter.ViewHolder>() {
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, listener: OnContactsItemClickListener, data: ArrayList<Contact>) :
+        RecyclerView.ViewHolder(view) {
 
         val nameTextView: TextView = itemView.nameTextView
 
         init {
-            // todo: Set click listeners for the ViewHolder's View
+            itemView.setOnClickListener {
+                listener.toggleSelection(data[adapterPosition])
+            }
         }
     }
 
+
+    interface OnContactsItemClickListener {
+        fun toggleSelection(contact: Contact)
+    }
 }
