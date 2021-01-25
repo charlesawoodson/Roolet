@@ -1,14 +1,17 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import kotlinx.android.synthetic.main.contact_list_item.view.*
@@ -26,8 +29,20 @@ class ContactsAdapter(private val listener: OnContactsItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.nameTextView.text = data[position].data.name
+        val item = data[position].data
+        holder.nameTextView.text = item.name
         holder.checkImageView.isVisible = data[position].selected
+
+        if (!item.photo.isNullOrBlank()) {
+            Glide.with(holder.context).load(item.photo).circleCrop().into(holder.contactImageView)
+        } else {
+            holder.contactImageView.setImageDrawable(
+                ContextCompat.getDrawable(
+                    holder.context,
+                    R.mipmap.ic_launcher_round
+                )
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -61,8 +76,11 @@ class ContactsAdapter(private val listener: OnContactsItemClickListener) :
     ) :
         RecyclerView.ViewHolder(view) {
 
+        val context: Context = itemView.context
+
         val nameTextView: TextView = itemView.nameTextView
         val checkImageView: ImageView = itemView.selectedImageView
+        val contactImageView: ImageView = itemView.contactImageView
 
         init {
             itemView.setOnClickListener {

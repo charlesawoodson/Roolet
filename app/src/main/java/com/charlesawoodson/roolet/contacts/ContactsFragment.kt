@@ -38,7 +38,8 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
 
     private val PROJECTION_NUMBERS: Array<out String> = arrayOf(
         ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-        ContactsContract.CommonDataKinds.Phone.NUMBER
+        ContactsContract.CommonDataKinds.Phone.NUMBER,
+        ContactsContract.CommonDataKinds.Phone.TYPE
     )
 
     private val PROJECTION_DETAILS: Array<out String> = arrayOf(
@@ -116,7 +117,6 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-
         when (id) {
             0 -> {
                 return CursorLoader(
@@ -149,6 +149,11 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
                     while (!data.isClosed && data.moveToNext()) {
                         val contactId = data.getLong(0)
                         val phone = data.getString(1)
+                        val type = ContactsContract.CommonDataKinds.Phone.getTypeLabel(
+                            resources,
+                            data.getInt(2),
+                            ""
+                        )
                         var list: ArrayList<String>
                         if (viewModel.phones.containsKey(contactId)) {
                             list = viewModel.phones.getValue(contactId)
@@ -156,7 +161,7 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
                             list = ArrayList()
                             (viewModel.phones as HashMap<Long, ArrayList<String>>)[contactId] = list
                         }
-                        list.add(phone)
+                        list.add("$type:$phone")
                     }
                     data.close()
                 }
@@ -171,8 +176,8 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
                         val photo = data.getString(2)
                         val contactPhones: List<String>? = viewModel.phones[contactId]
 
-                        contactPhones?.forEach { phone ->
-                            contacts.add(Contact(contactId, name, phone, photo))
+                        contactPhones?.also {
+                            contacts.add(Contact(contactId, name, it, photo))
                         }
                     }
                     if (contacts.size != 0) {
