@@ -1,8 +1,41 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
+import com.charlesawoodson.roolet.contacts.ContactsAdapter.Companion.SELECTED_PAYLOAD
+import com.charlesawoodson.roolet.lists.SelectableListItem
 
-class ContactsDiffCallback(private val oldList: List<Contact>, private val newList: List<Contact>) :
+class SelectedContactsDiffCallback(
+    private val oldList: List<SelectableListItem<Contact>>,
+    private val newList: List<SelectableListItem<Contact>>
+) :
+    DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int = oldList.size
+
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].data.id == newList[newItemPosition].data.id
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].selected == newList[newItemPosition].selected
+    }
+
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any {
+        val diff = Bundle()
+        diff.putBoolean(SELECTED_PAYLOAD, newList[newItemPosition].selected)
+
+        return diff
+    }
+
+}
+
+class ContactsDiffCallback(
+    private val oldList: List<Contact>,
+    private val newList: List<Contact>
+) :
     DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
@@ -14,10 +47,7 @@ class ContactsDiffCallback(private val oldList: List<Contact>, private val newLi
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val (_, name, number, photo) = oldList[oldItemPosition]
-        val (_, name1, number1, photo1) = newList[newItemPosition]
-
-        return name == name1 && number == number1 && photo == photo1
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
 }

@@ -4,10 +4,12 @@ import com.airbnb.mvrx.BaseMvRxViewModel
 import com.airbnb.mvrx.MvRxState
 import com.charlesawoodson.roolet.extensions.appendAt
 import com.charlesawoodson.roolet.extensions.removeItem
+import com.charlesawoodson.roolet.extensions.updateItems
+import com.charlesawoodson.roolet.lists.SelectableListItem
 
 data class ContactsState(
-    val contacts: List<Contact> = emptyList(),
-    val filteredContacts: List<Contact> = emptyList(),
+    val contacts: List<SelectableListItem<Contact>> = emptyList(),
+    val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
     val selectedContacts: List<Contact> = emptyList(),
     val filter: String = ""
 ) : MvRxState
@@ -20,18 +22,21 @@ class ContactsViewModel(initialState: ContactsState) :
     init {
 
         selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
-            val list = contacts.filter {
-                it.name.contains(filter)
-            }
+            val filteredList = contacts.filter { it.data.name.contains(filter) }
+
+            val selectedList = contacts
+                .filter { it.selected }
+                .map { it.data }
 
             setState {
-                copy(filteredContacts = list)
+                copy(filteredContacts = filteredList, selectedContacts = selectedList)
             }
         }
 
+
     }
 
-    fun setContacts(contacts: List<Contact>) {
+    fun setContacts(contacts: List<SelectableListItem<Contact>>) {
         setState {
             copy(contacts = contacts)
         }
@@ -43,9 +48,13 @@ class ContactsViewModel(initialState: ContactsState) :
         }
     }
 
-    fun addSelectedContact(contact: Contact) {
+    fun toggleSelection(item: SelectableListItem<Contact>) {
         setState {
-            copy(selectedContacts = selectedContacts + contact)
+            copy(
+                contacts = contacts.updateItems({ it.data.id == item.data.id }, {
+                    copy(selected = !selected)
+                })
+            )
         }
     }
 

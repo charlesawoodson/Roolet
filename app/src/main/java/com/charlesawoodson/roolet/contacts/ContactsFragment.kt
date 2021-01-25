@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +11,15 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
 import androidx.loader.content.CursorLoader
 import androidx.loader.content.Loader
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.mvrx.*
+import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
-import com.charlesawoodson.roolet.extensions.removeItem
+import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
@@ -32,6 +30,10 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
 
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
         ContactsAdapter(this)
+    }
+
+    private val selectedContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) {
+        SelectedContactsAdapter()
     }
 
     private val PROJECTION_NUMBERS: Array<out String> = arrayOf(
@@ -54,7 +56,7 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
         }
 
         viewModel.selectSubscribe(ContactsState::selectedContacts) { selectedContacts ->
-            Log.d("ContactsFragment", selectedContacts.toString())
+            selectedContactsAdapter.updateData(selectedContacts)
         }
 
         LoaderManager.getInstance(this).initLoader(0, null, this)
@@ -73,8 +75,12 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
 
         contactsRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        contactsRecyclerView.itemAnimator = DefaultItemAnimator()
         contactsRecyclerView.adapter = adapter
+
+        groupMembersRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        groupMembersRecyclerView.adapter = selectedContactsAdapter
+
 
         withState(viewModel) { state ->
             adapter.updateData(state.filteredContacts)
@@ -94,17 +100,17 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
 
         filterEditText.setOnFocusChangeListener { _, hasFocus ->
             cancelTextView.isVisible = hasFocus
+            closeKeyboard(hasFocus)
         }
+
+        groupNameEditText.setOnFocusChangeListener { v, hasFocus ->
+            closeKeyboard(hasFocus)
+        }
+
 
         cancelTextView.setOnClickListener {
             filterEditText.text.clear()
             filterEditText.clearFocus()
-
-            requireActivity().currentFocus?.let { v ->
-                val imm =
-                    activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                imm?.hideSoftInputFromWindow(v.windowToken, 0)
-            }
         }
 
     }
@@ -170,7 +176,8 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
                         }
                     }
                     if (contacts.size != 0) {
-                        viewModel.setContacts(contacts.sortedBy { it.name })
+                        viewModel.setContacts(contacts.sortedBy { it.name }
+                            .map { SelectableListItem(it) })
                     }
                     data.close()
                 }
@@ -187,8 +194,16 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
 
     }
 
-    override fun toggleSelection(contact: Contact) {
-        viewModel.addSelectedContact(contact)
+    override fun toggleSelection(contact: SelectableListItem<Contact>) {
+        viewModel.toggleSelection(contact)
+    }
+
+    private fun closeKeyboard(hasFocus: Boolean) {
+        if (!hasFocus) {
+            val imm =
+                activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+        }
     }
 
 }

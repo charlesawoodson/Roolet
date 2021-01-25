@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/groupNameEditText"
         tools:itemCount="2"
-        tools:listitem="@layout/selected_contact_group_item" />
+        tools:listitem="@layout/selected_contact_list_item" />
 
     <ImageView
         android:id="@+id/backImageView"
@@ -50,6 +50,7 @@
         android:layout_marginEnd="@dimen/row04"
         android:autofillHints="@null"
         android:background="@drawable/white_borders_off_white_bg_rounded"
+        android:focusable="true"
         android:fontFamily="serif"
         android:gravity="center"
         android:hint="@string/party_name"
@@ -99,7 +100,6 @@
             android:drawablePadding="@dimen/row01"
             android:focusable="true"
             android:hint="@string/search_contacts"
-            android:imeOptions="actionDone"
             android:inputType="text"
             android:paddingStart="@dimen/row01"
             android:paddingEnd="@dimen/row01"

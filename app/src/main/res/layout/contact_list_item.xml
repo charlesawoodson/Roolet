@@ -27,4 +27,15 @@
         android:textSize="@dimen/caption7"
         tools:text="Someone with a really long name" />
 
+    <ImageView
+        android:id="@+id/selectedImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_baseline_check_24"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
 </LinearLayout>
