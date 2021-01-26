@@ -42,7 +42,6 @@ open class BaseDialogFragment(
         if (roundEdges) {
             dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_bg)
         }
-        // dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
     }
 
     @CallSuper
@@ -52,6 +51,7 @@ open class BaseDialogFragment(
             width = dialogWidth
             height = dialogHeight
             gravity = dialogGravity
+            // windowAnimations = R.style.DialogAnimationTheme
         }
         if (params != null) {
             dialog?.window?.attributes = params

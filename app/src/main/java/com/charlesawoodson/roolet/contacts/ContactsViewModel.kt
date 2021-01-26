@@ -8,7 +8,7 @@ data class ContactsState(
     val contacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
     val selectedContacts: List<Contact> = emptyList(),
-    val selectedContact: SelectableListItem<Contact>? = null,
+    val selectedContact: Contact? = null,
     val filter: String = ""
 ) : MvRxState
 
@@ -16,7 +16,6 @@ class ContactsViewModel(initialState: ContactsState) :
     BaseMvRxViewModel<ContactsState>(initialState, true) {
 
     var phones: Map<Long, ArrayList<Phone>> = HashMap()
-    var typeToPhoneMap = mutableMapOf<Int, String>()
 
     init {
 
@@ -31,14 +30,6 @@ class ContactsViewModel(initialState: ContactsState) :
                 copy(filteredContacts = filteredList, selectedContacts = selectedList)
             }
         }
-
-        selectSubscribe(ContactsState::selectedContact) { selectedContact ->
-            selectedContact?.data?.phones?.forEach {
-                typeToPhoneMap[it.type] = it.number
-            }
-        }
-
-
     }
 
     fun setContacts(contacts: List<SelectableListItem<Contact>>) {
@@ -63,7 +54,18 @@ class ContactsViewModel(initialState: ContactsState) :
         }
     }
 
-    fun setSelectedContact(contact: SelectableListItem<Contact>?) {
+    fun addSelectedContact(contact: Contact) {
+        setState {
+            copy(
+                contacts = contacts.updateItems(
+                    { it.data.id == contact.id },
+                    { copy(selected = true) }
+                )
+            )
+        }
+    }
+
+    fun setSelectedContact(contact: Contact?) {
         setState {
             copy(selectedContact = contact)
         }

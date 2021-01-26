@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -210,7 +211,7 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
         if (contact.data.phones.size == 1 || contact.selected) {
             viewModel.toggleSelection(contact)
         } else {
-            viewModel.setSelectedContact(contact)
+            viewModel.setSelectedContact(contact.data)
         }
     }
 
