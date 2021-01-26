@@ -38,48 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
-    <!--    <Button-->
-    <!--        android:id="@+id/mobileButton"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="@dimen/row02"-->
-    <!--        android:layout_marginEnd="@dimen/row02"-->
-    <!--        android:layout_marginBottom="@dimen/row005"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/homeButton"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        tools:text="@string/mobile"-->
-    <!--        tools:visibility="visible" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/homeButton"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="@dimen/row02"-->
-    <!--        android:layout_marginEnd="@dimen/row02"-->
-    <!--        android:layout_marginBottom="@dimen/row005"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/workButton"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        tools:text="@string/home"-->
-    <!--        tools:visibility="visible" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/workButton"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="@dimen/row02"-->
-    <!--        android:layout_marginEnd="@dimen/row02"-->
-    <!--        android:layout_marginBottom="@dimen/row005"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/bumperSpace"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        tools:text="@string/work"-->
-    <!--        tools:visibility="visible" />-->
-
     <LinearLayout
         android:id="@+id/buttonsLinearLayout"
         android:layout_width="match_parent"

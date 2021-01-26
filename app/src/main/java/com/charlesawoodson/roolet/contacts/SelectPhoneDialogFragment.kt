@@ -1,27 +1,17 @@
 package com.charlesawoodson.roolet.contacts
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import com.airbnb.mvrx.parentFragmentViewModel
 import com.charlesawoodson.roolet.R
-import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_select_phone_dialog.*
 
@@ -48,22 +38,27 @@ class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM)
         return inflater.inflate(R.layout.fragment_select_phone_dialog, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        cancelButton.setOnClickListener {
+            dismiss()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun addPhoneNumberButton(phone: Phone, contact: Contact?) {
         val type =
             ContactsContract.CommonDataKinds.Phone.getTypeLabel(resources, phone.type, "NONE")
 
         val button = Button(context)
-
-        button.backgroundTintList = AppCompatResources.getColorStateList(
-            requireContext(),
-            R.color.phone_button_color_state
-        )
-
+        button.backgroundTintList =
+            AppCompatResources.getColorStateList(requireContext(), R.color.phone_button_color_state)
         button.text = "$type: ${phone.number}"
 
         button.setOnClickListener {
             if (contact != null) {
-                viewModel.addSelectedContact(contact)
+                viewModel.addSelectedContact(contact.copy(selectedNumber = phone.number))
             }
             dismiss()
         }
