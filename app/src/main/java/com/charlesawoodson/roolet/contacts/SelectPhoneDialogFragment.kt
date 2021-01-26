@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.mvrx.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_select_phone_dialog.*
 
-class SelectPhoneDialogFragment() : BaseDialogFragment() {
+class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM) {
 
     private val viewModel: ContactsViewModel by parentFragmentViewModel()
 
@@ -47,24 +48,12 @@ class SelectPhoneDialogFragment() : BaseDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner)
         return inflater.inflate(R.layout.fragment_select_phone_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    }
-
-
-    // Use onStart() to resize dialog if needed
-    override fun onStart() {
-        super.onStart()
-        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
-        val height = (resources.displayMetrics.heightPixels * 0.40).toInt()
-        dialog?.window?.also {
-            it.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
     }
 
 }
