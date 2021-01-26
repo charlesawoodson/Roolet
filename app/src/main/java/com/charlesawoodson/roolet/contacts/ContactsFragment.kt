@@ -28,6 +28,10 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
+    private val dialog by lazy(mode = LazyThreadSafetyMode.NONE) {
+        SelectPhoneDialogFragment()
+    }
+
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
         ContactsAdapter(this)
     }
@@ -60,6 +64,12 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
             selectedContactsAdapter.updateData(selectedContacts)
         }
 
+        viewModel.selectSubscribe(ContactsState::selectedContact) { selectedContact ->
+            if (!dialog.isVisible && selectedContact != null) {
+                dialog.show(childFragmentManager, "SelectPhoneFragment")
+            }
+        }
+
         LoaderManager.getInstance(this).initLoader(0, null, this)
     }
 
@@ -82,11 +92,6 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         groupMembersRecyclerView.adapter = selectedContactsAdapter
 
-
-        withState(viewModel) { state ->
-            adapter.updateData(state.filteredContacts)
-        }
-
         saveGroupTextView.setOnClickListener {
             viewModel.setFilter(" ")
         }
@@ -108,12 +113,18 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
             closeKeyboard(hasFocus)
         }
 
-
         cancelTextView.setOnClickListener {
             filterEditText.text.clear()
             filterEditText.clearFocus()
         }
 
+        /*withState(viewModel) { state ->
+            adapter.updateData(state.filteredContacts)
+        }
+
+        withState(viewModel) { state ->
+            adapter.updateData(state.filteredContacts)
+        }*/
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
@@ -149,19 +160,15 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
                     while (!data.isClosed && data.moveToNext()) {
                         val contactId = data.getLong(0)
                         val phone = data.getString(1)
-                        val type = ContactsContract.CommonDataKinds.Phone.getTypeLabel(
-                            resources,
-                            data.getInt(2),
-                            ""
-                        )
-                        var list: ArrayList<String>
+                        val type = data.getInt(2)
+                        var list: ArrayList<Phone>
                         if (viewModel.phones.containsKey(contactId)) {
                             list = viewModel.phones.getValue(contactId)
                         } else {
                             list = ArrayList()
-                            (viewModel.phones as HashMap<Long, ArrayList<String>>)[contactId] = list
+                            (viewModel.phones as HashMap<Long, ArrayList<Phone>>)[contactId] = list
                         }
-                        list.add("$type:$phone")
+                        list.add(Phone(phone, type))
                     }
                     data.close()
                 }
@@ -174,7 +181,7 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
                         val contactId = data.getLong(0)
                         val name = data.getString(1)
                         val photo = data.getString(2)
-                        val contactPhones: List<String>? = viewModel.phones[contactId]
+                        val contactPhones: List<Phone>? = viewModel.phones[contactId]
 
                         contactPhones?.also {
                             contacts.add(Contact(contactId, name, it, photo))
@@ -200,7 +207,11 @@ class ContactsFragment : BaseFragment(), LoaderManager.LoaderCallbacks<Cursor>,
     }
 
     override fun toggleSelection(contact: SelectableListItem<Contact>) {
-        viewModel.toggleSelection(contact)
+        if (contact.data.phones.size == 1 || contact.selected) {
+            viewModel.toggleSelection(contact)
+        } else {
+            viewModel.setSelectedContact(contact)
+        }
     }
 
     private fun closeKeyboard(hasFocus: Boolean) {

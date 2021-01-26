@@ -3,9 +3,8 @@ package com.charlesawoodson.roolet
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.charlesawoodson.roolet.contacts.CreateGroupActivity
 import kotlinx.android.synthetic.main.activity_main.*

@@ -1,9 +1,6 @@
 package com.charlesawoodson.roolet.contacts
 
-import com.airbnb.mvrx.BaseMvRxViewModel
-import com.airbnb.mvrx.MvRxState
-import com.charlesawoodson.roolet.extensions.appendAt
-import com.charlesawoodson.roolet.extensions.removeItem
+import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
 
@@ -11,13 +8,15 @@ data class ContactsState(
     val contacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
     val selectedContacts: List<Contact> = emptyList(),
+    val selectedContact: SelectableListItem<Contact>? = null,
     val filter: String = ""
 ) : MvRxState
 
 class ContactsViewModel(initialState: ContactsState) :
     BaseMvRxViewModel<ContactsState>(initialState, true) {
 
-    var phones: Map<Long, ArrayList<String>> = HashMap()
+    var phones: Map<Long, ArrayList<Phone>> = HashMap()
+    var typeToPhoneMap = mutableMapOf<Int, String>()
 
     init {
 
@@ -30,6 +29,12 @@ class ContactsViewModel(initialState: ContactsState) :
 
             setState {
                 copy(filteredContacts = filteredList, selectedContacts = selectedList)
+            }
+        }
+
+        selectSubscribe(ContactsState::selectedContact) { selectedContact ->
+            selectedContact?.data?.phones?.forEach {
+                typeToPhoneMap[it.type] = it.number
             }
         }
 
@@ -55,6 +60,12 @@ class ContactsViewModel(initialState: ContactsState) :
                     copy(selected = !selected)
                 })
             )
+        }
+    }
+
+    fun setSelectedContact(contact: SelectableListItem<Contact>?) {
+        setState {
+            copy(selectedContact = contact)
         }
     }
 

@@ -5,7 +5,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
     <string name="party_name">Party Name</string>
-    <string name="search_contacts">Search Contacts...</string>
+    <string name="search_contacts">Search Contacts…</string>
+    <string name="cancel">Cancel</string>
+    <string name="work">Work</string>
+    <string name="home">Home</string>
+    <string name="mobile">Mobile</string>
+    <string name="select_phone_label">Select which phone number you would like to send a message to</string>
+    <string name="phone_numbers">Phone Numbers</string>
 </resources>
