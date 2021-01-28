@@ -21,11 +21,26 @@ data class ContactsState(
 
 class ContactsViewModel(
     initialState: ContactsState,
-    contactsRepository: ContactsRepository
+    private val contactsRepository: ContactsRepository
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
     init {
+        fetchContacts()
 
+        selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
+            val filteredList = contacts.filter { it.data.name.contains(filter) }
+
+            val selectedList = contacts
+                .filter { it.selected }
+                .map { it.data }
+
+            setState {
+                copy(filteredContacts = filteredList, selectedContacts = selectedList)
+            }
+        }
+    }
+
+    private fun fetchContacts() {
         viewModelScope.launch {
             val contactsListAsync = async { contactsRepository.getPhoneContacts() }
             val contactNumbersAsync = async { contactsRepository.getContactNumbers() }
@@ -40,20 +55,9 @@ class ContactsViewModel(
             }
 
             setState {
-                copy(contacts = contacts.map { SelectableListItem(it) })
-            }
-        }
-
-
-        selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
-            val filteredList = contacts.filter { it.data.name.contains(filter) }
-
-            val selectedList = contacts
-                .filter { it.selected }
-                .map { it.data }
-
-            setState {
-                copy(filteredContacts = filteredList, selectedContacts = selectedList)
+                copy(contacts = contacts
+                    .filter { it.phones.isNotEmpty() }
+                    .map { SelectableListItem(it) })
             }
         }
     }

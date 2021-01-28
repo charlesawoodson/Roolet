@@ -24,6 +24,7 @@ class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM)
         super.onCreate(savedInstanceState)
 
         viewModel.selectSubscribe(ContactsState::selectedContact) { contact ->
+            buttonsLinearLayout.removeAllViews()
             contact?.phones?.forEach { phone ->
                 addPhoneNumberButton(phone, contact)
             }

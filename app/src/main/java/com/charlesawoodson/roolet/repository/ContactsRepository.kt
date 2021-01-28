@@ -54,6 +54,8 @@ class ContactsRepository(private val applicationContext: Context) {
                 phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
             val typeIndex = phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)
 
+            val numberSet = mutableSetOf<String>()
+
             while (phoneCursor.moveToNext()) {
                 val contactId = phoneCursor.getLong(contactIdIndex)
                 val number: String = phoneCursor.getString(numberIndex)
@@ -61,10 +63,14 @@ class ContactsRepository(private val applicationContext: Context) {
 
                 val phone = Phone(number, type)
 
-                if (contactsNumberMap.containsKey(contactId)) {
-                    contactsNumberMap[contactId]?.add(phone)
-                } else {
-                    contactsNumberMap[contactId] = arrayListOf(phone)
+                // todo: does not currently support multiple contacts w same phone numbers (support?)
+                if (!numberSet.contains(number)) {
+                    if (contactsNumberMap.containsKey(contactId)) {
+                        contactsNumberMap[contactId]?.add(phone)
+                    } else {
+                        contactsNumberMap[contactId] = arrayListOf(phone)
+                    }
+                    numberSet.add(number)
                 }
                 // contact contains all the numbers of a particular contact
             }
