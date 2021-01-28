@@ -33,8 +33,8 @@ class ContactsAdapter(private val listener: OnContactsItemClickListener) :
         holder.nameTextView.text = item.name
         holder.checkImageView.isVisible = data[position].selected
 
-        if (!item.photo.isNullOrBlank()) {
-            Glide.with(holder.context).load(item.photo).circleCrop().into(holder.contactImageView)
+        if (!item.photoUri.isNullOrBlank()) {
+            Glide.with(holder.context).load(item.photoUri).circleCrop().into(holder.contactImageView)
         } else {
             holder.contactImageView.setImageDrawable(
                 ContextCompat.getDrawable(

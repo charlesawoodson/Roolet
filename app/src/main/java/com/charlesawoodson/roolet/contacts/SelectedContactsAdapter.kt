@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import kotlinx.android.synthetic.main.selected_contact_list_item.view.*
 
-class SelectedContactsAdapter() :
+class SelectedContactsAdapter :
     RecyclerView.Adapter<SelectedContactsAdapter.ViewHolder>() {
 
     private val data = ArrayList<Contact>()
@@ -29,8 +29,8 @@ class SelectedContactsAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         holder.nameTextView.text = data[position].name
-        if (!item.photo.isNullOrBlank()) {
-            Glide.with(holder.context).load(item.photo).circleCrop().into(holder.contactImageView)
+        if (!item.photoUri.isNullOrBlank()) {
+            Glide.with(holder.context).load(item.photoUri).circleCrop().into(holder.contactImageView)
         } else {
             holder.contactImageView.setImageDrawable(
                 ContextCompat.getDrawable(

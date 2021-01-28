@@ -1,8 +1,15 @@
 package com.charlesawoodson.roolet.contacts
 
-import com.airbnb.mvrx.*
+import androidx.lifecycle.viewModelScope
+import com.airbnb.mvrx.BaseMvRxViewModel
+import com.airbnb.mvrx.MvRxState
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
+import com.charlesawoodson.roolet.repository.ContactsRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 data class ContactsState(
     val contacts: List<SelectableListItem<Contact>> = emptyList(),
@@ -12,12 +19,31 @@ data class ContactsState(
     val filter: String = ""
 ) : MvRxState
 
-class ContactsViewModel(initialState: ContactsState) :
-    BaseMvRxViewModel<ContactsState>(initialState, true) {
-
-    var phones: Map<Long, ArrayList<Phone>> = HashMap()
+class ContactsViewModel(
+    initialState: ContactsState,
+    contactsRepository: ContactsRepository
+) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
     init {
+
+        viewModelScope.launch {
+            val contactsListAsync = async { contactsRepository.getPhoneContacts() }
+            val contactNumbersAsync = async { contactsRepository.getContactNumbers() }
+
+            val contacts = contactsListAsync.await()
+            val contactNumbers = contactNumbersAsync.await()
+
+            contacts.forEach {
+                contactNumbers[it.id]?.let { phones ->
+                    it.phones = phones
+                }
+            }
+
+            setState {
+                copy(contacts = contacts.map { SelectableListItem(it) })
+            }
+        }
+
 
         selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
             val filteredList = contacts.filter { it.data.name.contains(filter) }
@@ -29,12 +55,6 @@ class ContactsViewModel(initialState: ContactsState) :
             setState {
                 copy(filteredContacts = filteredList, selectedContacts = selectedList)
             }
-        }
-    }
-
-    fun setContacts(contacts: List<SelectableListItem<Contact>>) {
-        setState {
-            copy(contacts = contacts)
         }
     }
 
@@ -71,4 +91,16 @@ class ContactsViewModel(initialState: ContactsState) :
         }
     }
 
+    companion object : MvRxViewModelFactory<ContactsViewModel, ContactsState> {
+        @JvmStatic
+        override fun create(
+            viewModelContext: ViewModelContext,
+            state: ContactsState
+        ): ContactsViewModel {
+            return ContactsViewModel(
+                state,
+                ContactsRepository(viewModelContext.activity.applicationContext)
+            )
+        }
+    }
 }
