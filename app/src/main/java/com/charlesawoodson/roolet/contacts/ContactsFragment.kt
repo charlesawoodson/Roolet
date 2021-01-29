@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -47,7 +48,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             selectedContactsAdapter.updateData(selectedContacts)
         }
 
-        viewModel.selectSubscribe(ContactsState::selectedContact) { selectedContact ->
+        viewModel.selectSubscribe(ContactsState::dialogContact) { selectedContact ->
             if (!dialog.isVisible && selectedContact != null) {
                 dialog.show(childFragmentManager, "SelectPhoneFragment")
             }
@@ -66,38 +67,12 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        contactsRecyclerView.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        contactsRecyclerView.adapter = adapter
+        setupRecyclerViews()
+        setOnClickListeners()
+        setEditTextListeners()
+    }
 
-        groupMembersRecyclerView.layoutManager =
-            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        groupMembersRecyclerView.adapter = selectedContactsAdapter
-
-        // todo: map group members in view model
-        saveGroupTextView.setOnClickListener {
-            withState(viewModel) { state ->
-                viewModel.saveGroup(
-                    Group(
-                        title = groupNameEditText.text.toString(),
-                        members = state.groupMembers
-                            .map {
-                                GroupMember(
-                                    it.name,
-                                    it.photoUri,
-                                    it.selectedPhone?.number!!,
-                                    it.selectedPhone?.type!!
-                                )
-                            }
-                    )
-                )
-            }
-        }
-
-        backImageView.setOnClickListener {
-            requireActivity().finish()
-        }
-
+    private fun setEditTextListeners() {
         filterEditText.doOnTextChanged { text, _, _, _ ->
             viewModel.setFilter(text.toString())
         }
@@ -110,6 +85,40 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         groupNameEditText.setOnFocusChangeListener { v, hasFocus ->
             closeKeyboard(hasFocus)
         }
+    }
+
+    private fun setOnClickListeners() {
+        saveGroupTextView.setOnClickListener {
+            withState(viewModel) { state ->
+                when {
+                    state.groupMembers.isEmpty() -> {
+                        // todo: show empty group error
+                        Toast.makeText(
+                            requireContext(),
+                            "No members have been added",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    groupNameEditText.text.isBlank() -> {
+                        // todo: show dialog title error
+                        Toast.makeText(requireContext(), "Title is blank", Toast.LENGTH_LONG).show()
+                    }
+                    else -> {
+                        viewModel.saveGroup(
+                            Group(
+                                title = groupNameEditText.text.toString(),
+                                members = state.groupMembers
+                            )
+                        )
+                        requireActivity().finish()
+                    }
+                }
+            }
+        }
+
+        backImageView.setOnClickListener {
+            requireActivity().finish()
+        }
 
         cancelTextView.setOnClickListener {
             filterEditText.text.clear()
@@ -117,11 +126,21 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         }
     }
 
+    private fun setupRecyclerViews() {
+        contactsRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        contactsRecyclerView.adapter = adapter
+
+        groupMembersRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        groupMembersRecyclerView.adapter = selectedContactsAdapter
+    }
+
     override fun toggleSelection(contact: SelectableListItem<Contact>) {
         if (contact.data.phones.size == 1 || contact.selected) {
             viewModel.toggleSelection(contact)
         } else {
-            viewModel.setSelectedContact(contact.data)
+            viewModel.setDialogContact(contact.data)
         }
     }
 

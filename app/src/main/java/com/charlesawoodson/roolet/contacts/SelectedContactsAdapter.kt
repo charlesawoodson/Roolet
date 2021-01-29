@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.selected_contact_list_item.view.*
 class SelectedContactsAdapter :
     RecyclerView.Adapter<SelectedContactsAdapter.ViewHolder>() {
 
-    private val data = ArrayList<Contact>()
+    private val data = ArrayList<GroupMember>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -43,8 +43,8 @@ class SelectedContactsAdapter :
 
     override fun getItemCount(): Int = data.size
 
-    fun updateData(newContacts: List<Contact>) {
-        val diffCallback = ContactsDiffCallback(data, newContacts)
+    fun updateData(newContacts: List<GroupMember>) {
+        val diffCallback = GroupMemberDiffCallback(data, newContacts)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         data.clear()
         data.addAll(newContacts)

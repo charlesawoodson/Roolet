@@ -1,6 +1,5 @@
 package com.charlesawoodson.roolet.contacts
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.airbnb.mvrx.BaseMvRxViewModel
 import com.airbnb.mvrx.MvRxState
@@ -18,8 +17,8 @@ import kotlinx.coroutines.launch
 data class ContactsState(
     val contacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
-    val groupMembers: List<Contact> = emptyList(),
-    val selectedContact: Contact? = null,
+    val groupMembers: List<GroupMember> = emptyList(),
+    val dialogContact: Contact? = null,
     val filter: String = ""
 ) : MvRxState
 
@@ -33,19 +32,23 @@ class ContactsViewModel(
         fetchContacts()
 
         selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
+            val filteredContacts = contacts.filter { it.data.name.contains(filter) }
 
-            contacts.forEach {
-                Log.d("ContactsViewModel", it.toString())
-            }
-
-            val filteredList = contacts.filter { it.data.name.contains(filter) }
-
-            val selectedList = contacts
+            val groupMembers = contacts
                 .filter { it.selected && it.data.selectedPhone != null }
                 .map { it.data }
+                .map {
+                    GroupMember(
+                        it.id,
+                        it.name,
+                        it.photoUri,
+                        it.selectedPhone?.number!!,
+                        it.selectedPhone?.type!!
+                    )
+                }
 
             setState {
-                copy(filteredContacts = filteredList, groupMembers = selectedList)
+                copy(filteredContacts = filteredContacts, groupMembers = groupMembers)
             }
         }
     }
@@ -105,21 +108,15 @@ class ContactsViewModel(
         }
     }
 
-    fun setSelectedContact(contact: Contact?) {
+    fun setDialogContact(contact: Contact?) {
         setState {
-            copy(selectedContact = contact)
+            copy(dialogContact = contact)
         }
     }
 
     fun saveGroup(group: Group) {
         viewModelScope.launch {
             dbHelper.insertGroup(group)
-
-            val getGroupsAsync = async { dbHelper.getGroups() }
-            getGroupsAsync.await().forEach {
-                Log.d("ContactsViewModel", it.toString())
-            }
-
         }
     }
 

@@ -32,9 +32,9 @@ class SelectedContactsDiffCallback(
 
 }
 
-class ContactsDiffCallback(
-    private val oldList: List<Contact>,
-    private val newList: List<Contact>
+class GroupMemberDiffCallback(
+    private val oldList: List<GroupMember>,
+    private val newList: List<GroupMember>
 ) :
     DiffUtil.Callback() {
 

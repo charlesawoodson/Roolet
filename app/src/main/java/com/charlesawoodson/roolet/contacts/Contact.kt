@@ -10,4 +10,4 @@ data class Contact(
 
 data class Phone(val number: String, val type: Int)
 
-data class GroupMember(val name: String, val photoUri: String?, val number: String, val type: Int)
+data class GroupMember(val id: Long, val name: String, val photoUri: String?, val number: String, val type: Int)

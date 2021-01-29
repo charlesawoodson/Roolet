@@ -23,7 +23,7 @@ class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.selectSubscribe(ContactsState::selectedContact) { contact ->
+        viewModel.selectSubscribe(ContactsState::dialogContact) { contact ->
             buttonsLinearLayout.removeAllViews()
             contact?.phones?.forEach { phone ->
                 addPhoneNumberButton(phone, contact)
@@ -68,7 +68,7 @@ class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-        viewModel.setSelectedContact(null)
+        viewModel.setDialogContact(null)
         super.onDismiss(dialog)
     }
 
