@@ -1,10 +1,14 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.airbnb.mvrx.BaseMvRxViewModel
 import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
+import com.charlesawoodson.roolet.DatabaseHelperImpl
+import com.charlesawoodson.roolet.User
+import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.repository.ContactsRepository
@@ -21,11 +25,13 @@ data class ContactsState(
 
 class ContactsViewModel(
     initialState: ContactsState,
-    private val contactsRepository: ContactsRepository
+    private val contactsRepository: ContactsRepository,
+    private val dbHelper: DatabaseHelperImpl
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
     init {
-        fetchContacts()
+        getAllContactsFromRoom()
+        // fetchContacts()
 
         selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
             val filteredList = contacts.filter { it.data.name.contains(filter) }
@@ -37,6 +43,20 @@ class ContactsViewModel(
             setState {
                 copy(filteredContacts = filteredList, selectedContacts = selectedList)
             }
+        }
+    }
+
+    private fun getAllContactsFromRoom() {
+        viewModelScope.launch {
+            dbHelper.updateSelectedNumberByContactId(3, "999-133-4878")
+            val testAsync = async { dbHelper.getUsers() }
+            val test = testAsync.await()
+
+            test.forEach {
+                Log.d("getAllContactsFrom()", it.toString())
+            }
+
+
         }
     }
 
@@ -53,6 +73,15 @@ class ContactsViewModel(
                     it.phones = phones
                 }
             }
+
+            dbHelper.insertAll(contacts.filter { it.phones.isNotEmpty() }.map {
+                User(
+                    it.id,
+                    it.name,
+                    it.photoUri,
+                    "it.selectedNumber"
+                )
+            })
 
             setState {
                 copy(contacts = contacts
@@ -101,9 +130,13 @@ class ContactsViewModel(
             viewModelContext: ViewModelContext,
             state: ContactsState
         ): ContactsViewModel {
+            val dbHelper =
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(viewModelContext.activity.applicationContext))
+
             return ContactsViewModel(
                 state,
-                ContactsRepository(viewModelContext.activity.applicationContext)
+                ContactsRepository(viewModelContext.activity.applicationContext),
+                dbHelper
             )
         }
     }
