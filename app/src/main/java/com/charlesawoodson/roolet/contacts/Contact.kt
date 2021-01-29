@@ -5,7 +5,9 @@ data class Contact(
     val name: String,
     val photoUri: String?,
     var phones: List<Phone> = emptyList(),
-    var selectedNumber: String = ""
+    var selectedPhone: Phone? = null
 )
 
 data class Phone(val number: String, val type: Int)
+
+data class GroupMember(val name: String, val photoUri: String?, val number: String, val type: Int)

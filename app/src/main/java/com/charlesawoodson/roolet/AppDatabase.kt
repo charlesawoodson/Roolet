@@ -1,18 +1,37 @@
 package com.charlesawoodson.roolet
 
 import androidx.room.*
+import com.charlesawoodson.roolet.contacts.GroupMember
+import com.charlesawoodson.roolet.contacts.Phone
+import com.google.gson.Gson
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class, Group::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun groupDao(): GroupDao
+}
+
+class Converters {
+    @TypeConverter
+    fun phonesToJson(value: List<Phone>?): String = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonToPhones(value: String) = Gson().fromJson(value, Array<Phone>::class.java).toList()
+
+    @TypeConverter
+    fun groupMemberToJson(value: List<GroupMember>): String = Gson().toJson(value)
+
+    @TypeConverter
+    fun jsonToGroupMember(value: String) = Gson().fromJson(value, Array<GroupMember>::class.java).toList()
 }
 
 @Entity
 data class User(
     @PrimaryKey val id: Long,
     @ColumnInfo(name = "name") val name: String?,
-    @ColumnInfo(name = "photoUri") val photoUri: String?,
-    @ColumnInfo(name = "selectedNumber") val selectedNumber: String?
+    @ColumnInfo(name = "photo_uri") val photoUri: String?,
+    @ColumnInfo(name = "phones") val phones: List<Phone>?
 )
 
 @Dao
@@ -33,9 +52,25 @@ interface UserDao {
     @Update
     suspend fun updateAll(users: List<User>)
 
-    @Query("UPDATE user SET selectedNumber = :selectedNumber WHERE id = :id")
-    suspend fun updateSelectedNumberByContactId(id: Long, selectedNumber: String?)
+}
 
+@Entity
+data class Group(
+    @PrimaryKey(autoGenerate = true) val groupId: Long = 0,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "members") val members: List<GroupMember>
+)
+
+@Dao
+interface GroupDao {
+    @Query("SELECT * FROM 'group'")
+    suspend fun getAll(): List<Group>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGroup(group: Group)
+
+    @Delete
+    suspend fun deleteGroup(group: Group)
 }
 
 interface DatabaseHelper {
@@ -43,10 +78,14 @@ interface DatabaseHelper {
     suspend fun insertAll(users: List<User>)
     suspend fun deleteAll(users: List<User>)
     suspend fun updateAll(users: List<User>)
-    suspend fun updateSelectedNumberByContactId(id: Long, selectedNumber: String?)
+
+    suspend fun getGroups(): List<Group>
+    suspend fun insertGroup(group: Group)
+    suspend fun deleteGroup(group: Group)
 }
 
 class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper {
+    // Contacts
     override suspend fun getUsers(): List<User> = appDatabase.userDao().getAll()
 
     override suspend fun insertAll(users: List<User>) = appDatabase.userDao().insertAll(users)
@@ -55,6 +94,12 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
 
     override suspend fun updateAll(users: List<User>) = appDatabase.userDao().updateAll(users)
 
-    override suspend fun updateSelectedNumberByContactId(id: Long, selectedNumber: String?) =
-        appDatabase.userDao().updateSelectedNumberByContactId(id, selectedNumber)
+    // Groups
+    override suspend fun getGroups(): List<Group> = appDatabase.groupDao().getAll()
+
+    override suspend fun insertGroup(group: Group) = appDatabase.groupDao().insertGroup(group)
+
+    override suspend fun deleteGroup(group: Group) = appDatabase.groupDao().deleteGroup(group)
+
+
 }

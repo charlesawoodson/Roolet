@@ -7,7 +7,7 @@ import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.charlesawoodson.roolet.DatabaseHelperImpl
-import com.charlesawoodson.roolet.User
+import com.charlesawoodson.roolet.Group
 import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 data class ContactsState(
     val contacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
-    val selectedContacts: List<Contact> = emptyList(),
+    val groupMembers: List<Contact> = emptyList(),
     val selectedContact: Contact? = null,
     val filter: String = ""
 ) : MvRxState
@@ -30,35 +30,26 @@ class ContactsViewModel(
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
     init {
-        getAllContactsFromRoom()
-        // fetchContacts()
+        fetchContacts()
 
         selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
+
+            contacts.forEach {
+                Log.d("ContactsViewModel", it.toString())
+            }
+
             val filteredList = contacts.filter { it.data.name.contains(filter) }
 
             val selectedList = contacts
-                .filter { it.selected }
+                .filter { it.selected && it.data.selectedPhone != null }
                 .map { it.data }
 
             setState {
-                copy(filteredContacts = filteredList, selectedContacts = selectedList)
+                copy(filteredContacts = filteredList, groupMembers = selectedList)
             }
         }
     }
 
-    private fun getAllContactsFromRoom() {
-        viewModelScope.launch {
-            dbHelper.updateSelectedNumberByContactId(3, "999-133-4878")
-            val testAsync = async { dbHelper.getUsers() }
-            val test = testAsync.await()
-
-            test.forEach {
-                Log.d("getAllContactsFrom()", it.toString())
-            }
-
-
-        }
-    }
 
     private fun fetchContacts() {
         viewModelScope.launch {
@@ -73,15 +64,6 @@ class ContactsViewModel(
                     it.phones = phones
                 }
             }
-
-            dbHelper.insertAll(contacts.filter { it.phones.isNotEmpty() }.map {
-                User(
-                    it.id,
-                    it.name,
-                    it.photoUri,
-                    "it.selectedNumber"
-                )
-            })
 
             setState {
                 copy(contacts = contacts
@@ -101,7 +83,10 @@ class ContactsViewModel(
         setState {
             copy(
                 contacts = contacts.updateItems({ it.data.id == item.data.id }, {
-                    copy(selected = !selected)
+                    copy(
+                        selected = !selected,
+                        data = data.copy(selectedPhone = item.data.phones[0])
+                    )
                 })
             )
         }
@@ -110,10 +95,12 @@ class ContactsViewModel(
     fun addSelectedContact(contact: Contact) {
         setState {
             copy(
-                contacts = contacts.updateItems(
-                    { it.data.id == contact.id },
-                    { copy(selected = true) }
-                )
+                contacts = contacts.updateItems({ it.data.id == contact.id }, {
+                    copy(
+                        selected = true,
+                        data = data.copy(selectedPhone = contact.selectedPhone)
+                    )
+                })
             )
         }
     }
@@ -121,6 +108,18 @@ class ContactsViewModel(
     fun setSelectedContact(contact: Contact?) {
         setState {
             copy(selectedContact = contact)
+        }
+    }
+
+    fun saveGroup(group: Group) {
+        viewModelScope.launch {
+            dbHelper.insertGroup(group)
+
+            val getGroupsAsync = async { dbHelper.getGroups() }
+            getGroupsAsync.await().forEach {
+                Log.d("ContactsViewModel", it.toString())
+            }
+
         }
     }
 

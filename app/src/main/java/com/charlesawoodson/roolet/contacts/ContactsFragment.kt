@@ -12,6 +12,8 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
+import com.charlesawoodson.roolet.Group
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
@@ -41,7 +43,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             adapter.updateData(contacts)
         }
 
-        viewModel.selectSubscribe(ContactsState::selectedContacts) { selectedContacts ->
+        viewModel.selectSubscribe(ContactsState::groupMembers) { selectedContacts ->
             selectedContactsAdapter.updateData(selectedContacts)
         }
 
@@ -72,8 +74,24 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         groupMembersRecyclerView.adapter = selectedContactsAdapter
 
+        // todo: map group members in view model
         saveGroupTextView.setOnClickListener {
-            viewModel.setFilter(" ")
+            withState(viewModel) { state ->
+                viewModel.saveGroup(
+                    Group(
+                        title = groupNameEditText.text.toString(),
+                        members = state.groupMembers
+                            .map {
+                                GroupMember(
+                                    it.name,
+                                    it.photoUri,
+                                    it.selectedPhone?.number!!,
+                                    it.selectedPhone?.type!!
+                                )
+                            }
+                    )
+                )
+            }
         }
 
         backImageView.setOnClickListener {

@@ -59,7 +59,7 @@ class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM)
 
         button.setOnClickListener {
             if (contact != null) {
-                viewModel.addSelectedContact(contact.copy(selectedNumber = phone.number))
+                viewModel.addSelectedContact(contact.copy(selectedPhone = phone))
             }
             dismiss()
         }
