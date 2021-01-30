@@ -4,6 +4,7 @@ import androidx.room.*
 import com.charlesawoodson.roolet.contacts.model.GroupMember
 import com.charlesawoodson.roolet.contacts.model.Phone
 import com.google.gson.Gson
+import io.reactivex.Observable
 
 @Database(entities = [User::class, Group::class], version = 1)
 @TypeConverters(Converters::class)
@@ -23,7 +24,8 @@ class Converters {
     fun groupMemberToJson(value: List<GroupMember>): String = Gson().toJson(value)
 
     @TypeConverter
-    fun jsonToGroupMember(value: String) = Gson().fromJson(value, Array<GroupMember>::class.java).toList()
+    fun jsonToGroupMember(value: String) =
+        Gson().fromJson(value, Array<GroupMember>::class.java).toList()
 }
 
 @Entity
@@ -64,7 +66,7 @@ data class Group(
 @Dao
 interface GroupDao {
     @Query("SELECT * FROM 'group'")
-    suspend fun getAll(): List<Group>
+    fun getGroups(): Observable<List<Group>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGroup(group: Group)
@@ -79,7 +81,7 @@ interface DatabaseHelper {
     suspend fun deleteAll(users: List<User>)
     suspend fun updateAll(users: List<User>)
 
-    suspend fun getGroups(): List<Group>
+    fun getGroups(): Observable<List<Group>>
     suspend fun insertGroup(group: Group)
     suspend fun deleteGroup(group: Group)
 }
@@ -95,7 +97,7 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
     override suspend fun updateAll(users: List<User>) = appDatabase.userDao().updateAll(users)
 
     // Groups
-    override suspend fun getGroups(): List<Group> = appDatabase.groupDao().getAll()
+    override fun getGroups(): Observable<List<Group>> = appDatabase.groupDao().getGroups()
 
     override suspend fun insertGroup(group: Group) = appDatabase.groupDao().insertGroup(group)
 

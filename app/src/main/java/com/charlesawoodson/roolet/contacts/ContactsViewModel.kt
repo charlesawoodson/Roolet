@@ -28,7 +28,7 @@ class ContactsViewModel(
     initialState: ContactsState,
     private val contactsRepository: ContactsRepository,
     private val dbHelper: DatabaseHelperImpl
-) : BaseMvRxViewModel<ContactsState>(initialState, true) {
+) : BaseMvRxViewModel<ContactsState>(initialState, false) {
 
     init {
         fetchContacts()

@@ -4,10 +4,12 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.mvrx.BaseFragment
@@ -15,10 +17,16 @@ import kotlinx.android.synthetic.main.fragment_groups.*
 
 class GroupsFragment : BaseFragment() {
 
-    // todo: private val viewModel: GroupsViewModel by fragmentViewModel()
+    private val viewModel: GroupsViewModel by fragmentViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.selectSubscribe(GroupsState::groups) { groups ->
+            groups.forEach {
+                Log.d("GroupsFragment", it.toString())
+            }
+        }
 
     }
 
