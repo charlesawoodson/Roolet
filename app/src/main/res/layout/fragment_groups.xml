@@ -53,10 +53,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/groupRecyclerView"
+        android:id="@+id/groupsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/row02"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="@dimen/row005"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         tools:itemCount="2"

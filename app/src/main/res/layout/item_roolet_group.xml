@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/row01"
     android:background="@drawable/rounded_bg"
-    android:elevation="@dimen/row02">
+    android:elevation="@dimen/row01">
 
     <ImageView
         android:id="@+id/memberOneImageView"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/groupTitleTextView"
+        android:id="@+id/groupNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/row01"

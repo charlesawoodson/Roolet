@@ -9,23 +9,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
+import com.charlesawoodson.roolet.db.Group
+import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_groups.*
 
-class GroupsFragment : BaseFragment() {
+class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
     private val viewModel: GroupsViewModel by fragmentViewModel()
+
+    private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
+        GroupsAdapter(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.selectSubscribe(GroupsState::groups) { groups ->
-            groups.forEach {
-                Log.d("GroupsFragment", it.toString())
-            }
+            instructionsTextView.isGone = groups.isNotEmpty()
+            adapter.updateData(groups)
         }
 
     }
@@ -40,6 +49,10 @@ class GroupsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        groupsRecyclerView.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        groupsRecyclerView.adapter = adapter
 
         addGroupImageView.setOnClickListener {
             when (PackageManager.PERMISSION_GRANTED) {
@@ -93,6 +106,10 @@ class GroupsFragment : BaseFragment() {
 
     companion object {
         const val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+    }
+
+    override fun onGroupItemClick(group: Group) {
+
     }
 
 }
