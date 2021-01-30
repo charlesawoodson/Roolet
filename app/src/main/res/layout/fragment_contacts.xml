@@ -7,7 +7,7 @@
     android:background="@color/off_white_smoke"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".MainActivity">
+    tools:context=".LauncherActivity">
 
     <View
         android:id="@+id/view"

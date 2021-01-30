@@ -1,10 +1,10 @@
-package com.charlesawoodson.roolet.repository
+package com.charlesawoodson.roolet.contacts.repository
 
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
-import com.charlesawoodson.roolet.contacts.Contact
-import com.charlesawoodson.roolet.contacts.Phone
+import com.charlesawoodson.roolet.contacts.model.Contact
+import com.charlesawoodson.roolet.contacts.model.Phone
 
 
 class ContactsRepository(private val applicationContext: Context) {

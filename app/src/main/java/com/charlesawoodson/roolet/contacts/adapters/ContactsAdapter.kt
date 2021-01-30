@@ -1,4 +1,4 @@
-package com.charlesawoodson.roolet.contacts
+package com.charlesawoodson.roolet.contacts.adapters
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
+import com.charlesawoodson.roolet.contacts.model.Contact
+import com.charlesawoodson.roolet.contacts.diffutils.SelectedContactsDiffCallback
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 

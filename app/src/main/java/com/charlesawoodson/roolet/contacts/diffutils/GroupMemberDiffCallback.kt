@@ -1,8 +1,10 @@
-package com.charlesawoodson.roolet.contacts
+package com.charlesawoodson.roolet.contacts.diffutils
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
-import com.charlesawoodson.roolet.contacts.ContactsAdapter.Companion.SELECTED_PAYLOAD
+import com.charlesawoodson.roolet.contacts.model.Contact
+import com.charlesawoodson.roolet.contacts.model.GroupMember
+import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter.Companion.SELECTED_PAYLOAD
 import com.charlesawoodson.roolet.lists.SelectableListItem
 
 class SelectedContactsDiffCallback(

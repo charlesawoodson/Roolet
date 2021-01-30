@@ -1,19 +1,20 @@
-package com.charlesawoodson.roolet.contacts
+package com.charlesawoodson.roolet.groups
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.charlesawoodson.roolet.R
 
-class CreateGroupActivity : AppCompatActivity() {
+class GroupsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_group)
+        setContentView(R.layout.activity_groups)
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<ContactsFragment>(R.id.container)
+                add<GroupsFragment>(R.id.container)
             }
         }
     }

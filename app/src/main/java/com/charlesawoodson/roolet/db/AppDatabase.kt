@@ -1,8 +1,8 @@
-package com.charlesawoodson.roolet
+package com.charlesawoodson.roolet.db
 
 import androidx.room.*
-import com.charlesawoodson.roolet.contacts.GroupMember
-import com.charlesawoodson.roolet.contacts.Phone
+import com.charlesawoodson.roolet.contacts.model.GroupMember
+import com.charlesawoodson.roolet.contacts.model.Phone
 import com.google.gson.Gson
 
 @Database(entities = [User::class, Group::class], version = 1)

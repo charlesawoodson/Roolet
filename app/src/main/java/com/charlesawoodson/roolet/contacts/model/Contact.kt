@@ -1,4 +1,4 @@
-package com.charlesawoodson.roolet.contacts
+package com.charlesawoodson.roolet.contacts.model
 
 data class Contact(
     val id: Long,

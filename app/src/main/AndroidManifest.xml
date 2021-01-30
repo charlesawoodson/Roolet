@@ -5,20 +5,20 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <application
         android:name=".RooletApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Roolet">
         <activity
-            android:name=".contacts.CreateGroupActivity"
+            android:name=".contacts.ContactsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".groups.GroupsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LauncherActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

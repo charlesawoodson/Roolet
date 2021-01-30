@@ -2,7 +2,6 @@ package com.charlesawoodson.roolet.db
 
 import android.content.Context
 import androidx.room.Room
-import com.charlesawoodson.roolet.AppDatabase
 
 object DatabaseBuilder {
 

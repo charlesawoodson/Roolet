@@ -1,4 +1,4 @@
-package com.charlesawoodson.roolet.contacts
+package com.charlesawoodson.roolet.contacts.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
+import com.charlesawoodson.roolet.contacts.model.GroupMember
+import com.charlesawoodson.roolet.contacts.diffutils.GroupMemberDiffCallback
 import kotlinx.android.synthetic.main.selected_contact_list_item.view.*
 
-class SelectedContactsAdapter :
-    RecyclerView.Adapter<SelectedContactsAdapter.ViewHolder>() {
+class GroupMembersAdapter :
+    RecyclerView.Adapter<GroupMembersAdapter.ViewHolder>() {
 
     private val data = ArrayList<GroupMember>()
 

@@ -14,8 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import com.charlesawoodson.roolet.Group
+import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.R
+import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter
+import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
+import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneDialogFragment
+import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
@@ -33,7 +37,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     }
 
     private val selectedContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) {
-        SelectedContactsAdapter()
+        GroupMembersAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

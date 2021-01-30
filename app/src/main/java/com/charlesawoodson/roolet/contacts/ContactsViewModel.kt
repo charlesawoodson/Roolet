@@ -5,12 +5,14 @@ import com.airbnb.mvrx.BaseMvRxViewModel
 import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
-import com.charlesawoodson.roolet.DatabaseHelperImpl
-import com.charlesawoodson.roolet.Group
+import com.charlesawoodson.roolet.db.DatabaseHelperImpl
+import com.charlesawoodson.roolet.db.Group
+import com.charlesawoodson.roolet.contacts.model.Contact
+import com.charlesawoodson.roolet.contacts.model.GroupMember
 import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
-import com.charlesawoodson.roolet.repository.ContactsRepository
+import com.charlesawoodson.roolet.contacts.repository.ContactsRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
