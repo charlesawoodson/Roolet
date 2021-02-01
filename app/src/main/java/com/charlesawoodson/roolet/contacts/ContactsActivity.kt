@@ -4,16 +4,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.airbnb.mvrx.MvRx
 import com.charlesawoodson.roolet.R
 
 class ContactsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
+
+        val groupData = intent.getParcelableExtra<ContactsArgs>(MvRx.KEY_ARG)
+
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<ContactsFragment>(R.id.container)
+                add<ContactsFragment>(
+                    R.id.container,
+                    "",
+                    Bundle().apply {
+                        putParcelable(MvRx.KEY_ARG, groupData)
+                    }
+                )
             }
         }
     }

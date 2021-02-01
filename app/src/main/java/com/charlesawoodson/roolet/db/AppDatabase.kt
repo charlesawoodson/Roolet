@@ -1,10 +1,12 @@
 package com.charlesawoodson.roolet.db
 
+import android.os.Parcelable
 import androidx.room.*
 import com.charlesawoodson.roolet.contacts.model.GroupMember
 import com.charlesawoodson.roolet.contacts.model.Phone
 import com.google.gson.Gson
 import io.reactivex.Observable
+import kotlinx.android.parcel.Parcelize
 
 @Database(entities = [User::class, Group::class], version = 1)
 @TypeConverters(Converters::class)
@@ -56,12 +58,13 @@ interface UserDao {
 
 }
 
+@Parcelize
 @Entity
 data class Group(
     @PrimaryKey(autoGenerate = true) val groupId: Long = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "members") val members: List<GroupMember>
-)
+) : Parcelable
 
 @Dao
 interface GroupDao {
@@ -73,6 +76,8 @@ interface GroupDao {
 
     @Delete
     suspend fun deleteGroup(group: Group)
+
+    // todo: getGroupById
 }
 
 interface DatabaseHelper {

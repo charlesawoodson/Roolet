@@ -13,9 +13,11 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
+import com.charlesawoodson.roolet.contacts.ContactsArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.mvrx.BaseFragment
@@ -61,6 +63,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                     Manifest.permission.READ_CONTACTS
                 ) -> {
                     Intent(context, ContactsActivity::class.java).apply {
+                        putExtra(KEY_ARG, ContactsArgs(Group(1, "Group Args", emptyList())))
                         startActivity(this)
                     }
                 }
@@ -90,6 +93,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
                     Intent(context, ContactsActivity::class.java).apply {
+                        putExtra(KEY_ARG, ContactsArgs(Group(1, "Group Args", emptyList())))
                         startActivity(this)
                     }
                 } else {

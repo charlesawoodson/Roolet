@@ -1,10 +1,9 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.airbnb.mvrx.BaseMvRxViewModel
-import com.airbnb.mvrx.MvRxState
-import com.airbnb.mvrx.MvRxViewModelFactory
-import com.airbnb.mvrx.ViewModelContext
+import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.db.DatabaseHelperImpl
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.contacts.model.Contact
@@ -13,8 +12,14 @@ import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.contacts.repository.ContactsRepository
+import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+
+@Parcelize
+data class ContactsArgs(
+    val group: Group? = null
+) : Parcelable
 
 data class ContactsState(
     val contacts: List<SelectableListItem<Contact>> = emptyList(),
@@ -27,10 +32,13 @@ data class ContactsState(
 class ContactsViewModel(
     initialState: ContactsState,
     private val contactsRepository: ContactsRepository,
-    private val dbHelper: DatabaseHelperImpl
-) : BaseMvRxViewModel<ContactsState>(initialState, false) {
+    private val dbHelper: DatabaseHelperImpl,
+    private val contactsArgs: ContactsArgs
+) : BaseMvRxViewModel<ContactsState>(initialState, true) {
+
 
     init {
+        Log.d("ContactArgs", contactsArgs.toString())
         fetchContacts()
 
         selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
@@ -131,10 +139,13 @@ class ContactsViewModel(
             val dbHelper =
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(viewModelContext.activity.applicationContext))
 
+            val test = viewModelContext.args<ContactsArgs>()
+
             return ContactsViewModel(
                 state,
                 ContactsRepository(viewModelContext.activity.applicationContext),
-                dbHelper
+                dbHelper,
+                test
             )
         }
     }

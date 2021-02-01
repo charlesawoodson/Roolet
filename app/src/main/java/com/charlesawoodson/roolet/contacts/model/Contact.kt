@@ -1,5 +1,8 @@
 package com.charlesawoodson.roolet.contacts.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class Contact(
     val id: Long,
     val name: String,
@@ -10,4 +13,11 @@ data class Contact(
 
 data class Phone(val number: String, val type: Int)
 
-data class GroupMember(val id: Long, val name: String, val photoUri: String?, val number: String, val type: Int)
+@Parcelize
+data class GroupMember(
+    val id: Long,
+    val name: String,
+    val photoUri: String?,
+    val number: String,
+    val type: Int
+) : Parcelable

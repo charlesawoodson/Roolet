@@ -2,6 +2,7 @@ package com.charlesawoodson.roolet.contacts
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.MvRx
+import com.airbnb.mvrx.args
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.db.Group
@@ -25,6 +28,8 @@ import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
+
+    private val arguments: ContactsArgs by args()
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
@@ -46,6 +51,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         viewModel.selectSubscribe(ContactsState::filteredContacts) { contacts ->
             progressSpinner.isGone = true
             adapter.updateData(contacts)
+            Log.d("argumentsYurp", arguments.toString())
         }
 
         viewModel.selectSubscribe(ContactsState::groupMembers) { selectedContacts ->

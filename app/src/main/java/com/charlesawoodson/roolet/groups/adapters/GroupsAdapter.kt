@@ -28,10 +28,35 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
+        val members = item.members
 
         holder.groupNameTextView.text = item.title
         setGroupMembersIcon(item, holder)
 
+        val test = when (members.size) {
+            0 -> {
+                ""
+            }
+            1 -> {
+                members.map { it.name }.joinToString { " & " }
+            }
+            2 -> {
+                members.map { it.name }.joinToString { " ! " }
+            }
+            3 -> {
+                members.map { it.name }.joinToString { " 3 " }
+            }
+            4 -> {
+                members.map { it.name }.joinToString(limit = 3) {
+                    it
+                }
+            }
+            else -> {
+                members.map { it.name }.joinToString { " else " }
+            }
+        }
+
+        holder.groupMembersTextView.text = test
 
     }
 
@@ -51,7 +76,12 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
         }
     }
 
-    private fun setGroupMemberIcon(i: Int, item: Group, context: Context, memberImageView: ImageView) {
+    private fun setGroupMemberIcon(
+        i: Int,
+        item: Group,
+        context: Context,
+        memberImageView: ImageView
+    ) {
         if (i < item.members.size) {
             val groupMember = item.members[i]
 

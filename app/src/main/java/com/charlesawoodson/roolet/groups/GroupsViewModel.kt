@@ -15,7 +15,7 @@ data class GroupsState(
 class GroupsViewModel(
     initialState: GroupsState,
     dbHelper: DatabaseHelperImpl
-) : BaseMvRxViewModel<GroupsState>(initialState, false) {
+) : BaseMvRxViewModel<GroupsState>(initialState, true) {
 
     init {
         dbHelper.getGroups().subscribe { groups ->
