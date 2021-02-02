@@ -116,13 +116,21 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                         Toast.makeText(requireContext(), "Title is blank", Toast.LENGTH_LONG).show()
                     }
                     else -> {
-                        viewModel.saveGroup(
+                        val group = if (arguments.group?.groupId != null) {
+                            Group(
+                                groupId = arguments.group?.groupId!!,
+                                title = groupTitleEditText.text.toString(),
+                                members = state.groupMembers
+                            )
+                        } else {
                             Group(
                                 title = groupTitleEditText.text.toString(),
                                 members = state.groupMembers
                             )
-                        )
+                        }
+                        viewModel.saveGroup(group)
                         requireActivity().finish()
+
                     }
                 }
             }
