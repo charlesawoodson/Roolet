@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.mvrx.MvRx
 import com.airbnb.mvrx.args
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
-    private val arguments: ContactsArgs by args()
+    private val arguments: GroupArgs by args()
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 

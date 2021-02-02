@@ -17,12 +17,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @Parcelize
-data class ContactsArgs(
+data class GroupArgs(
     val group: Group? = null
 ) : Parcelable
 
 data class ContactsState(
-    val contacts: List<SelectableListItem<Contact>> = emptyList(),
+    val allContacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
     val groupMembers: List<GroupMember> = emptyList(),
     val dialogContact: Contact? = null,
@@ -33,15 +33,15 @@ class ContactsViewModel(
     initialState: ContactsState,
     private val contactsRepository: ContactsRepository,
     private val dbHelper: DatabaseHelperImpl,
-    private val contactsArgs: ContactsArgs
+    private val groupArgs: GroupArgs
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
+    private val selectedIds = groupArgs.group?.members?.map { it.id }?.toSet()
 
     init {
-        Log.d("ContactArgs", contactsArgs.toString())
         fetchContacts()
 
-        selectSubscribe(ContactsState::contacts, ContactsState::filter) { contacts, filter ->
+        selectSubscribe(ContactsState::allContacts, ContactsState::filter) { contacts, filter ->
             val filteredContacts = contacts.filter { it.data.name.contains(filter) }
 
             val groupMembers = contacts
@@ -75,13 +75,19 @@ class ContactsViewModel(
             contacts.forEach {
                 contactNumbers[it.id]?.let { phones ->
                     it.phones = phones
+                    it.selectedPhone = phones[0]
                 }
             }
 
             setState {
-                copy(contacts = contacts
+                copy(allContacts = contacts
                     .filter { it.phones.isNotEmpty() }
-                    .map { SelectableListItem(it) })
+                    .map {
+                        SelectableListItem(
+                            it,
+                            selected = selectedIds?.contains(it.id) == true
+                        )
+                    })
             }
         }
     }
@@ -95,7 +101,7 @@ class ContactsViewModel(
     fun toggleSelection(item: SelectableListItem<Contact>) {
         setState {
             copy(
-                contacts = contacts.updateItems({ it.data.id == item.data.id }, {
+                allContacts = allContacts.updateItems({ it.data.id == item.data.id }, {
                     copy(
                         selected = !selected,
                         data = data.copy(selectedPhone = item.data.phones[0])
@@ -108,7 +114,7 @@ class ContactsViewModel(
     fun addSelectedContact(contact: Contact) {
         setState {
             copy(
-                contacts = contacts.updateItems({ it.data.id == contact.id }, {
+                allContacts = allContacts.updateItems({ it.data.id == contact.id }, {
                     copy(
                         selected = true,
                         data = data.copy(selectedPhone = contact.selectedPhone)
@@ -139,13 +145,13 @@ class ContactsViewModel(
             val dbHelper =
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(viewModelContext.activity.applicationContext))
 
-            val test = viewModelContext.args<ContactsArgs>()
+            val group = viewModelContext.args<GroupArgs>()
 
             return ContactsViewModel(
                 state,
                 ContactsRepository(viewModelContext.activity.applicationContext),
                 dbHelper,
-                test
+                group
             )
         }
     }

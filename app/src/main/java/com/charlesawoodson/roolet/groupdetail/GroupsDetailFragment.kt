@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
+import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
-import com.charlesawoodson.roolet.contacts.ContactsArgs
+import com.charlesawoodson.roolet.contacts.GroupArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.mvrx.BaseFragment
@@ -59,9 +60,11 @@ class GroupsDetailFragment : BaseFragment() {
                     requireActivity(),
                     Manifest.permission.READ_CONTACTS
                 ) -> {
-                    Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, ContactsArgs(Group(1, "Group Args", emptyList())))
-                        startActivity(this)
+                    withState(viewModel) { state ->
+                        Intent(context, ContactsActivity::class.java).apply {
+                            putExtra(KEY_ARG, GroupArgs(state.group()))
+                            startActivity(this)
+                        }
                     }
                 }
 
@@ -89,9 +92,11 @@ class GroupsDetailFragment : BaseFragment() {
                 if ((grantResults.isNotEmpty() &&
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
-                    Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, ContactsArgs(Group(1, "Group Args", emptyList())))
-                        startActivity(this)
+                    withState(viewModel) { state ->
+                        Intent(context, ContactsActivity::class.java).apply {
+                            putExtra(KEY_ARG, GroupArgs(state.group()))
+                            startActivity(this)
+                        }
                     }
                 } else {
                     // Explain to the user that the feature is unavailable because

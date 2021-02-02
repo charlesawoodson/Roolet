@@ -4,20 +4,18 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
-import com.charlesawoodson.roolet.contacts.ContactsArgs
+import com.charlesawoodson.roolet.contacts.GroupArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
@@ -64,7 +62,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                     Manifest.permission.READ_CONTACTS
                 ) -> {
                     Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, ContactsArgs(Group(1, "Group Args", emptyList())))
+                        putExtra(KEY_ARG, GroupArgs(Group(1, "Group Args", emptyList())))
                         startActivity(this)
                     }
                 }
@@ -94,7 +92,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
                     Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, ContactsArgs(Group(1, "Group Args", emptyList())))
+                        putExtra(KEY_ARG, GroupArgs(Group(1, "Group Args", emptyList())))
                         startActivity(this)
                     }
                 } else {
