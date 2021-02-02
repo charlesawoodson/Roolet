@@ -1,17 +1,19 @@
 package com.charlesawoodson.roolet.contacts
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.airbnb.mvrx.*
-import com.charlesawoodson.roolet.db.DatabaseHelperImpl
-import com.charlesawoodson.roolet.db.Group
+import com.airbnb.mvrx.BaseMvRxViewModel
+import com.airbnb.mvrx.MvRxState
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.contacts.model.GroupMember
+import com.charlesawoodson.roolet.contacts.repository.ContactsRepository
 import com.charlesawoodson.roolet.db.DatabaseBuilder
+import com.charlesawoodson.roolet.db.DatabaseHelperImpl
+import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.extensions.updateItems
 import com.charlesawoodson.roolet.lists.SelectableListItem
-import com.charlesawoodson.roolet.contacts.repository.ContactsRepository
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -33,10 +35,10 @@ class ContactsViewModel(
     initialState: ContactsState,
     private val contactsRepository: ContactsRepository,
     private val dbHelper: DatabaseHelperImpl,
-    private val groupArgs: GroupArgs
+    groupArgs: GroupArgs?
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
-    private val selectedIds = groupArgs.group?.members?.map { it.id }?.toSet()
+    private val selectedIds = groupArgs?.group?.members?.map { it.id }?.toSet()
 
     init {
         fetchContacts()

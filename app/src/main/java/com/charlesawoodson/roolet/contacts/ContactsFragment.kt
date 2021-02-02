@@ -2,12 +2,12 @@ package com.charlesawoodson.roolet.contacts
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -50,7 +50,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         viewModel.selectSubscribe(ContactsState::filteredContacts) { contacts ->
             progressSpinner.isGone = true
             adapter.updateData(contacts)
-            Log.d("argumentsYurp", arguments.toString())
         }
 
         viewModel.selectSubscribe(ContactsState::groupMembers) { selectedContacts ->
@@ -91,8 +90,12 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             closeKeyboard(hasFocus)
         }
 
-        groupNameEditText.setOnFocusChangeListener { v, hasFocus ->
+        groupTitleEditText.setOnFocusChangeListener { v, hasFocus ->
             closeKeyboard(hasFocus)
+        }
+
+        arguments.group?.title?.also { title ->
+            groupTitleEditText.setText(title.toSpannable())
         }
     }
 
@@ -108,14 +111,14 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    groupNameEditText.text.isBlank() -> {
+                    groupTitleEditText.text.isBlank() -> {
                         // todo: show dialog title error
                         Toast.makeText(requireContext(), "Title is blank", Toast.LENGTH_LONG).show()
                     }
                     else -> {
                         viewModel.saveGroup(
                             Group(
-                                title = groupNameEditText.text.toString(),
+                                title = groupTitleEditText.text.toString(),
                                 members = state.groupMembers
                             )
                         )

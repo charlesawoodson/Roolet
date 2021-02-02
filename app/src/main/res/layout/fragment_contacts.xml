@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/filterFrameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/groupNameEditText"
+        app:layout_constraintTop_toBottomOf="@id/groupTitleEditText"
         tools:itemCount="2"
         tools:listitem="@layout/selected_contact_list_item" />
 
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/groupNameEditText"
+        android:id="@+id/groupTitleEditText"
         android:layout_width="0dp"
         android:layout_height="@dimen/row04"
         android:layout_marginStart="@dimen/row04"
