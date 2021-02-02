@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/off_white_smoke"
+    tools:context=".groups.GroupsActivity">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row16"
+        android:background="@color/roolet_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backImageView"
+        android:layout_width="@dimen/row04"
+        android:layout_height="@dimen/row04"
+        android:layout_marginStart="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+        app:layout_constraintBottom_toBottomOf="@id/groupNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/groupNameTextView" />
+
+    <TextView
+        android:id="@+id/groupNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row02"
+        android:fontFamily="serif"
+        android:textColor="@color/white"
+        android:textSize="@dimen/subhead3"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/editGroupImageView"
+        app:layout_constraintStart_toEndOf="@id/backImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="GroupName" />
+
+    <TextView
+        android:id="@+id/editGroupImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/row02"
+        android:gravity="center"
+        android:padding="@dimen/row01"
+        android:text="@string/edit"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption10"
+        app:layout_constraintBottom_toBottomOf="@id/groupNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/groupNameTextView" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/groupsDetailRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/row02"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="@dimen/row005"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/groupNameTextView"
+        tools:listitem="@layout/list_item_group_detail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

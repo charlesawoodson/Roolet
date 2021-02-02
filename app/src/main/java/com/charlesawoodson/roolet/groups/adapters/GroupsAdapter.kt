@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.db.Group
-import kotlinx.android.synthetic.main.item_roolet_group.view.*
+import kotlinx.android.synthetic.main.list_item_group.view.*
 
 class GroupsAdapter(private val listener: OnGroupItemClickListener) :
     RecyclerView.Adapter<GroupsAdapter.ViewHolder>() {
@@ -20,7 +20,7 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_roolet_group, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_group, parent, false)
 
         return ViewHolder(view, data, listener)
     }

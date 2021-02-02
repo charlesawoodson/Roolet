@@ -18,6 +18,12 @@
 
         </activity>
         <activity
+            android:name=".groupdetail.GroupDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
             android:name=".groups.GroupsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/row08"
+    android:layout_marginStart="@dimen/row01"
+    android:layout_marginTop="@dimen/row005"
+    android:layout_marginEnd="@dimen/row01"
+    android:layout_marginBottom="@dimen/row005"
+    android:background="@drawable/rounded_bg"
+    android:elevation="@dimen/row01">
+
+    <ImageView
+        android:id="@+id/groupMemberImageView"
+        android:layout_width="@dimen/row05"
+        android:layout_height="@dimen/row05"
+        android:layout_margin="@dimen/row01"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row01"
+        android:layout_marginEnd="@dimen/row01"
+        android:textColor="@color/black_80"
+        android:textSize="@dimen/caption8"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/numberTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/groupMemberImageView"
+        app:layout_constraintTop_toTopOf="@+id/groupMemberImageView"
+        tools:text="Aaron King" />
+
+    <TextView
+        android:id="@+id/numberTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row01"
+        android:layout_marginEnd="@dimen/row01"
+        android:textSize="@dimen/caption1"
+        app:layout_constraintBottom_toBottomOf="@+id/groupMemberImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/groupMemberImageView"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+        tools:text="(919) 784-1987" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

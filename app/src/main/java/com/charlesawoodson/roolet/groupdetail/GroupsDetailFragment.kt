@@ -1,16 +1,13 @@
-package com.charlesawoodson.roolet.groups
+package com.charlesawoodson.roolet.groupdetail
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
@@ -19,25 +16,24 @@ import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.ContactsArgs
 import com.charlesawoodson.roolet.db.Group
-import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
-import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
+import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.mvrx.BaseFragment
-import kotlinx.android.synthetic.main.fragment_groups.*
+import kotlinx.android.synthetic.main.fragment_group_detail.*
 
-class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
+class GroupsDetailFragment : BaseFragment() {
 
-    private val viewModel: GroupsViewModel by fragmentViewModel()
+    private val viewModel: GroupsDetailViewModel by fragmentViewModel()
 
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
-        GroupsAdapter(this)
+        GroupDetailAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.selectSubscribe(GroupsState::groups) { groups ->
-            instructionsTextView.isGone = groups.isNotEmpty()
-            adapter.updateData(groups)
+        viewModel.asyncSubscribe(GroupDetailState::group) { group ->
+            adapter.updateData(group.members)
+            groupNameTextView.text = group.title
         }
 
     }
@@ -47,17 +43,17 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_groups, container, false)
+        return inflater.inflate(R.layout.fragment_group_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        groupsRecyclerView.layoutManager =
+        groupsDetailRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        groupsRecyclerView.adapter = adapter
+        groupsDetailRecyclerView.adapter = adapter
 
-        addGroupImageView.setOnClickListener {
+        editGroupImageView.setOnClickListener {
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     requireActivity(),
@@ -111,14 +107,6 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
     companion object {
         const val PERMISSIONS_REQUEST_READ_CONTACTS = 100
-    }
-
-    override fun onGroupItemClick(group: Group) {
-        Intent(context, GroupDetailActivity::class.java).apply {
-            putExtra(KEY_ARG, group.groupId)
-            startActivity(this)
-            // todo: return id instead of entire group
-        }
     }
 
 }

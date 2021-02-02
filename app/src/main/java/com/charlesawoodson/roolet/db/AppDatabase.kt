@@ -38,6 +38,14 @@ data class User(
     @ColumnInfo(name = "phones") val phones: List<Phone>?
 )
 
+@Parcelize
+@Entity
+data class Group(
+    @PrimaryKey(autoGenerate = true) val groupId: Long = 0,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "members") val members: List<GroupMember>
+) : Parcelable
+
 @Dao
 interface UserDao {
 
@@ -58,14 +66,6 @@ interface UserDao {
 
 }
 
-@Parcelize
-@Entity
-data class Group(
-    @PrimaryKey(autoGenerate = true) val groupId: Long = 0,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "members") val members: List<GroupMember>
-) : Parcelable
-
 @Dao
 interface GroupDao {
     @Query("SELECT * FROM 'group'")
@@ -77,7 +77,8 @@ interface GroupDao {
     @Delete
     suspend fun deleteGroup(group: Group)
 
-    // todo: getGroupById
+    @Query("SELECT * FROM 'group' WHERE groupId=:id")
+    fun getGroupById(id: Long): Observable<Group>
 }
 
 interface DatabaseHelper {
@@ -89,6 +90,7 @@ interface DatabaseHelper {
     fun getGroups(): Observable<List<Group>>
     suspend fun insertGroup(group: Group)
     suspend fun deleteGroup(group: Group)
+    fun getGroupById(id: Long): Observable<Group>
 }
 
 class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper {
@@ -108,5 +110,5 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
 
     override suspend fun deleteGroup(group: Group) = appDatabase.groupDao().deleteGroup(group)
 
-
+    override fun getGroupById(id: Long): Observable<Group> = appDatabase.groupDao().getGroupById(id)
 }
