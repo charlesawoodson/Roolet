@@ -52,7 +52,7 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
                 "${memberNames[0]}, ${memberNames[1]}, ${memberNames[2]} & ${memberNames[3]}"
             }
             else -> {
-                "${memberNames[0]}, ${memberNames[1]}, ${memberNames[2]} & ${memberNames.size - 4} others"
+                "${memberNames[0]}, ${memberNames[1]}, ${memberNames[2]} & ${memberNames.size - 3} others"
             }
         }
 
@@ -90,12 +90,12 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
                 Glide.with(context).load(groupMember.photoUri).circleCrop()
                     .into(memberImageView)
             } else {
-                memberImageView.setImageDrawable(
+                Glide.with(context).load(
                     ContextCompat.getDrawable(
                         context,
-                        R.mipmap.ic_launcher_round
+                        R.drawable.roolet_icon_1024
                     )
-                )
+                ).circleCrop().into(memberImageView)
             }
         } else {
             memberImageView.isInvisible = true
