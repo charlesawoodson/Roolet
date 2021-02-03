@@ -9,7 +9,8 @@
     android:layout_marginEnd="@dimen/row01"
     android:layout_marginBottom="@dimen/row005"
     android:background="@drawable/rounded_bg"
-    android:elevation="@dimen/row01">
+    android:elevation="@dimen/row01"
+    android:foreground="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/memberOneImageView"
