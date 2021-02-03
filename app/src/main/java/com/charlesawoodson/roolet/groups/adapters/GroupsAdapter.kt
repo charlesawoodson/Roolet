@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
@@ -28,31 +30,29 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        val members = item.members
+        val memberNames = item.members.map { it.name }
 
         holder.groupNameTextView.text = item.title
         setGroupMembersIcon(item, holder)
 
-        val test = when (members.size) {
+        val test = when (memberNames.size) {
             0 -> {
                 ""
             }
             1 -> {
-                members.map { it.name }.joinToString { " & " }
+                memberNames[0]
             }
             2 -> {
-                members.map { it.name }.joinToString { " ! " }
+                "${memberNames[0]} & ${memberNames[1]}"
             }
             3 -> {
-                members.map { it.name }.joinToString { " 3 " }
+                "${memberNames[0]}, ${memberNames[1]} & ${memberNames[2]}"
             }
             4 -> {
-                members.map { it.name }.joinToString(limit = 3) {
-                    it
-                }
+                "${memberNames[0]}, ${memberNames[1]}, ${memberNames[2]} & ${memberNames[3]}"
             }
             else -> {
-                members.map { it.name }.joinToString { " else " }
+                "${memberNames[0]}, ${memberNames[1]}, ${memberNames[2]} & ${memberNames.size - 4} others"
             }
         }
 
@@ -83,6 +83,7 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
         memberImageView: ImageView
     ) {
         if (i < item.members.size) {
+            memberImageView.isVisible = true
             val groupMember = item.members[i]
 
             if (!groupMember.photoUri.isNullOrBlank()) {
@@ -96,6 +97,8 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
                     )
                 )
             }
+        } else {
+            memberImageView.isInvisible = true
         }
     }
 
