@@ -10,7 +10,7 @@
         android:layout_width="@dimen/row06"
         android:layout_height="@dimen/row06"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/roolet_icon_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

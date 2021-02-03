@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/row01"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/roolet_icon_grey" />
 
     <TextView
         android:id="@+id/nameTextView"

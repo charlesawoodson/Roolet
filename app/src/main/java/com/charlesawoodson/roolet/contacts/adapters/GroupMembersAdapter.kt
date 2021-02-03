@@ -30,16 +30,18 @@ class GroupMembersAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
+        val context = holder.context
         holder.nameTextView.text = data[position].name
         if (!item.photoUri.isNullOrBlank()) {
-            Glide.with(holder.context).load(item.photoUri).circleCrop().into(holder.contactImageView)
+            Glide.with(holder.context).load(item.photoUri).circleCrop()
+                .into(holder.contactImageView)
         } else {
-            holder.contactImageView.setImageDrawable(
+            Glide.with(context).load(
                 ContextCompat.getDrawable(
-                    holder.context,
-                    R.mipmap.ic_launcher_round
+                    context,
+                    R.drawable.roolet_icon_grey
                 )
-            )
+            ).circleCrop().into(holder.contactImageView)
         }
     }
 

@@ -93,7 +93,7 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
                 Glide.with(context).load(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.roolet_icon_1024
+                        R.drawable.roolet_icon_grey
                     )
                 ).circleCrop().into(memberImageView)
             }

@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/row01"
+    android:layout_marginStart="@dimen/row01"
+    android:layout_marginTop="@dimen/row005"
+    android:layout_marginEnd="@dimen/row01"
+    android:layout_marginBottom="@dimen/row005"
     android:background="@drawable/rounded_bg"
     android:elevation="@dimen/row01">
 
@@ -15,7 +18,7 @@
         android:layout_marginStart="@dimen/row01"
         android:layout_marginTop="@dimen/row01"
         android:contentDescription="@null"
-        android:src="@drawable/roolet_icon_1024"
+        android:src="@drawable/roolet_icon_grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +28,7 @@
         android:layout_height="@dimen/row04"
         android:layout_marginStart="@dimen/row04"
         android:contentDescription="@null"
-        android:src="@drawable/roolet_icon_1024"
+        android:src="@drawable/roolet_icon_grey"
         app:layout_constraintBottom_toTopOf="@id/memberThreeImageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/memberOneImageView" />
@@ -37,7 +40,7 @@
         android:layout_marginStart="@dimen/row01"
         android:layout_marginBottom="@dimen/row01"
         android:contentDescription="@null"
-        android:src="@drawable/roolet_icon_1024"
+        android:src="@drawable/roolet_icon_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -45,25 +48,24 @@
         android:id="@+id/groupNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/row01"
-        android:fontFamily="serif"
+        android:layout_marginStart="@dimen/row01"
+        android:fontFamily="@font/gochi_hand_regular"
         android:textColor="@color/black"
-        android:textSize="@dimen/caption7"
+        android:textSize="@dimen/subhead3"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/groupMembersTextView"
-        app:layout_constraintStart_toStartOf="@id/groupMembersTextView"
+        app:layout_constraintBottom_toBottomOf="@id/memberOneImageView"
+        app:layout_constraintStart_toEndOf="@id/memberTwoImageView"
+        app:layout_constraintTop_toTopOf="@id/memberOneImageView"
         tools:text="Group One" />
 
     <TextView
         android:id="@+id/groupMembersTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/row02"
         android:layout_marginEnd="@dimen/row04"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/arrowImageView"
-        app:layout_constraintStart_toEndOf="@id/memberTwoImageView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/groupNameTextView"
+        app:layout_constraintTop_toBottomOf="@id/groupNameTextView"
         tools:text="Aaron King, Aaron Spears, AC, Jared Davis, &amp; 8 others" />
 
     <ImageView

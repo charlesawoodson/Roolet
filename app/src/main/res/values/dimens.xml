@@ -18,6 +18,8 @@
     <dimen name="caption8">18sp</dimen>
     <dimen name="caption9">19sp</dimen>
     <dimen name="caption10">20sp</dimen>
+    <dimen name="caption11">21sp</dimen>
+    <dimen name="caption12">22sp</dimen>
 
     <!-- Row Dimension - Base * 0.80-->
     <dimen name="row00025">1dp</dimen>

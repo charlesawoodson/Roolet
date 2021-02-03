@@ -13,11 +13,11 @@
 
     <ImageView
         android:id="@+id/groupMemberImageView"
-        android:layout_width="@dimen/row05"
-        android:layout_height="@dimen/row05"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
         android:layout_margin="@dimen/row01"
         android:contentDescription="@null"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@drawable/roolet_icon_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,13 +28,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/row01"
         android:layout_marginEnd="@dimen/row01"
+        android:fontFamily="@font/gochi_hand_regular"
         android:textColor="@color/black_80"
-        android:textSize="@dimen/caption8"
+        android:textSize="@dimen/caption12"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/numberTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/groupMemberImageView"
         app:layout_constraintTop_toTopOf="@+id/groupMemberImageView"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="Aaron King" />
 
     <TextView

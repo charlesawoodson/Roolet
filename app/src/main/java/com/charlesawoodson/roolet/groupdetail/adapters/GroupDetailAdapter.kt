@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.model.GroupMember
-import com.charlesawoodson.roolet.db.Group
-import kotlinx.android.synthetic.main.list_item_group_detail.view.*
+import kotlinx.android.synthetic.main.list_item_group_member.view.*
 
 class GroupDetailAdapter :
     RecyclerView.Adapter<GroupDetailAdapter.ViewHolder>() {
@@ -22,7 +21,7 @@ class GroupDetailAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_group_detail, parent, false)
+                .inflate(R.layout.list_item_group_member, parent, false)
 
         return ViewHolder(view)
     }
@@ -35,12 +34,12 @@ class GroupDetailAdapter :
             Glide.with(holder.context).load(item.photoUri).circleCrop()
                 .into(holder.groupMemberImageView)
         } else {
-            holder.groupMemberImageView.setImageDrawable(
+            Glide.with(holder.context).load(
                 ContextCompat.getDrawable(
                     holder.context,
-                    R.mipmap.ic_launcher_round
+                    R.drawable.roolet_icon_grey
                 )
-            )
+            ).circleCrop().into(holder.groupMemberImageView)
         }
 
         holder.nameTextView.text = item.name

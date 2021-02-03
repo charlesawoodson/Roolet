@@ -22,6 +22,7 @@
         android:layout_height="@dimen/row04"
         android:layout_marginStart="@dimen/row02"
         android:contentDescription="@null"
+        android:padding="@dimen/row005"
         android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
         app:layout_constraintBottom_toBottomOf="@id/groupNameTextView"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,9 +33,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/row02"
-        android:fontFamily="serif"
+        android:fontFamily="@font/chunk_five_ex"
         android:textColor="@color/white"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption12"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/editGroupImageView"
         app:layout_constraintStart_toEndOf="@id/backImageView"
@@ -50,7 +51,7 @@
         android:padding="@dimen/row01"
         android:text="@string/edit"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/caption10"
+        android:textSize="@dimen/caption7"
         app:layout_constraintBottom_toBottomOf="@id/groupNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/groupNameTextView" />
@@ -65,6 +66,6 @@
         android:fadingEdgeLength="@dimen/row005"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/groupNameTextView"
-        tools:listitem="@layout/list_item_group_detail" />
+        tools:listitem="@layout/list_item_group_member" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
