@@ -62,7 +62,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                     Manifest.permission.READ_CONTACTS
                 ) -> {
                     Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, GroupArgs(Group(1, "Group Args", emptyList())))
+                        putExtra(KEY_ARG, GroupArgs())
                         startActivity(this)
                     }
                 }
@@ -92,7 +92,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
                     Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, GroupArgs(Group(1, "Group Args", emptyList())))
+                        putExtra(KEY_ARG, GroupArgs())
                         startActivity(this)
                     }
                 } else {

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
+import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
@@ -78,6 +79,10 @@ class GroupsDetailFragment : BaseFragment() {
                     )
                 }
             }
+        }
+
+        backImageView.setOnClickListener {
+            requireActivity().finish()
         }
     }
 

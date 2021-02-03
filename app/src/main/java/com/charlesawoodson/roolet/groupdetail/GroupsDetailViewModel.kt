@@ -16,11 +16,12 @@ class GroupsDetailViewModel(
 ) : BaseMvRxViewModel<GroupDetailState>(initialState, true) {
 
     init {
-        dbHelper.getGroupById(groupId).subscribe { group ->
-            setState {
-                copy(group = Success(group))
-            }
-        }.disposeOnClear()
+        dbHelper.getGroupById(groupId)
+            .subscribe { group ->
+                setState {
+                    copy(group = Success(group))
+                }
+            }.disposeOnClear()
     }
 
     companion object : MvRxViewModelFactory<GroupsDetailViewModel, GroupDetailState> {

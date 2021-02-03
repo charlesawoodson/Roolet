@@ -79,6 +79,9 @@ interface GroupDao {
 
     @Query("SELECT * FROM 'group' WHERE groupId=:id")
     fun getGroupById(id: Long): Observable<Group>
+
+    @Query("DELETE FROM 'group' WHERE groupId=:id")
+    suspend fun deleteGroupById(id: Long)
 }
 
 interface DatabaseHelper {
@@ -91,6 +94,7 @@ interface DatabaseHelper {
     suspend fun insertGroup(group: Group)
     suspend fun deleteGroup(group: Group)
     fun getGroupById(id: Long): Observable<Group>
+    suspend fun deleteGroupById(id: Long)
 }
 
 class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper {
@@ -111,4 +115,6 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
     override suspend fun deleteGroup(group: Group) = appDatabase.groupDao().deleteGroup(group)
 
     override fun getGroupById(id: Long): Observable<Group> = appDatabase.groupDao().getGroupById(id)
+
+    override suspend fun deleteGroupById(id: Long) = appDatabase.groupDao().deleteGroupById(id)
 }

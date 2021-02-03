@@ -1,6 +1,7 @@
 package com.charlesawoodson.roolet.contacts
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,13 +23,14 @@ import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter
 import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
 import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneDialogFragment
 import com.charlesawoodson.roolet.contacts.model.Contact
+import com.charlesawoodson.roolet.groups.GroupsActivity
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
-    private val arguments: GroupArgs by args()
+    private val arguments: GroupArgs by args() // todo: create NullableArgs<T> wrapper
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
@@ -78,6 +80,9 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         setupRecyclerViews()
         setOnClickListeners()
         setEditTextListeners()
+
+        backImageView.isVisible = arguments.group == null
+        deleteGroupTextView.isGone = arguments.group == null
     }
 
     private fun setEditTextListeners() {
@@ -101,43 +106,21 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
     private fun setOnClickListeners() {
         saveGroupTextView.setOnClickListener {
-            withState(viewModel) { state ->
-                when {
-                    state.groupMembers.isEmpty() -> {
-                        // todo: show empty group error
-                        Toast.makeText(
-                            requireContext(),
-                            "No members have been added",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    groupTitleEditText.text.isBlank() -> {
-                        // todo: show dialog title error
-                        Toast.makeText(requireContext(), "Title is blank", Toast.LENGTH_LONG).show()
-                    }
-                    else -> {
-                        val group = if (arguments.group?.groupId != null) {
-                            Group(
-                                groupId = arguments.group?.groupId!!,
-                                title = groupTitleEditText.text.toString(),
-                                members = state.groupMembers
-                            )
-                        } else {
-                            Group(
-                                title = groupTitleEditText.text.toString(),
-                                members = state.groupMembers
-                            )
-                        }
-                        viewModel.saveGroup(group)
-                        requireActivity().finish()
-
-                    }
-                }
-            }
+            saveGroup()
         }
 
         backImageView.setOnClickListener {
             requireActivity().finish()
+        }
+
+        deleteGroupTextView.setOnClickListener {
+            arguments.group?.groupId?.also {
+                viewModel.deleteGroup(it)
+            }
+            Intent(requireContext(), GroupsActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(this)
+            }
         }
 
         cancelTextView.setOnClickListener {
@@ -164,6 +147,42 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         }
     }
 
+    private fun saveGroup() {
+        withState(viewModel) { state ->
+            when {
+                state.groupMembers.isEmpty() -> {
+                    // todo: show empty group error
+                    Toast.makeText(
+                        requireContext(),
+                        "No members have been added",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                groupTitleEditText.text.isBlank() -> {
+                    // todo: show dialog title error
+                    Toast.makeText(requireContext(), "Title is blank", Toast.LENGTH_LONG).show()
+                }
+                else -> {
+                    val group = if (arguments.group?.groupId != null) {
+                        Group(
+                            groupId = arguments.group?.groupId!!,
+                            title = groupTitleEditText.text.toString(),
+                            members = state.groupMembers
+                        )
+                    } else {
+                        Group(
+                            title = groupTitleEditText.text.toString(),
+                            members = state.groupMembers
+                        )
+                    }
+                    viewModel.saveGroup(group)
+                    requireActivity().finish()
+                }
+            }
+        }
+    }
+
+    // todo: fix edit text focus
     private fun closeKeyboard(hasFocus: Boolean) {
         if (!hasFocus) {
             val imm =

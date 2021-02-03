@@ -138,6 +138,12 @@ class ContactsViewModel(
         }
     }
 
+    fun deleteGroup(groupId: Long) {
+        viewModelScope.launch {
+            dbHelper.deleteGroupById(groupId)
+        }
+    }
+
     companion object : MvRxViewModelFactory<ContactsViewModel, ContactsState> {
         @JvmStatic
         override fun create(
