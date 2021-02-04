@@ -7,28 +7,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.MvRx
 import com.airbnb.mvrx.args
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
-import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter
 import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
+import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
+import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogFragment
 import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneDialogFragment
 import com.charlesawoodson.roolet.contacts.model.Contact
+import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groups.GroupsActivity
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
-import kotlinx.android.synthetic.main.view_error_dialog.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
@@ -123,11 +123,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             filterEditText.clearFocus()
             closeKeyboard()
         }
-
-        // todo: Error View
-        errorView.setOnClickListener {
-            errorView.isInvisible = true
-        }
     }
 
     private fun setupRecyclerViews() {
@@ -152,14 +147,10 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         withState(viewModel) { state ->
             when {
                 state.groupMembers.isEmpty() -> {
-                    errorTitle.setText(R.string.no_party_name)
-                    errorDescription.setText(R.string.add_name_for_party)
-                    errorView.isVisible = true
+                    showErrorDialog(R.string.no_members, R.string.add_people_to_party)
                 }
                 groupTitleEditText.text.isBlank() -> {
-                    errorTitle.setText(R.string.no_members)
-                    errorDescription.setText(R.string.add_people_to_party)
-                    errorView.isVisible = true
+                    showErrorDialog(R.string.no_party_name, R.string.add_name_for_party)
                 }
                 else -> {
                     val group = if (arguments.group?.groupId != null) {
@@ -179,6 +170,14 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                 }
             }
         }
+    }
+
+    private fun showErrorDialog(titleRes: Int, descriptionRes: Int) {
+        ErrorDialogFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(MvRx.KEY_ARG, ErrorDialogArgs(titleRes, descriptionRes))
+            }
+        }.show(childFragmentManager, null)
     }
 
     private fun closeKeyboard() {

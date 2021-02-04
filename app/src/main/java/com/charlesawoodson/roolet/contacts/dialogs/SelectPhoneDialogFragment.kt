@@ -12,14 +12,14 @@ import android.widget.Button
 import androidx.appcompat.content.res.AppCompatResources
 import com.airbnb.mvrx.parentFragmentViewModel
 import com.charlesawoodson.roolet.R
-import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.contacts.ContactsState
 import com.charlesawoodson.roolet.contacts.ContactsViewModel
+import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.contacts.model.Phone
 import com.charlesawoodson.roolet.mvrx.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_select_phone_dialog.*
 
-class SelectPhoneDialogFragment() : BaseDialogFragment(gravity = Gravity.BOTTOM) {
+class SelectPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM) {
 
     private val viewModel: ContactsViewModel by parentFragmentViewModel()
 

@@ -13,7 +13,8 @@ open class BaseDialogFragment(
     override val mvrxViewId: String = "",
     width: Float = 1.0F,
     gravity: Int = Gravity.CENTER,
-    private val roundEdges: Boolean = true
+    private val roundEdges: Boolean = true,
+    private val bgDrawableRes: Int = R.drawable.rounded_bg_white
 ) : DialogFragment(), MvRxView {
 
     /**
@@ -39,7 +40,7 @@ open class BaseDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (roundEdges) {
-            dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_bg_white)
+            dialog?.window?.setBackgroundDrawableResource(bgDrawableRes)
         }
     }
 
