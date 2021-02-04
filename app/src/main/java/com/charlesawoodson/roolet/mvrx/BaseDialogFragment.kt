@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.annotation.CallSuper
 import androidx.fragment.app.DialogFragment
 import com.airbnb.mvrx.MvRxView
@@ -40,7 +39,7 @@ open class BaseDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (roundEdges) {
-            dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_bg)
+            dialog?.window?.setBackgroundDrawableResource(R.drawable.rounded_bg_white)
         }
     }
 

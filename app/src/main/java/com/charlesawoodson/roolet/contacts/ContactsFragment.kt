@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,7 @@ import com.charlesawoodson.roolet.groups.GroupsActivity
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
+import kotlinx.android.synthetic.main.view_error_dialog.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
@@ -121,6 +123,11 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             filterEditText.clearFocus()
             closeKeyboard()
         }
+
+        // todo: Error View
+        errorView.setOnClickListener {
+            errorView.isInvisible = true
+        }
     }
 
     private fun setupRecyclerViews() {
@@ -145,16 +152,14 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         withState(viewModel) { state ->
             when {
                 state.groupMembers.isEmpty() -> {
-                    // todo: show empty group error
-                    Toast.makeText(
-                        requireContext(),
-                        "No members have been added",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    errorTitle.setText(R.string.no_party_name)
+                    errorDescription.setText(R.string.add_name_for_party)
+                    errorView.isVisible = true
                 }
                 groupTitleEditText.text.isBlank() -> {
-                    // todo: show dialog title error
-                    Toast.makeText(requireContext(), "Title is blank", Toast.LENGTH_LONG).show()
+                    errorTitle.setText(R.string.no_members)
+                    errorDescription.setText(R.string.add_people_to_party)
+                    errorView.isVisible = true
                 }
                 else -> {
                     val group = if (arguments.group?.groupId != null) {

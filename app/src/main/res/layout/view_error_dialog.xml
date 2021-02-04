@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/errorContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/row01"
+    android:background="@drawable/rounded_bg_red"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/errorIcon"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
+        android:layout_marginStart="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_baseline_cancel_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/errorTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row01"
+        android:layout_marginTop="@dimen/row02"
+        android:layout_marginEnd="@dimen/row04"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption8"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/errorDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/errorIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/no_party_name" />
+
+    <TextView
+        android:id="@+id/errorDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row01"
+        android:layout_marginEnd="@dimen/row04"
+        android:layout_marginBottom="@dimen/row02"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/errorIcon"
+        app:layout_constraintTop_toBottomOf="@+id/errorTitle"
+        tools:text="@string/add_people_to_party" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

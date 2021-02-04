@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/row005"
     android:layout_marginEnd="@dimen/row01"
     android:layout_marginBottom="@dimen/row005"
-    android:background="@drawable/rounded_bg"
+    android:background="@drawable/rounded_bg_white"
     android:elevation="@dimen/row01"
     android:foreground="?attr/selectableItemBackground">
 
