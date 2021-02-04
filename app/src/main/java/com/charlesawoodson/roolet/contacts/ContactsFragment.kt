@@ -32,8 +32,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
     private val arguments: GroupArgs by args() // todo: create NullableArgs<T> wrapper
 
-
-
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
     private val dialog by lazy(mode = LazyThreadSafetyMode.NONE) {
@@ -81,30 +79,23 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
         setupRecyclerViews()
         setOnClickListeners()
-        setEditTextListeners()
 
-        backImageView.isVisible = arguments.group == null
-        deleteGroupTextView.isGone = arguments.group == null
-    }
-
-    private fun setEditTextListeners() {
         filterEditText.doOnTextChanged { text, _, _, _ ->
             viewModel.setFilter(text.toString())
         }
 
         filterEditText.setOnFocusChangeListener { _, hasFocus ->
             cancelTextView.isVisible = hasFocus
-            closeKeyboard(hasFocus)
         }
 
-        groupTitleEditText.setOnFocusChangeListener { v, hasFocus ->
-            closeKeyboard(hasFocus)
-        }
+        backImageView.isVisible = arguments.group == null
+        deleteGroupTextView.isGone = arguments.group == null
 
         arguments.group?.title?.also { title ->
             groupTitleEditText.setText(title.toSpannable())
         }
     }
+
 
     private fun setOnClickListeners() {
         saveGroupTextView.setOnClickListener {
@@ -128,6 +119,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         cancelTextView.setOnClickListener {
             filterEditText.text.clear()
             filterEditText.clearFocus()
+            closeKeyboard()
         }
     }
 
@@ -184,13 +176,10 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         }
     }
 
-    // todo: fix edit text focus
-    private fun closeKeyboard(hasFocus: Boolean) {
-        if (!hasFocus) {
-            val imm =
-                activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            imm?.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
-        }
+    private fun closeKeyboard() {
+        val imm =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 
 }

@@ -44,7 +44,7 @@ class ContactsViewModel(
         fetchContacts()
 
         selectSubscribe(ContactsState::allContacts, ContactsState::filter) { contacts, filter ->
-            val filteredContacts = contacts.filter { it.data.name.contains(filter) }
+            val filteredContacts = contacts.filter { it.data.name.contains(filter, true) }
 
             val groupMembers = contacts
                 .filter { it.selected && it.data.selectedPhone != null }

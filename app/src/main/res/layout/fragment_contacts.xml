@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/off_white_smoke"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".LauncherActivity">
+    tools:context=".contacts.ContactsActivity">
 
     <View
         android:id="@+id/view"
@@ -77,10 +75,10 @@
         android:layout_marginEnd="@dimen/row03"
         android:autofillHints="@null"
         android:background="@drawable/white_borders_off_white_bg_rounded"
-        android:focusable="true"
         android:gravity="center"
         android:hint="@string/party_name"
-        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:inputType="textCapWords"
         android:paddingStart="@dimen/row01"
         android:paddingEnd="@dimen/row01"
         android:textColor="@color/white"
@@ -126,9 +124,9 @@
             android:background="@drawable/rounded_bg"
             android:drawableStart="@drawable/ic_baseline_search_24"
             android:drawablePadding="@dimen/row01"
-            android:focusable="true"
             android:hint="@string/search_contacts"
-            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:inputType="textCapWords"
             android:paddingStart="@dimen/row01"
             android:paddingEnd="@dimen/row01"
             android:textColor="@color/black"
