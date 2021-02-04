@@ -32,6 +32,8 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
     private val arguments: GroupArgs by args() // todo: create NullableArgs<T> wrapper
 
+
+
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
     private val dialog by lazy(mode = LazyThreadSafetyMode.NONE) {
