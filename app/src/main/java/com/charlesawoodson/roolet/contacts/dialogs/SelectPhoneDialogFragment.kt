@@ -54,11 +54,10 @@ class SelectPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM) {
 
         val button = Button(context)
 
-        // todo: fix button style
         button.text = "$type: ${phone.number}"
+        button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         button.backgroundTintList =
             AppCompatResources.getColorStateList(requireContext(), R.color.phone_button_color_state)
-        button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
 
         button.setOnClickListener {
             viewModel.setSelectedPhone(arguments.contactId, phone)

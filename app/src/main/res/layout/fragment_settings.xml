@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/toolbarBackground"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row07"
+        android:background="@color/roolet_blue"
+        android:elevation="@dimen/row01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/backImageView"
+        android:layout_width="@dimen/row07"
+        android:layout_height="@dimen/row07"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@null"
+        android:elevation="@dimen/row01"
+        android:padding="@dimen/row02"
+        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/settingsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/row01"
+        android:fontFamily="@font/chunk_five_ex"
+        android:text="@string/settings"
+        android:textColor="@color/white"
+        android:textSize="@dimen/caption12"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/toolbarBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

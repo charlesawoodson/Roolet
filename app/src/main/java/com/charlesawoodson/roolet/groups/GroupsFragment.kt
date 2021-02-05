@@ -20,6 +20,7 @@ import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.mvrx.BaseFragment
+import com.charlesawoodson.roolet.settings.SettingsActivity
 import kotlinx.android.synthetic.main.fragment_groups.*
 
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
@@ -67,7 +68,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                         startActivity(this)
                     }
                 }
-
+                // todo:
                 /*shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
 
                 }*/
@@ -77,6 +78,12 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                         PERMISSIONS_REQUEST_READ_CONTACTS
                     )
                 }
+            }
+        }
+
+        settingsImageView.setOnClickListener {
+            Intent(context, SettingsActivity::class.java).apply {
+                startActivity(this)
             }
         }
     }

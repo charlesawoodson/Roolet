@@ -19,4 +19,5 @@
     <string name="add_name_for_party">Add a name for this party homie</string>
     <string name="no_members">No Members</string>
     <string name="add_people_to_party">Add people to this party by picking them in the table</string>
+    <string name="settings">Settings</string>
 </resources>
