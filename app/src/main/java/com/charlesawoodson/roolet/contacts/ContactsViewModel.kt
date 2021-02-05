@@ -8,6 +8,7 @@ import com.airbnb.mvrx.MvRxViewModelFactory
 import com.airbnb.mvrx.ViewModelContext
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.contacts.model.GroupMember
+import com.charlesawoodson.roolet.contacts.model.Phone
 import com.charlesawoodson.roolet.contacts.repository.ContactsRepository
 import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.db.DatabaseHelperImpl
@@ -27,7 +28,6 @@ data class ContactsState(
     val allContacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
     val groupMembers: List<GroupMember> = emptyList(),
-    val dialogContact: Contact? = null,
     val filter: String = ""
 ) : MvRxState
 
@@ -48,15 +48,15 @@ class ContactsViewModel(
 
             val groupMembers = contacts
                 .filter { it.selected && it.data.selectedPhone != null }
-                .map { it.data }
                 .map {
+                    val contact = it.data
                     GroupMember(
-                        it.id,
-                        it.name,
-                        it.photoUri,
-                        it.selectedPhone?.number!!,
-                        it.selectedPhone?.type!!
-                    )
+                        contact.id,
+                        contact.name,
+                        contact.photoUri,
+                        contact.selectedPhone?.number!!,
+                        contact.selectedPhone?.type!!
+                    ) // todo: add phone to group member?
                 }
 
             setState {
@@ -100,35 +100,26 @@ class ContactsViewModel(
         }
     }
 
-    fun toggleSelection(item: SelectableListItem<Contact>) {
+    fun toggleSelection(contactId: Long) {
         setState {
             copy(
-                allContacts = allContacts.updateItems({ it.data.id == item.data.id }, {
-                    copy(
-                        selected = !selected,
-                        data = data.copy(selectedPhone = item.data.phones[0])
-                    )
+                allContacts = allContacts.updateItems({ it.data.id == contactId }, {
+                    copy(selected = !selected)
                 })
             )
         }
     }
 
-    fun addSelectedContact(contact: Contact) {
+    fun setSelectedPhone(contactId: Long, selectedPhone: Phone) {
         setState {
             copy(
-                allContacts = allContacts.updateItems({ it.data.id == contact.id }, {
+                allContacts = allContacts.updateItems({ it.data.id == contactId }, {
                     copy(
                         selected = true,
-                        data = data.copy(selectedPhone = contact.selectedPhone)
+                        data = data.copy(selectedPhone = selectedPhone)
                     )
                 })
             )
-        }
-    }
-
-    fun setDialogContact(contact: Contact?) {
-        setState {
-            copy(dialogContact = contact)
         }
     }
 

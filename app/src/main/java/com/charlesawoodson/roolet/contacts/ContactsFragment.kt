@@ -22,6 +22,7 @@ import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter
 import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
 import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
 import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogFragment
+import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneArgs
 import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneDialogFragment
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.db.Group
@@ -36,34 +37,27 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 
-    private val dialog by lazy(mode = LazyThreadSafetyMode.NONE) {
-        SelectPhoneDialogFragment()
-    }
-
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
         ContactsAdapter(this)
     }
 
-    private val selectedContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) {
+    private val groupMembersAdapter by lazy(mode = LazyThreadSafetyMode.NONE) {
         GroupMembersAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.selectSubscribe(ContactsState::filteredContacts) { contacts ->
-            progressSpinner.isGone = true
-            adapter.updateData(contacts)
+        viewModel.selectSubscribe(ContactsState::allContacts) { allContacts ->
+            progressSpinner.isVisible = allContacts.isEmpty()
         }
 
-        viewModel.selectSubscribe(ContactsState::groupMembers) { selectedContacts ->
-            selectedContactsAdapter.updateData(selectedContacts)
+        viewModel.selectSubscribe(ContactsState::filteredContacts) { filteredContacts ->
+            adapter.updateData(filteredContacts)
         }
 
-        viewModel.selectSubscribe(ContactsState::dialogContact) { selectedContact ->
-            if (!dialog.isVisible && selectedContact != null) {
-                dialog.show(childFragmentManager, "SelectPhoneFragment")
-            }
+        viewModel.selectSubscribe(ContactsState::groupMembers) { groupMembers ->
+            groupMembersAdapter.updateData(groupMembers)
         }
 
     }
@@ -132,15 +126,26 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
         groupMembersRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        groupMembersRecyclerView.adapter = selectedContactsAdapter
+        groupMembersRecyclerView.adapter = groupMembersAdapter
     }
 
     override fun toggleSelection(contact: SelectableListItem<Contact>) {
         if (contact.data.phones.size == 1 || contact.selected) {
-            viewModel.toggleSelection(contact)
+            viewModel.toggleSelection(contact.data.id)
         } else {
-            viewModel.setDialogContact(contact.data)
+            showPhoneSelectionDialog(contact)
         }
+    }
+
+    private fun showPhoneSelectionDialog(contact: SelectableListItem<Contact>) {
+        SelectPhoneDialogFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(
+                    MvRx.KEY_ARG,
+                    SelectPhoneArgs(contact.data.id, contact.data.phones)
+                )
+            }
+        }.show(childFragmentManager, null)
     }
 
     private fun saveGroup() {
@@ -153,6 +158,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                     showErrorDialog(R.string.no_party_name, R.string.add_name_for_party)
                 }
                 else -> {
+                    // todo: improve this
                     val group = if (arguments.group?.groupId != null) {
                         Group(
                             groupId = arguments.group?.groupId!!,

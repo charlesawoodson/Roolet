@@ -52,8 +52,9 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         groupsRecyclerView.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         groupsRecyclerView.adapter = adapter
+
 
         addGroupImageView.setOnClickListener {
             when (PackageManager.PERMISSION_GRANTED) {

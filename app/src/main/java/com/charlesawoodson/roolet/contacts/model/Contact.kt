@@ -11,7 +11,8 @@ data class Contact(
     var selectedPhone: Phone? = null
 )
 
-data class Phone(val number: String, val type: Int)
+@Parcelize
+data class Phone(val number: String, val type: Int) : Parcelable
 
 @Parcelize
 data class GroupMember(
