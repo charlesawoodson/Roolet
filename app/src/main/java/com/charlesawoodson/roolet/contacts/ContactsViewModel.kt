@@ -35,10 +35,10 @@ class ContactsViewModel(
     initialState: ContactsState,
     private val contactsRepository: ContactsRepository,
     private val dbHelper: DatabaseHelperImpl,
-    groupArgs: GroupArgs?
+    groupArgs: GroupArgs
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
-    private val selectedIds = groupArgs?.group?.members?.map { it.id }?.toSet()
+    private val selectedIds = groupArgs.group?.members?.map { it.id }?.toSet() ?: emptySet()
 
     init {
         fetchContacts()
@@ -87,7 +87,7 @@ class ContactsViewModel(
                     .map {
                         SelectableListItem(
                             it,
-                            selected = selectedIds?.contains(it.id) == true
+                            selected = selectedIds.contains(it.id)
                         )
                     })
             }

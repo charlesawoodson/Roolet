@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import com.airbnb.mvrx.args
 import com.airbnb.mvrx.parentFragmentViewModel
 import com.charlesawoodson.roolet.R
@@ -53,9 +54,11 @@ class SelectPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM) {
 
         val button = Button(context)
 
+        // todo: fix button style
         button.text = "$type: ${phone.number}"
         button.backgroundTintList =
             AppCompatResources.getColorStateList(requireContext(), R.color.phone_button_color_state)
+        button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
 
         button.setOnClickListener {
             viewModel.setSelectedPhone(arguments.contactId, phone)
