@@ -4,43 +4,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/toolbarBackground"
+    <FrameLayout
+        android:id="@+id/toolbarContainer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/row07"
         android:background="@color/roolet_blue"
         android:elevation="@dimen/row01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/backImageView"
-        android:layout_width="@dimen/row07"
-        android:layout_height="@dimen/row07"
-        android:layout_gravity="center"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="@null"
-        android:elevation="@dimen/row01"
-        android:padding="@dimen/row02"
-        android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="@dimen/row07"
+            android:layout_height="@dimen/row07"
+            android:layout_gravity="start|center"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@null"
+            android:padding="@dimen/row02"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            android:id="@+id/settingsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/chunk_five_ex"
+            android:text="@string/settings"
+            android:textColor="@color/white"
+            android:textSize="@dimen/caption12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarContainer" />
+
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/settingsTextView"
+        android:id="@+id/callTypeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/row01"
+        android:layout_marginStart="@dimen/row02"
+        android:layout_marginTop="@dimen/row04"
         android:fontFamily="@font/chunk_five_ex"
-        android:text="@string/settings"
-        android:textColor="@color/white"
-        android:textSize="@dimen/caption12"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/toolbarBackground"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/call_type"
+        android:textAllCaps="true"
+        android:textSize="@dimen/caption8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer" />
+
+    <LinearLayout
+        android:id="@+id/audioTypeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/callTypeTextView">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/audioTypeRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/row02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/callTypeTextView" />
+
+        <TextView
+            android:id="@+id/audioTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/audio"
+            android:textSize="@dimen/caption10"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/audioTypeRadioButton"
+            app:layout_constraintStart_toEndOf="@id/audioTypeRadioButton"
+            app:layout_constraintTop_toTopOf="@id/audioTypeRadioButton" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/videoTypeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/audioTypeContainer">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/videoTypeRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/row02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/audioTypeRadioButton" />
+
+        <TextView
+            android:id="@+id/videoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/video"
+            android:textSize="@dimen/caption10"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
+            app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
+            app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/callSettingsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row02"
+        android:layout_marginTop="@dimen/row04"
+        android:fontFamily="@font/chunk_five_ex"
+        android:text="@string/call_settings"
+        android:textAllCaps="true"
+        android:textSize="@dimen/caption8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/videoTypeContainer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
