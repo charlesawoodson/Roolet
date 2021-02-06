@@ -70,4 +70,17 @@
         app:layout_constraintTop_toBottomOf="@id/groupNameTextView"
         tools:listitem="@layout/list_item_group_member" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/callActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_phone_24"
+        app:tint="@color/white_100"
+        android:backgroundTint="@color/turquoise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/row02"
+        android:layout_marginEnd="@dimen/row02"
+        android:contentDescription="@null" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         groupsRecyclerView.layoutManager =
-            LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false) // todo: reverse layout start at top of page
         groupsRecyclerView.adapter = adapter
 
 

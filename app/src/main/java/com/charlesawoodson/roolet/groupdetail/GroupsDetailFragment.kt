@@ -3,6 +3,7 @@ package com.charlesawoodson.roolet.groupdetail
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,10 @@ class GroupsDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        callActionButton.setOnClickListener {
+            viewModel.callGroupMember()
+        }
 
         groupsDetailRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
