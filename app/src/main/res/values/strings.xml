@@ -41,4 +41,9 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="allow_repeat_calls">Allow Repeat Calls</string>
+    <string name="game_mode">Game Mode</string>
+    <string name="general">General</string>
+    <string name="report_a_problem">Report a Problem</string>
+    <string name="about_us">About Us</string>
 </resources>

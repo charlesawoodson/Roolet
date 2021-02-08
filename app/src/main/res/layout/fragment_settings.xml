@@ -56,6 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/row01"
+        android:background="@color/off_white_smoke"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/callTypeTextView">
 
@@ -85,6 +86,7 @@
         android:id="@+id/videoTypeContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/off_white_smoke"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/audioTypeContainer">
 
@@ -123,5 +125,135 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/videoTypeContainer" />
 
+    <LinearLayout
+        android:id="@+id/repeatCallsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row01"
+        android:background="@color/off_white_smoke"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/callSettingsTextView">
+
+        <TextView
+            android:id="@+id/repeatCallsTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/row08"
+            android:layout_weight="1"
+            android:text="@string/allow_repeat_calls"
+            android:textSize="@dimen/caption10"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
+            app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
+            app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/repeatCallsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/row02"
+            android:layout_marginEnd="@dimen/row02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/audioTypeRadioButton" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gameModesContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/off_white_smoke"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/repeatCallsContainer">
+
+        <TextView
+            android:id="@+id/gameModesTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/row08"
+            android:layout_weight="1"
+            android:text="@string/game_mode"
+            android:textSize="@dimen/caption10"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
+            app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
+            app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/gameModesSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/row02"
+            android:layout_marginEnd="@dimen/row02"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/audioTypeRadioButton" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/generalSettingsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row02"
+        android:layout_marginTop="@dimen/row04"
+        android:fontFamily="@font/chunk_five_ex"
+        android:text="@string/general"
+        android:textAllCaps="true"
+        android:textSize="@dimen/caption8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gameModesContainer" />
+
+    <LinearLayout
+        android:id="@+id/reportProblemContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row06"
+        android:layout_marginTop="@dimen/row01"
+        android:background="@color/off_white_smoke"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/generalSettingsTextView">
+
+        <TextView
+            android:id="@+id/reportProblemTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/row08"
+            android:layout_weight="1"
+            android:text="@string/report_a_problem"
+            android:textSize="@dimen/caption10"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
+            app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
+            app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row06"
+        android:background="@color/off_white_smoke"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reportProblemContainer">
+
+        <TextView
+            android:id="@+id/aboutUsTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/row08"
+            android:layout_weight="1"
+            android:text="@string/about_us"
+            android:textSize="@dimen/caption10"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
+            app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
+            app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
