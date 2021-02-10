@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/audio"
-            android:textSize="@dimen/caption10"
+            android:textSize="@dimen/caption3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/audioTypeRadioButton"
             app:layout_constraintStart_toEndOf="@id/audioTypeRadioButton"
@@ -87,6 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/off_white_smoke"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/audioTypeContainer">
 
@@ -104,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/video"
-            android:textSize="@dimen/caption10"
+            android:textSize="@dimen/caption3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
             app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
@@ -121,7 +122,7 @@
         android:fontFamily="@font/chunk_five_ex"
         android:text="@string/call_settings"
         android:textAllCaps="true"
-        android:textSize="@dimen/caption8"
+        android:textSize="@dimen/caption3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/videoTypeContainer" />
 
@@ -142,7 +143,7 @@
             android:layout_marginStart="@dimen/row08"
             android:layout_weight="1"
             android:text="@string/allow_repeat_calls"
-            android:textSize="@dimen/caption10"
+            android:textSize="@dimen/caption3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
             app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
@@ -176,7 +177,7 @@
             android:layout_marginStart="@dimen/row08"
             android:layout_weight="1"
             android:text="@string/game_mode"
-            android:textSize="@dimen/caption10"
+            android:textSize="@dimen/caption3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
             app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
@@ -203,7 +204,7 @@
         android:fontFamily="@font/chunk_five_ex"
         android:text="@string/general"
         android:textAllCaps="true"
-        android:textSize="@dimen/caption8"
+        android:textSize="@dimen/caption3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/gameModesContainer" />
 
@@ -224,11 +225,20 @@
             android:layout_marginStart="@dimen/row08"
             android:layout_weight="1"
             android:text="@string/report_a_problem"
-            android:textSize="@dimen/caption10"
+            android:textSize="@dimen/caption3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
             app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
             app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+        <ImageView
+            android:id="@+id/reportProblemArrowImageView"
+            android:layout_width="@dimen/row04"
+            android:layout_height="@dimen/row04"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:padding="@dimen/row01"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
 
@@ -248,11 +258,20 @@
             android:layout_marginStart="@dimen/row08"
             android:layout_weight="1"
             android:text="@string/about_us"
-            android:textSize="@dimen/caption10"
+            android:textSize="@dimen/caption3"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/videoTypeRadioButton"
             app:layout_constraintStart_toEndOf="@id/videoTypeRadioButton"
             app:layout_constraintTop_toTopOf="@id/videoTypeRadioButton" />
+
+        <ImageView
+            android:id="@+id/aboutUsArrowImageView"
+            android:layout_width="@dimen/row04"
+            android:layout_height="@dimen/row04"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:padding="@dimen/row01"
+            android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
 
     </LinearLayout>
 
