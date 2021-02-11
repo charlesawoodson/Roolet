@@ -25,6 +25,10 @@ import kotlinx.android.synthetic.main.fragment_group_detail.*
 
 class GroupsDetailFragment : BaseFragment() {
 
+    private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
+        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
+    }
+
     private val viewModel: GroupsDetailViewModel by fragmentViewModel()
 
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
@@ -53,7 +57,9 @@ class GroupsDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         callActionButton.setOnClickListener {
-            viewModel.callGroupMember()
+            viewModel.callGroupMember(
+                sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
+            )
         }
 
         groupsDetailRecyclerView.layoutManager =

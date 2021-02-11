@@ -31,4 +31,7 @@
     <string name="general">General</string>
     <string name="report_a_problem">Report a Problem</string>
     <string name="about_us">About Us</string>
+
+    <string name="repeat_calls_pref">repeat-calls-pref</string>
+    <string name="game_mode_pref">game-mode-pref</string>
 </resources>

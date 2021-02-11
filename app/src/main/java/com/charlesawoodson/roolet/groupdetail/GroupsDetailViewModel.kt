@@ -32,7 +32,7 @@ class GroupsDetailViewModel(
             }.disposeOnClear()
     }
 
-    fun callGroupMember() {
+    fun callGroupMember(allowRepeatCalls: Boolean) {
         if (set.size > 0) {
             set.apply {
                 val number = random()
@@ -40,8 +40,9 @@ class GroupsDetailViewModel(
                     data = Uri.parse("tel:$number")
                     startActivity(context, this, null)
                 }
-                // todo: if allow repeat number
-                remove(number)
+                if (!allowRepeatCalls) {
+                    remove(number)
+                }
             }
         }
     }
