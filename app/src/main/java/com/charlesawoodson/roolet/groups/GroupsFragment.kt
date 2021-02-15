@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_groups.*
 
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
+
     private val viewModel: GroupsViewModel by fragmentViewModel()
 
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {

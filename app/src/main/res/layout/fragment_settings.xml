@@ -216,6 +216,7 @@
         android:layout_height="@dimen/row06"
         android:layout_marginTop="@dimen/row01"
         android:background="@color/off_white_smoke"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/generalSettingsTextView">
 

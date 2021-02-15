@@ -1,5 +1,6 @@
 package com.charlesawoodson.roolet.settings
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.mvrx.BaseFragment
+import com.charlesawoodson.roolet.settings.aboutus.AboutUsActivity
 import kotlinx.android.synthetic.main.fragment_contacts.backImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -48,6 +50,11 @@ class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceCha
             editor.apply()
         }
 
+        aboutUsContainer.setOnClickListener {
+            Intent(context, AboutUsActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
 
         backImageView.setOnClickListener {
             requireActivity().finish()

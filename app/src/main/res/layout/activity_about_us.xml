@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:id="@+id/toolbarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row07"
+        android:background="@color/roolet_blue"
+        android:elevation="@dimen/row01"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="@dimen/row07"
+            android:layout_height="@dimen/row07"
+            android:layout_gravity="start|center"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@null"
+            android:padding="@dimen/row02"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            android:id="@+id/settingsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/chunk_five_ex"
+            android:text="@string/about_us"
+            android:textColor="@color/white"
+            android:textSize="@dimen/caption12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarContainer" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

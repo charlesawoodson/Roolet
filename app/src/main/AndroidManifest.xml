@@ -13,15 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Roolet">
         <activity
+            android:name=".settings.aboutus.SettingsActivity2"
+            android:label="@string/title_activity_settings2"></activity>
+        <activity
             android:name=".settings.SettingsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".contacts.ContactsActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".groupdetail.GroupDetailActivity"
             android:configChanges="orientation"
