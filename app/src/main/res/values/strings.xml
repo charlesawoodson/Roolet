@@ -37,6 +37,7 @@
     <string name="title_activity_settings2">SettingsActivity2</string>
 
     <string name="groups_tutorial_seen_pref">groups-tutorial-seen-pref</string>
+    <string name="group_detail_tutorial_seen_pref">group-detail-tutorial-seen-pref</string>
     <string name="contacts_tutorial_seen_pref">contacts-tutorial-seen-pref</string>
 
     <!-- Preference Titles -->
@@ -50,8 +51,7 @@
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="skip">Skip</string>
     <string name="roolet_uses_contacts_message">Roolet uses your contacts to build parties of people to call from</string>
@@ -61,6 +61,8 @@
     <string name="de_squaw_members">Terrance Diggs, Jorge Arnedo, Charlotte Kennedy and 8 Others</string>
     <string name="tap_here_to_create_a_new_party">Tap here to create a new party</string>
     <string name="tap_anywhere_to_dismiss">Tap anywhere to dismiss</string>
-    <string name="edit_the_name_of_party_here">Edit the name of this /n party here</string>
-    <string name="select_party_members_from_your_contacts">Select party members from \n your contacts</string>
+    <string name="edit_the_name_of_party_here">Edit the name of this party here</string>
+    <string name="select_party_members_from_your_contacts">Select party members from your contacts</string>
+    <string name="tap_here_to_edit_your_party">Tap here to edit your party</string>
+    <string name="tap_this_button_to_call_a_random_member_from_this_party">Tap this button to call a random member from this party</string>
 </resources>

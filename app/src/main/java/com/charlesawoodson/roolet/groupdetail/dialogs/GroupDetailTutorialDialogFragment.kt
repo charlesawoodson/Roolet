@@ -1,4 +1,4 @@
-package com.charlesawoodson.roolet.contacts.dialogs
+package com.charlesawoodson.roolet.groupdetail.dialogs
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,13 +11,10 @@ import androidx.fragment.app.DialogFragment
 import com.charlesawoodson.roolet.R
 import kotlinx.android.synthetic.main.view_groups_tutorial.*
 
-class ContactsTutorialDialogFragment : DialogFragment() {
+class GroupDetailTutorialDialogFragment : DialogFragment() {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().getSharedPreferences(
-            getString(R.string.preference_file_key),
-            0
-        )
+        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +27,7 @@ class ContactsTutorialDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.view_contacts_tutorial, container, false)
+        return inflater.inflate(R.layout.view_group_detail_tutorial, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +45,7 @@ class ContactsTutorialDialogFragment : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         val editor = sharedPreferences.edit()
-        editor.putBoolean(getString(R.string.contacts_tutorial_seen_pref), true)
+        editor.putBoolean(getString(R.string.group_detail_tutorial_seen_pref), true)
         editor.apply()
     }
 

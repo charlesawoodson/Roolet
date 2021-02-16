@@ -16,7 +16,9 @@ import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
+import com.charlesawoodson.roolet.contacts.dialogs.ContactsTutorialDialogFragment
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
+import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
 
@@ -91,6 +93,10 @@ class GroupsDetailFragment : BaseFragment() {
 
         backImageView.setOnClickListener {
             requireActivity().finish()
+        }
+
+        if (!sharedPreferences.getBoolean(getString(R.string.group_detail_tutorial_seen_pref), false)) {
+            GroupDetailTutorialDialogFragment().show(childFragmentManager, null)
         }
     }
 

@@ -32,10 +32,7 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().applicationContext.getSharedPreferences(
-            getString(R.string.preference_file_key),
-            0
-        )
+        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
     }
 
     private val arguments: EditGroupArgs by args() // todo: create NullableArgs<T> wrapper

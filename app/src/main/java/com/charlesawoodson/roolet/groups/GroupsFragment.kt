@@ -28,10 +28,7 @@ import kotlinx.android.synthetic.main.fragment_groups.instructionsTextView
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().applicationContext.getSharedPreferences(
-            getString(R.string.preference_file_key),
-            0
-        )
+        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
     }
 
     private val viewModel: GroupsViewModel by fragmentViewModel()
