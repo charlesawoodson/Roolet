@@ -65,6 +65,8 @@
         android:fadingEdge="vertical"
         android:fadingEdgeLength="@dimen/row005"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         tools:itemCount="2"
         tools:listitem="@layout/list_item_group" />

@@ -59,11 +59,8 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         groupsRecyclerView.layoutManager =
-            LinearLayoutManager(
-                context,
-                RecyclerView.VERTICAL,
-                false
-            ) // todo: reverse layout start at top of page
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
         groupsRecyclerView.adapter = adapter
 
 
@@ -137,7 +134,6 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         Intent(context, GroupDetailActivity::class.java).apply {
             putExtra(KEY_ARG, group.groupId)
             startActivity(this)
-            // todo: return id instead of entire group
         }
     }
 
