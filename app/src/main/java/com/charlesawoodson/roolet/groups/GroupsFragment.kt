@@ -108,10 +108,11 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
             }
         }
 
-
+        titleTextView.setOnClickListener {
+            GroupsTutorialDialogFragment().show(childFragmentManager, null)
+        }
 
         if (!sharedPreferences.getBoolean(getString(R.string.groups_tutorial_seen_pref), false)) {
-            // todo: probs pass dismiss listener
             GroupsTutorialDialogFragment().show(childFragmentManager, null)
         }
     }
