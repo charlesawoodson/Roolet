@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import com.charlesawoodson.roolet.settings.aboutus.AboutUsActivity
+import com.charlesawoodson.roolet.settings.aboutus.SettingsActivity2
 import kotlinx.android.synthetic.main.fragment_contacts.backImageView
 import kotlinx.android.synthetic.main.fragment_settings.*
 
-class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsFragment : BaseFragment() {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
         requireActivity().applicationContext.getSharedPreferences(
@@ -51,44 +52,13 @@ class SettingsFragment : BaseFragment(), SharedPreferences.OnSharedPreferenceCha
         }
 
         aboutUsContainer.setOnClickListener {
-            Intent(context, AboutUsActivity::class.java).apply {
+            Intent(context, SettingsActivity2::class.java).apply {
                 startActivity(this)
             }
         }
 
         backImageView.setOnClickListener {
             requireActivity().finish()
-        }
-    }
-
-    /**
-     * Called when a shared preference is changed, added, or removed. This
-     * may be called even if a preference is set to its existing value.
-     *
-     *
-     * This callback will be run on your main thread.
-     *
-     *
-     * *Note: This callback will not be triggered when preferences are cleared via
-     * [Editor.clear].*
-     *
-     * @param sharedPreferences The [SharedPreferences] that received
-     * the change.
-     * @param key The key of the preference that was changed, added, or
-     * removed.
-     */
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (sharedPreferences != null && key != null) {
-            when (key) {
-                getString(R.string.repeat_calls_pref) -> {
-                    repeatCallsSwitch.isSelected =
-                        sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-                }
-                getString(R.string.game_mode_pref) -> {
-                    gameModesSwitch.isSelected =
-                        sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)
-                }
-            }
         }
     }
 

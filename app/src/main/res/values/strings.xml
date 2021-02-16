@@ -65,4 +65,5 @@
     <string name="select_party_members_from_your_contacts">Select party members from your contacts</string>
     <string name="tap_here_to_edit_your_party">Tap here to edit your party</string>
     <string name="tap_this_button_to_call_a_random_member_from_this_party">Tap this button to call a random member from this party</string>
+    <string name="game_mode_summary">Roolet will give you a rule/challenge to follow for each call</string>
 </resources>
