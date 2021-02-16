@@ -20,18 +20,23 @@ import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter
 import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
-import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
-import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogFragment
-import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneArgs
-import com.charlesawoodson.roolet.contacts.dialogs.SelectPhoneDialogFragment
+import com.charlesawoodson.roolet.contacts.dialogs.*
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groups.GroupsActivity
+import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
+
+    private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
+        requireActivity().applicationContext.getSharedPreferences(
+            getString(R.string.preference_file_key),
+            0
+        )
+    }
 
     private val arguments: EditGroupArgs by args() // todo: create NullableArgs<T> wrapper
 
@@ -89,6 +94,10 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
         arguments.group?.title?.also { title ->
             groupTitleEditText.setText(title.toSpannable())
+        }
+
+        if (!sharedPreferences.getBoolean(getString(R.string.contacts_tutorial_seen_pref), false)) {
+            ContactsTutorialDialogFragment().show(childFragmentManager, null)
         }
     }
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialogContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_20">
+
+    <ImageView
+        android:id="@+id/tutorialArrowImageView"
+        android:layout_width="@dimen/row08"
+        android:layout_height="@dimen/row08"
+        android:layout_marginTop="@dimen/row06"
+        android:layout_marginEnd="@dimen/row10"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_baseline_north_east_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/instructionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row01"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:padding="@dimen/row01"
+        android:text="@string/edit_the_name_of_party_here"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/subhead3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tutorialArrowImageView" />
+
+    <ImageView
+        android:id="@+id/secondaryTutorialArrowImageView"
+        android:layout_width="@dimen/row10"
+        android:layout_height="@dimen/row10"
+        android:layout_marginStart="@dimen/row14"
+        android:layout_marginBottom="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_baseline_north_west_24"
+        app:layout_constraintBottom_toTopOf="@id/secondaryInstructionsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/secondaryInstructionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/row04"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:gravity="center"
+        android:text="@string/select_party_members_from_your_contacts"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/subhead3"
+        app:layout_constraintBottom_toTopOf="@id/tapAnywhereTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tapAnywhereTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/row01"
+        android:layout_marginTop="@dimen/row01"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:padding="@dimen/row01"
+        android:text="@string/tap_anywhere_to_dismiss"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
