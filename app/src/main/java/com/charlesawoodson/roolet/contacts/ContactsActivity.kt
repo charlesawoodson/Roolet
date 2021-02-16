@@ -12,7 +12,7 @@ class ContactsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
 
-        val groupData = intent.getParcelableExtra<GroupArgs>(MvRx.KEY_ARG)
+        val groupData = intent.getParcelableExtra<EditGroupArgs>(MvRx.KEY_ARG)
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {

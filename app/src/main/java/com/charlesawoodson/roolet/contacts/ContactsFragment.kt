@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
-    private val arguments: GroupArgs by args() // todo: create NullableArgs<T> wrapper
+    private val arguments: EditGroupArgs by args() // todo: create NullableArgs<T> wrapper
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 

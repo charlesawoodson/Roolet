@@ -20,7 +20,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @Parcelize
-data class GroupArgs(
+data class EditGroupArgs(
     val group: Group? = null
 ) : Parcelable
 
@@ -35,10 +35,10 @@ class ContactsViewModel(
     initialState: ContactsState,
     private val contactsRepository: ContactsRepository,
     private val dbHelper: DatabaseHelperImpl,
-    groupArgs: GroupArgs
+    editGroupArgs: EditGroupArgs
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
-    private val selectedIds = groupArgs.group?.members?.map { it.id }?.toSet() ?: emptySet()
+    private val selectedIds = editGroupArgs.group?.members?.map { it.id }?.toSet() ?: emptySet()
 
     init {
         fetchContacts()
@@ -144,7 +144,7 @@ class ContactsViewModel(
             val dbHelper =
                 DatabaseHelperImpl(DatabaseBuilder.getInstance(viewModelContext.activity.applicationContext))
 
-            val group = viewModelContext.args<GroupArgs>()
+            val group = viewModelContext.args<EditGroupArgs>()
 
             return ContactsViewModel(
                 state,

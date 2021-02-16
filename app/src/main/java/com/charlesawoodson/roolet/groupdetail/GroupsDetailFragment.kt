@@ -3,7 +3,6 @@ package com.charlesawoodson.roolet.groupdetail
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +11,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
-import com.airbnb.mvrx.Uninitialized
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
-import com.charlesawoodson.roolet.contacts.GroupArgs
-import com.charlesawoodson.roolet.db.Group
+import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
@@ -74,7 +71,7 @@ class GroupsDetailFragment : BaseFragment() {
                 ) -> {
                     withState(viewModel) { state ->
                         Intent(context, ContactsActivity::class.java).apply {
-                            putExtra(KEY_ARG, GroupArgs(state.group()))
+                            putExtra(KEY_ARG, EditGroupArgs(state.group()))
                             startActivity(this)
                         }
                     }
@@ -110,7 +107,7 @@ class GroupsDetailFragment : BaseFragment() {
                 ) {
                     withState(viewModel) { state ->
                         Intent(context, ContactsActivity::class.java).apply {
-                            putExtra(KEY_ARG, GroupArgs(state.group()))
+                            putExtra(KEY_ARG, EditGroupArgs(state.group()))
                             startActivity(this)
                         }
                     }

@@ -9,17 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.mvrx.MvRx
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
-import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
-import com.charlesawoodson.roolet.contacts.GroupArgs
-import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
+import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
@@ -28,10 +24,6 @@ import com.charlesawoodson.roolet.mvrx.BaseFragment
 import com.charlesawoodson.roolet.settings.SettingsActivity
 import kotlinx.android.synthetic.main.fragment_groups.*
 import kotlinx.android.synthetic.main.fragment_groups.instructionsTextView
-import kotlinx.android.synthetic.main.list_item_group.view.*
-import kotlinx.android.synthetic.main.list_item_group_member.view.*
-import kotlinx.android.synthetic.main.view_groups_tutorial.*
-import kotlinx.android.synthetic.main.view_groups_tutorial.view.*
 
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
@@ -85,7 +77,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                     Manifest.permission.READ_CONTACTS
                 ) -> {
                     Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, GroupArgs())
+                        putExtra(KEY_ARG, EditGroupArgs())
                         startActivity(this)
                     }
                 }
@@ -108,10 +100,6 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
             }
         }
 
-        titleTextView.setOnClickListener {
-            GroupsTutorialDialogFragment().show(childFragmentManager, null)
-        }
-
         if (!sharedPreferences.getBoolean(getString(R.string.groups_tutorial_seen_pref), false)) {
             GroupsTutorialDialogFragment().show(childFragmentManager, null)
         }
@@ -129,7 +117,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                             grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 ) {
                     Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, GroupArgs())
+                        putExtra(KEY_ARG, EditGroupArgs())
                         startActivity(this)
                     }
                 } else {
