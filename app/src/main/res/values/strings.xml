@@ -34,8 +34,9 @@
 
     <string name="repeat_calls_pref">repeat-calls-pref</string>
     <string name="game_mode_pref">game-mode-pref</string>
-    <string name="about_us">About Us</string>
     <string name="title_activity_settings2">SettingsActivity2</string>
+
+    <string name="groups_tutorial_seen_pref">groups-tutorial-seen-pref</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -51,4 +52,11 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="skip">Skip</string>
+    <string name="roolet_uses_contacts_message">Roolet uses your contacts to build parties of people to call from</string>
+    <string name="after_building_party_message">After building a party, you can go to that party\'s page by selecting it in this table</string>
+    <string name="tap_anywhere_to_continue">Tap anywhere to continue</string>
+    <string name="de_squaw">De Squaw</string>
+    <string name="de_squaw_members"><![CDATA[Terrance Diggs, Jorge Arnedo, Charlotte Kennedy & 8 Others]]></string>
+    <string name="tap_here_to_create_a_new_party">Tap here to create a new party</string>
 </resources>

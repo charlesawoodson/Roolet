@@ -17,6 +17,8 @@ class GroupsViewModel(
     dbHelper: DatabaseHelperImpl
 ) : BaseMvRxViewModel<GroupsState>(initialState, true) {
 
+    var tutorialPageCount = 0
+
     init {
         dbHelper.getGroups().subscribe { groups ->
             setState {

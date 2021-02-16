@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="@id/memberOneImageView"
         app:layout_constraintStart_toEndOf="@id/memberTwoImageView"
         app:layout_constraintTop_toTopOf="@id/memberOneImageView"
-        tools:text="Group One" />
+        android:text="@string/de_squaw" />
 
     <TextView
         android:id="@+id/groupMembersTextView"
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toStartOf="@id/arrowImageView"
         app:layout_constraintStart_toStartOf="@id/groupNameTextView"
         app:layout_constraintTop_toBottomOf="@id/groupNameTextView"
-        tools:text="Aaron King, Aaron Spears, AC, Jared Davis, &amp; 8 others" />
+        android:text="@string/de_squaw_members" />
 
     <ImageView
         android:id="@+id/arrowImageView"

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/black_70">
+
+    <TextView
+        android:id="@+id/skipTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/row01"
+        android:layout_marginTop="@dimen/row01"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:padding="@dimen/row01"
+        android:text="@string/skip"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/tutorialArrowImageView"
+        android:layout_width="@dimen/row08"
+        android:layout_height="@dimen/row08"
+        android:layout_marginEnd="@dimen/row06"
+        android:layout_marginBottom="@dimen/row02"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_baseline_north_east_24"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/tapHereCreatePartyTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tapHereCreatePartyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/row08"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:text="@string/tap_here_to_create_a_new_party"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/subhead3"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/instructionsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/instructionsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row04"
+        android:layout_marginEnd="@dimen/row04"
+        android:layout_marginBottom="@dimen/row12"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:gravity="center"
+        android:text="@string/roolet_uses_contacts_message"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/subhead3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/groupItem"
+        layout="@layout/list_item_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row04"
+        android:layout_marginTop="@dimen/row04"
+        android:layout_marginEnd="@dimen/row04"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instructionsTextView"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tapAnywhereTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/row01"
+        android:layout_marginTop="@dimen/row01"
+        android:fontFamily="@font/gochi_hand_regular"
+        android:padding="@dimen/row01"
+        android:text="@string/tap_anywhere_to_continue"
+        android:textColor="@color/white_100"
+        android:textSize="@dimen/caption12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
