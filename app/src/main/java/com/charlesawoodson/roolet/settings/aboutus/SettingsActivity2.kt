@@ -11,6 +11,8 @@ class SettingsActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
+        overridePendingTransition(R.anim.enter_slide_up, R.anim.exit_slide_down)
+
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -29,5 +31,10 @@ class SettingsActivity2 : AppCompatActivity() {
             super.onViewCreated(view, savedInstanceState)
 
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.enter_slide_up, R.anim.exit_slide_down)
     }
 }
