@@ -41,7 +41,7 @@ class GroupsTutorialDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // requireDialog().window?.setWindowAnimations(R.style.DialogAnimation)
+        // requireDialog().window?.setWindowAnimations(R.style.DialogAnimationSlideUp)
         setupTutorialScreen()
     }
 

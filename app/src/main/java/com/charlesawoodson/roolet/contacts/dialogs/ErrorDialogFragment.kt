@@ -16,6 +16,11 @@ class ErrorDialogFragment : BaseDialogFragment(gravity = Gravity.TOP, width = .9
 
     private val arguments: ErrorDialogArgs by args()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_Fullscreen)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,7 +31,7 @@ class ErrorDialogFragment : BaseDialogFragment(gravity = Gravity.TOP, width = .9
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireDialog().window?.setWindowAnimations(R.style.DialogAnimation)
         errorTitle.setText(arguments.titleRes)
         errorDescription.setText(arguments.descriptionRes)
     }

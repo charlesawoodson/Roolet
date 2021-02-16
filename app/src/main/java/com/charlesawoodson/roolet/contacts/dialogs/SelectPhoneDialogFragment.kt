@@ -36,6 +36,7 @@ class SelectPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireDialog().window?.setWindowAnimations(R.style.DialogAnimation)
 
         buttonsLinearLayout.removeAllViews()
         arguments.phones.forEach { phone ->
