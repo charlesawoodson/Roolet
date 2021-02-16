@@ -13,22 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Roolet">
         <activity
-            android:name=".settings.aboutus.SettingsActivity2"
-            android:label="@string/title_activity_settings2" />
-        <activity
             android:name=".settings.SettingsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".contacts.ContactsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".groupdetail.GroupDetailActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".settings.aboutus.AboutUsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity

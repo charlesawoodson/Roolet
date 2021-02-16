@@ -1,23 +1,37 @@
 package com.charlesawoodson.roolet.settings
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
-import com.airbnb.mvrx.MvRx
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.get
 import com.charlesawoodson.roolet.R
 
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_container)
-        if (savedInstanceState == null) {
+        setContentView(R.layout.settings_activity)
+        overridePendingTransition(R.anim.enter_slide_up, R.anim.exit_slide_down)
 
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<SettingsFragment>(R.id.container)
-            }
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.settings, SettingsFragment())
+                .commit()
         }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.enter_slide_up, R.anim.exit_slide_down)
     }
 }

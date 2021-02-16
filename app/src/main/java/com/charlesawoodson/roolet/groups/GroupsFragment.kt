@@ -23,7 +23,6 @@ import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import com.charlesawoodson.roolet.settings.SettingsActivity
-import com.charlesawoodson.roolet.settings.aboutus.SettingsActivity2
 import kotlinx.android.synthetic.main.fragment_groups.*
 import kotlinx.android.synthetic.main.fragment_groups.instructionsTextView
 
@@ -91,7 +90,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         }
 
         settingsImageView.setOnClickListener {
-            Intent(context, SettingsActivity2::class.java).apply {
+            Intent(context, SettingsActivity::class.java).apply {
                 startActivity(this)
             }
         }
