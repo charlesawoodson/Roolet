@@ -4,11 +4,11 @@
     <PreferenceCategory app:title="@string/call_settings">
 
         <SwitchPreferenceCompat
-            app:key="allowRepeat"
+            app:key="@string/repeat_calls_pref"
             app:title="@string/allow_repeat_calls" />
 
         <SwitchPreferenceCompat
-            app:key="gameModes"
+            app:key="@string/game_mode_pref"
             app:summary="@string/game_mode_summary"
             app:title="@string/game_mode" />
 

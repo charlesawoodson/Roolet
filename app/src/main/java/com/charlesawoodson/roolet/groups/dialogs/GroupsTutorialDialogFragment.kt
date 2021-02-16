@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
+import androidx.preference.PreferenceManager
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import kotlinx.android.synthetic.main.list_item_group.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.view_groups_tutorial.*
 class GroupsTutorialDialogFragment : DialogFragment() {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
+        PreferenceManager.getDefaultSharedPreferences(requireActivity())
     }
 
     var tutorialPageCount = 0

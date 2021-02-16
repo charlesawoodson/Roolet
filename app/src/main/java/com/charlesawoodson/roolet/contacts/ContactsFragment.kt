@@ -11,6 +11,7 @@ import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx
@@ -32,10 +33,10 @@ import kotlinx.android.synthetic.main.fragment_contacts.*
 class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickListener {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
+        PreferenceManager.getDefaultSharedPreferences(requireActivity())
     }
 
-    private val arguments: EditGroupArgs by args() // todo: create NullableArgs<T> wrapper
+    private val arguments: EditGroupArgs by args()
 
     private val viewModel: ContactsViewModel by fragmentViewModel()
 

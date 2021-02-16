@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_group_detail.*
 class GroupsDetailFragment : BaseFragment() {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
+        PreferenceManager.getDefaultSharedPreferences(requireActivity())
     }
 
     private val viewModel: GroupsDetailViewModel by fragmentViewModel()
@@ -95,7 +96,11 @@ class GroupsDetailFragment : BaseFragment() {
             requireActivity().finish()
         }
 
-        if (!sharedPreferences.getBoolean(getString(R.string.group_detail_tutorial_seen_pref), false)) {
+        if (!sharedPreferences.getBoolean(
+                getString(R.string.group_detail_tutorial_seen_pref),
+                false
+            )
+        ) {
             GroupDetailTutorialDialogFragment().show(childFragmentManager, null)
         }
     }

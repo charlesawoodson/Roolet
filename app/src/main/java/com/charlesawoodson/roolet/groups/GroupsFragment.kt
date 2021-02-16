@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_groups.instructionsTextView
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
-        requireActivity().getSharedPreferences(getString(R.string.preference_file_key), 0)
+        PreferenceManager.getDefaultSharedPreferences(requireActivity())
     }
 
     private val viewModel: GroupsViewModel by fragmentViewModel()

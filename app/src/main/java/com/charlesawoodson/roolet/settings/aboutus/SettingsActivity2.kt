@@ -4,7 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
+import androidx.preference.get
 import com.charlesawoodson.roolet.R
+import java.util.prefs.PreferenceChangeEvent
+import java.util.prefs.PreferenceChangeListener
 
 class SettingsActivity2 : AppCompatActivity() {
 
@@ -30,7 +35,14 @@ class SettingsActivity2 : AppCompatActivity() {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
+            val sharedPreferences = preferenceManager.sharedPreferences
+
+            val preference = preferenceScreen.get<SwitchPreferenceCompat>("allowRepeat")
+
+//            val allowRepeatCalls = sharedPreferences.getBoolean("allowRepeat", false)
+//            val gameMode = sharedPreferences.getBoolean("gameMode", false)
         }
+
     }
 
     override fun finish() {
