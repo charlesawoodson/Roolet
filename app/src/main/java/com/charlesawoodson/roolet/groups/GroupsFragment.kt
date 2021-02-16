@@ -12,15 +12,18 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.MvRx
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.GroupArgs
+import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
+import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import com.charlesawoodson.roolet.settings.SettingsActivity
 import kotlinx.android.synthetic.main.fragment_groups.*
@@ -38,6 +41,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
             0
         )
     }
+
     private val viewModel: GroupsViewModel by fragmentViewModel()
 
     private val adapter by lazy(mode = LazyThreadSafetyMode.NONE) {
@@ -107,60 +111,9 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
 
         if (!sharedPreferences.getBoolean(getString(R.string.groups_tutorial_seen_pref), false)) {
-            setupTutorialScreen()
+            // todo: probs pass dismiss listener
+            GroupsTutorialDialogFragment().show(childFragmentManager, null)
         }
-    }
-
-    private fun setupTutorialScreen() {
-
-        tutorialView.isVisible = true
-
-        Glide.with(requireContext())
-            .load(ContextCompat.getDrawable(requireContext(), R.drawable.roolet_icon_grey))
-            .circleCrop()
-            .into(tutorialView.groupItem.memberOneImageView)
-
-        Glide.with(requireContext())
-            .load(ContextCompat.getDrawable(requireContext(), R.drawable.roolet_icon_grey))
-            .circleCrop()
-            .into(tutorialView.groupItem.memberTwoImageView)
-
-        Glide.with(requireContext())
-            .load(ContextCompat.getDrawable(requireContext(), R.drawable.roolet_icon_grey))
-            .circleCrop()
-            .into(tutorialView.groupItem.memberThreeImageView)
-
-        tutorialView.setOnClickListener {
-            when (viewModel.tutorialPageCount) {
-                0 -> {
-                    tutorialView.groupItem.isVisible = true
-                    tutorialView.instructionsTextView.setText(R.string.after_building_party_message)
-                    viewModel.tutorialPageCount++
-                }
-                1 -> {
-                    tutorialView.tapHereCreatePartyTextView.isVisible = true
-                    tutorialView.tutorialArrowImageView.isVisible = true
-                    tutorialView.skipTextView.isGone = true
-                    viewModel.tutorialPageCount++
-                }
-                else -> {
-                    tutorialView.isGone = true
-                    // todo : finish this
-//                  val editor = sharedPreferences.edit()
-//                  editor.putBoolean(getString(R.string.groups_tutorial_seen_pref), true)
-//                  editor.apply()
-                }
-            }
-        }
-
-        skipTextView.setOnClickListener {
-            tutorialView.isGone = true
-            // todo : finish this
-//            val editor = sharedPreferences.edit()
-//            editor.putBoolean(getString(R.string.groups_tutorial_seen_pref), true)
-//            editor.apply()
-        }
-
     }
 
     override fun onRequestPermissionsResult(

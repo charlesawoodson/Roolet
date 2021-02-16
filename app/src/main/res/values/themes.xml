@@ -9,4 +9,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.App.Dialog.Fullscreen" parent="Theme.MaterialComponents.Dialog">
+        <!--   Tells the dialog don’t use wrap_content for its size, instead, it will use match_parent which is the size of the screen.     -->
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

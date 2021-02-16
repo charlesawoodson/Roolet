@@ -57,6 +57,6 @@
     <string name="after_building_party_message">After building a party, you can go to that party\'s page by selecting it in this table</string>
     <string name="tap_anywhere_to_continue">Tap anywhere to continue</string>
     <string name="de_squaw">De Squaw</string>
-    <string name="de_squaw_members"><![CDATA[Terrance Diggs, Jorge Arnedo, Charlotte Kennedy & 8 Others]]></string>
+    <string name="de_squaw_members">Terrance Diggs, Jorge Arnedo, Charlotte Kennedy and 8 Others</string>
     <string name="tap_here_to_create_a_new_party">Tap here to create a new party</string>
 </resources>

@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialogContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/black_70">
+    android:background="@color/black_40">
 
     <TextView
         android:id="@+id/skipTextView"
@@ -71,9 +72,9 @@
         layout="@layout/list_item_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/row04"
+        android:layout_marginStart="@dimen/row02"
         android:layout_marginTop="@dimen/row04"
-        android:layout_marginEnd="@dimen/row04"
+        android:layout_marginEnd="@dimen/row02"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
