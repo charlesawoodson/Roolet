@@ -19,8 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 data class GroupDetailState(
-    val group: Async<Group> = Uninitialized,
-    val rules: List<Rule> = emptyList()
+    val group: Async<Group> = Uninitialized
 ) : MvRxState
 
 class GroupsDetailViewModel(
@@ -32,6 +31,7 @@ class GroupsDetailViewModel(
 ) : BaseMvRxViewModel<GroupDetailState>(initialState, true) {
 
     private var set = mutableSetOf<String>()
+    private var rules = mutableSetOf<String>()
 
     init {
         dbHelper.getGroupById(selectedGroupId)
@@ -63,10 +63,19 @@ class GroupsDetailViewModel(
         }
     }
 
-    private fun handleResponse(rulesResponse: RulesResponse) {
-        setState {
-            copy(rules = rulesResponse.rules)
+    fun getRandomRule(): String {
+        if (rules.size > 0) {
+            rules.apply {
+                val rule = random()
+                remove(rule)
+                return rule
+            }
         }
+        return "No More Rules!"
+    }
+
+    private fun handleResponse(rulesResponse: RulesResponse) {
+        rules = rulesResponse.rules.map { it.ruleDescription }.toMutableSet()
     }
 
     private fun handleError(error: Throwable) {

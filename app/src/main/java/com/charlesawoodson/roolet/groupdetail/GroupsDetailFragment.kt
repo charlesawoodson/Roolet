@@ -58,10 +58,13 @@ class GroupsDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         callActionButton.setOnClickListener {
-            GameModeDialogFragment().show(childFragmentManager, null)
-//            viewModel.callGroupMember(
-//                sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-//            )
+            if (sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)) {
+                GameModeDialogFragment().show(childFragmentManager, null)
+            } else {
+                viewModel.callGroupMember(
+                    sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
+                )
+            }
         }
 
         groupsDetailRecyclerView.layoutManager =

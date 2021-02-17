@@ -21,11 +21,13 @@
 
     <TextView
         android:id="@+id/ruleDescriptionTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row02"
         android:layout_marginTop="@dimen/row0025"
+        android:layout_marginEnd="@dimen/row02"
+        android:gravity="center"
         android:text="Sing a song."
-        android:textColor="@color/black_60"
         android:textSize="@dimen/caption6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
