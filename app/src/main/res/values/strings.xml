@@ -58,4 +58,5 @@
 
     <string name="your_rule">Your Rule</string>
     <string name="got_it">Got it</string>
+    <string name="contact_permissions_needed">We don\'t have permission to get your contacts, open your phone settings to fix that :)</string>
 </resources>

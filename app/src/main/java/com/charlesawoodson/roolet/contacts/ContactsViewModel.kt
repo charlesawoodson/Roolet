@@ -1,11 +1,12 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Parcelable
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
-import com.airbnb.mvrx.BaseMvRxViewModel
-import com.airbnb.mvrx.MvRxState
-import com.airbnb.mvrx.MvRxViewModelFactory
-import com.airbnb.mvrx.ViewModelContext
+import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.contacts.model.GroupMember
 import com.charlesawoodson.roolet.contacts.model.Phone
@@ -28,7 +29,8 @@ data class ContactsState(
     val allContacts: List<SelectableListItem<Contact>> = emptyList(),
     val filteredContacts: List<SelectableListItem<Contact>> = emptyList(),
     val groupMembers: List<GroupMember> = emptyList(),
-    val filter: String = ""
+    val filter: String = "",
+    val hasContactsPermission: Boolean = false
 ) : MvRxState
 
 class ContactsViewModel(
@@ -41,7 +43,11 @@ class ContactsViewModel(
     private val selectedIds = editGroupArgs.group?.members?.map { it.id }?.toSet() ?: emptySet()
 
     init {
-        fetchContacts()
+        selectSubscribe(ContactsState::hasContactsPermission) { hasPermission ->
+            if (hasPermission) {
+                fetchContacts()
+            }
+        }
 
         selectSubscribe(ContactsState::allContacts, ContactsState::filter) { contacts, filter ->
             val filteredContacts = contacts.filter { it.data.name.contains(filter, true) }
@@ -65,6 +71,11 @@ class ContactsViewModel(
         }
     }
 
+    fun setHasContactsPermissions(hasPermissions: Boolean) {
+        setState {
+            copy(hasContactsPermission = hasPermissions)
+        }
+    }
 
     private fun fetchContacts() {
         viewModelScope.launch {

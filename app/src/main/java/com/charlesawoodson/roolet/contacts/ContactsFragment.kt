@@ -1,12 +1,15 @@
 package com.charlesawoodson.roolet.contacts
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -51,10 +54,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.selectSubscribe(ContactsState::allContacts) { allContacts ->
-            progressSpinner.isVisible = allContacts.isEmpty()
-        }
-
         viewModel.selectSubscribe(ContactsState::filteredContacts) { filteredContacts ->
             adapter.updateData(filteredContacts)
         }
@@ -63,6 +62,18 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
             groupMembersAdapter.updateData(groupMembers)
         }
 
+        viewModel.selectSubscribe(ContactsState::hasContactsPermission) { hasPermissions ->
+            instructionsTextView.isGone = hasPermissions
+            if (hasPermissions) {
+                if (!sharedPreferences.getBoolean(
+                        getString(R.string.contacts_tutorial_seen_pref),
+                        false
+                    )
+                ) {
+                    ContactsTutorialDialogFragment().show(childFragmentManager, null)
+                }
+            }
+        }
     }
 
     override fun onCreateView(
@@ -93,9 +104,20 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         arguments.group?.title?.also { title ->
             groupTitleEditText.setText(title.toSpannable())
         }
+    }
 
-        if (!sharedPreferences.getBoolean(getString(R.string.contacts_tutorial_seen_pref), false)) {
-            ContactsTutorialDialogFragment().show(childFragmentManager, null)
+    override fun onStart() {
+        super.onStart()
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_CONTACTS
+            ) -> {
+                viewModel.setHasContactsPermissions(true)
+            }
+            else -> {
+                viewModel.setHasContactsPermissions(false)
+            }
         }
     }
 
