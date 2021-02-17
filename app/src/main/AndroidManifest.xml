@@ -3,6 +3,7 @@
     package="com.charlesawoodson.roolet">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".RooletApplication"
@@ -15,7 +16,7 @@
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".contacts.ContactsActivity"
             android:configChanges="orientation"
