@@ -69,17 +69,17 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
         addGroupImageView.setOnClickListener {
             when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_CONTACTS) -> {
+                ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.READ_CONTACTS
+                ) -> {
                     Intent(context, ContactsActivity::class.java).apply {
                         putExtra(KEY_ARG, EditGroupArgs())
                         startActivity(this)
                     }
                 }
-                // todo:
-                /*shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
-
-                }*/
                 else -> {
+                    // todo: Non deprecated version
                     requestPermissions(
                         arrayOf(Manifest.permission.READ_CONTACTS),
                         PERMISSIONS_REQUEST_READ_CONTACTS
@@ -100,29 +100,13 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         when (requestCode) {
             PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, EditGroupArgs())
-                        startActivity(this)
-                    }
-                } else {
-                    // todo: show permission denied dialog | probs remove entire section
-                    Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, EditGroupArgs())
-                        startActivity(this)
-                    }
-                    // Explain to the user that the feature is unavailable because
-                    // the features requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
+                Intent(context, ContactsActivity::class.java).apply {
+                    putExtra(KEY_ARG, EditGroupArgs())
+                    startActivity(this)
                 }
                 return
             }

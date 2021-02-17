@@ -84,10 +84,6 @@ class GroupsDetailFragment : BaseFragment() {
                         }
                     }
                 }
-
-                /*shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
-
-                }*/
                 else -> {
                     requestPermissions(
                         arrayOf(Manifest.permission.READ_CONTACTS),
@@ -101,11 +97,7 @@ class GroupsDetailFragment : BaseFragment() {
             requireActivity().finish()
         }
 
-        if (!sharedPreferences.getBoolean(
-                getString(R.string.group_detail_tutorial_seen_pref),
-                false
-            )
-        ) {
+        if (!sharedPreferences.getBoolean(getString(R.string.group_detail_tutorial_seen_pref), false)) {
             GroupDetailTutorialDialogFragment().show(childFragmentManager, null)
         }
     }
@@ -118,21 +110,11 @@ class GroupsDetailFragment : BaseFragment() {
         when (requestCode) {
             PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 // If request is cancelled, the result arrays are empty.
-                if ((grantResults.isNotEmpty() &&
-                            grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                ) {
-                    withState(viewModel) { state ->
-                        Intent(context, ContactsActivity::class.java).apply {
-                            putExtra(KEY_ARG, EditGroupArgs(state.group()))
-                            startActivity(this)
-                        }
+                withState(viewModel) { state ->
+                    Intent(context, ContactsActivity::class.java).apply {
+                        putExtra(KEY_ARG, EditGroupArgs(state.group()))
+                        startActivity(this)
                     }
-                } else {
-                    // Explain to the user that the feature is unavailable because
-                    // the features requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
                 }
                 return
             }

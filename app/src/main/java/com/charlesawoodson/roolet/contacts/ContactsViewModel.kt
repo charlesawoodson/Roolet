@@ -43,6 +43,12 @@ class ContactsViewModel(
     private val selectedIds = editGroupArgs.group?.members?.map { it.id }?.toSet() ?: emptySet()
 
     init {
+        editGroupArgs.group?.members?.let {
+            setState {
+                copy(groupMembers = it)
+            }
+        }
+
         selectSubscribe(ContactsState::hasContactsPermission) { hasPermission ->
             if (hasPermission) {
                 fetchContacts()
@@ -50,23 +56,25 @@ class ContactsViewModel(
         }
 
         selectSubscribe(ContactsState::allContacts, ContactsState::filter) { contacts, filter ->
-            val filteredContacts = contacts.filter { it.data.name.contains(filter, true) }
+            if (contacts.isNotEmpty()) {
+                val filteredContacts = contacts.filter { it.data.name.contains(filter, true) }
 
-            val groupMembers = contacts
-                .filter { it.selected && it.data.selectedPhone != null }
-                .map {
-                    val contact = it.data
-                    GroupMember(
-                        contact.id,
-                        contact.name,
-                        contact.photoUri,
-                        contact.selectedPhone?.number!!,
-                        contact.selectedPhone?.type!!
-                    ) // todo: add phone to group member?
+                val groupMembers = contacts
+                    .filter { it.selected && it.data.selectedPhone != null }
+                    .map {
+                        val contact = it.data
+                        GroupMember(
+                            contact.id,
+                            contact.name,
+                            contact.photoUri,
+                            contact.selectedPhone?.number!!,
+                            contact.selectedPhone?.type!!
+                        ) // todo: add phone to group member?
+                    }
+
+                setState {
+                    copy(filteredContacts = filteredContacts, groupMembers = groupMembers)
                 }
-
-            setState {
-                copy(filteredContacts = filteredContacts, groupMembers = groupMembers)
             }
         }
     }
