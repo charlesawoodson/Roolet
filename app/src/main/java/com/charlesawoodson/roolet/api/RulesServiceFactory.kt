@@ -2,6 +2,7 @@ package com.charlesawoodson.roolet.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RulesServiceFactory {
@@ -28,6 +29,7 @@ object RulesServiceFactory {
     private fun retrofit(): Retrofit = Retrofit.Builder()
         // .client(rulesClient)
         .baseUrl(BASE_URL)
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 

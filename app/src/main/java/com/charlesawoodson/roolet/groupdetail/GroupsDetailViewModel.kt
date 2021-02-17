@@ -13,6 +13,7 @@ import com.charlesawoodson.roolet.api.RulesServiceFactory
 import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.db.DatabaseHelperImpl
 import com.charlesawoodson.roolet.db.Group
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,15 +42,10 @@ class GroupsDetailViewModel(
                 }
             }.disposeOnClear()
 
-        rulesService.getRules().enqueue(object : Callback<RulesResponse> {
-            override fun onResponse(call: Call<RulesResponse>, response: Response<RulesResponse>) {
-                Log.d("onResponse", response.toString())
-            }
-
-            override fun onFailure(call: Call<RulesResponse>, t: Throwable) {
-                Log.d("onFailure", call.toString())
-            }
-        })
+        rulesService.getRules()
+            .subscribeOn(Schedulers.io())
+            .subscribe(this::handleResponse, this::handleError)
+            .disposeOnClear()
     }
 
     fun callGroupMember(allowRepeatCalls: Boolean) {
@@ -65,6 +61,16 @@ class GroupsDetailViewModel(
                 }
             }
         }
+    }
+
+    private fun handleResponse(rulesResponse: RulesResponse) {
+        setState {
+            copy(rules = rulesResponse.rules)
+        }
+    }
+
+    private fun handleError(error: Throwable) {
+        Log.d("Error", error.toString())
     }
 
     companion object : MvRxViewModelFactory<GroupsDetailViewModel, GroupDetailState> {
