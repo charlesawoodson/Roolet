@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/row02">
+
+    <TextView
+        android:id="@+id/ruleTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row02"
+        android:text="@string/your_rule"
+        android:textColor="@color/black_80"
+        android:textSize="@dimen/caption10"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ruleDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/row0025"
+        android:text="Sing a song."
+        android:textColor="@color/black_60"
+        android:textSize="@dimen/caption6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ruleTitleTextView" />
+
+    <Button
+        android:id="@+id/gotItButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/row02"
+        android:layout_marginTop="@dimen/row01"
+        android:layout_marginEnd="@dimen/row02"
+        android:layout_marginBottom="@dimen/row02"
+        android:backgroundTint="@color/turquoise"
+        android:text="@string/got_it"
+        android:textAllCaps="false"
+        android:textSize="@dimen/caption8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ruleDescriptionTextView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

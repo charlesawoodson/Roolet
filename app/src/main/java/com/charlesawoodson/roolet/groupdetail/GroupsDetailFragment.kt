@@ -19,6 +19,7 @@ import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.contacts.dialogs.ContactsTutorialDialogFragment
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
+import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
@@ -57,9 +58,10 @@ class GroupsDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         callActionButton.setOnClickListener {
-            viewModel.callGroupMember(
-                sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-            )
+            GameModeDialogFragment().show(childFragmentManager, null)
+//            viewModel.callGroupMember(
+//                sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
+//            )
         }
 
         groupsDetailRecyclerView.layoutManager =
