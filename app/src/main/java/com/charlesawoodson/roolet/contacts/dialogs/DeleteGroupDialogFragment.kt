@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.preference.PreferenceManager
 import com.airbnb.mvrx.parentFragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsViewModel
-import com.charlesawoodson.roolet.groupdetail.GroupsDetailViewModel
 import com.charlesawoodson.roolet.groups.GroupsActivity
 import com.charlesawoodson.roolet.mvrx.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_delete_group_dialog.*
-import kotlinx.android.synthetic.main.fragment_game_mode_dialog.*
 
 class DeleteGroupDialogFragment : BaseDialogFragment(width = 0.8f, roundEdges = false) {
 

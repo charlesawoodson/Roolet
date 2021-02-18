@@ -2,7 +2,6 @@ package com.charlesawoodson.roolet.contacts
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,8 +26,6 @@ import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
 import com.charlesawoodson.roolet.contacts.dialogs.*
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.db.Group
-import com.charlesawoodson.roolet.groups.GroupsActivity
-import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*

@@ -1,12 +1,11 @@
 package com.charlesawoodson.roolet.contacts
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Parcelable
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
-import com.airbnb.mvrx.*
+import com.airbnb.mvrx.BaseMvRxViewModel
+import com.airbnb.mvrx.MvRxState
+import com.airbnb.mvrx.MvRxViewModelFactory
+import com.airbnb.mvrx.ViewModelContext
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.contacts.model.GroupMember
 import com.charlesawoodson.roolet.contacts.model.Phone
