@@ -41,6 +41,7 @@ class ContactsViewModel(
 ) : BaseMvRxViewModel<ContactsState>(initialState, true) {
 
     private val selectedIds = editGroupArgs.group?.members?.map { it.id }?.toSet() ?: emptySet()
+    val selectedGroupId = editGroupArgs.group?.groupId
 
     init {
         editGroupArgs.group?.members?.let {

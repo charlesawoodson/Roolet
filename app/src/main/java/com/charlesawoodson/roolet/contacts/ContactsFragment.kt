@@ -132,13 +132,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         }
 
         deleteGroupTextView.setOnClickListener {
-            arguments.group?.groupId?.also {
-                viewModel.deleteGroup(it)
-            }
-            Intent(requireContext(), GroupsActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(this)
-            }
+            DeleteGroupDialogFragment().show(childFragmentManager, null)
         }
 
         cancelTextView.setOnClickListener {
