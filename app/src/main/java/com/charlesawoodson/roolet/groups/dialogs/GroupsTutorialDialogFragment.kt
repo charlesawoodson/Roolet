@@ -71,12 +71,12 @@ class GroupsTutorialDialogFragment : DialogFragment() {
                 1 -> {
                     tapHereCreatePartyTextView.isVisible = true
                     tutorialArrowImageView.isVisible = true
+                    addGroupImageView.isVisible = true
                     skipTextView.isGone = true
                     tutorialPageCount++
                 }
                 else -> {
                     dismiss()
-//
                 }
             }
         }

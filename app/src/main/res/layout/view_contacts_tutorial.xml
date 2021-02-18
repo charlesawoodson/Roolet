@@ -6,30 +6,53 @@
     android:layout_height="match_parent"
     android:background="@color/black_20">
 
+    <EditText
+        android:id="@+id/groupTitleEditText"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/row04"
+        android:layout_marginStart="@dimen/row09"
+        android:layout_marginTop="@dimen/row02"
+        android:layout_marginEnd="@dimen/row10"
+        android:autofillHints="@null"
+        android:background="@drawable/white_borders_off_white_bg_rounded"
+        android:gravity="center"
+        android:hint="@string/party_name"
+        android:imeOptions="actionDone"
+        android:inputType="none"
+        android:paddingStart="@dimen/row01"
+        android:paddingEnd="@dimen/row01"
+        android:textColor="@color/white"
+        android:textSize="@dimen/caption7"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/tutorialArrowImageView"
         android:layout_width="@dimen/row08"
         android:layout_height="@dimen/row08"
-        android:layout_marginTop="@dimen/row06"
+        android:layout_marginTop="@dimen/row01"
         android:layout_marginEnd="@dimen/row10"
         android:contentDescription="@null"
         android:src="@drawable/ic_baseline_north_east_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/groupTitleEditText"
+        app:layout_constraintStart_toStartOf="@+id/groupTitleEditText"
+        app:layout_constraintTop_toBottomOf="@+id/groupTitleEditText" />
 
     <TextView
         android:id="@+id/instructionsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/row01"
+        android:layout_marginTop="@dimen/row01"
         android:fontFamily="@font/gochi_hand_regular"
         android:padding="@dimen/row01"
         android:text="@string/edit_the_name_of_party_here"
         android:textColor="@color/white_100"
         android:textSize="@dimen/subhead3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tutorialArrowImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/tutorialArrowImageView" />
 
     <ImageView
         android:id="@+id/secondaryTutorialArrowImageView"
@@ -47,7 +70,7 @@
         android:id="@+id/secondaryInstructionsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/row04"
+        android:layout_marginBottom="@dimen/row08"
         android:fontFamily="@font/gochi_hand_regular"
         android:gravity="center"
         android:text="@string/select_party_members_from_your_contacts"
