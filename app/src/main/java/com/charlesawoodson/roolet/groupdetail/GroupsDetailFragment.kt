@@ -21,6 +21,7 @@ import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
+import com.charlesawoodson.roolet.groups.GroupsFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
 
@@ -57,16 +58,40 @@ class GroupsDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        callActionButton.setOnClickListener {
+//            if (sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)) {
+//                GameModeDialogFragment().show(childFragmentManager, null)
+//            } else {
+//                val randomNumber = viewModel.getRandomNumber(
+//                    sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
+//                )
+//                Intent(Intent.ACTION_CALL).apply {
+//                    data = Uri.parse("tel:$randomNumber") // todo: fix probably
+//                    ContextCompat.startActivity(requireContext(), this, null)
+//                }
+//            }
+//        }
+
         callActionButton.setOnClickListener {
-            if (sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)) {
-                GameModeDialogFragment().show(childFragmentManager, null)
-            } else {
-                val randomNumber = viewModel.getRandomNumber(
-                    sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-                )
-                Intent(Intent.ACTION_DIAL).apply {
-                    data = Uri.parse("tel:$randomNumber") // todo: fix probably
-                    ContextCompat.startActivity(requireContext(), this, null)
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.CALL_PHONE
+                ) -> {
+                    val randomNumber = viewModel.getRandomNumber(
+                        sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
+                    )
+                    Intent(Intent.ACTION_CALL).apply {
+                        data = Uri.parse("tel:$randomNumber") // todo: fix probably
+                        ContextCompat.startActivity(requireContext(), this, null)
+                    }
+                }
+                else -> {
+                    // todo: Non deprecated version
+                    requestPermissions(
+                        arrayOf(Manifest.permission.CALL_PHONE),
+                        PERMISSIONS_REQUEST_CALL_PHONE
+                    )
                 }
             }
         }
@@ -126,11 +151,21 @@ class GroupsDetailFragment : BaseFragment() {
                 }
                 return
             }
+            PERMISSIONS_REQUEST_CALL_PHONE -> {
+                val randomNumber = viewModel.getRandomNumber(
+                    sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
+                )
+                Intent(Intent.ACTION_CALL).apply {
+                    data = Uri.parse("tel:$randomNumber") // todo: fix probably
+                    ContextCompat.startActivity(requireContext(), this, null)
+                }
+            }
         }
     }
 
     companion object {
         const val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+        const val PERMISSIONS_REQUEST_CALL_PHONE = 200
     }
 
 }
