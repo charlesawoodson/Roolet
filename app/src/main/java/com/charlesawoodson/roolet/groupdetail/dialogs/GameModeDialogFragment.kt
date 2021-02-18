@@ -1,9 +1,12 @@
 package com.charlesawoodson.roolet.groupdetail.dialogs
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.airbnb.mvrx.parentFragmentViewModel
 import com.charlesawoodson.roolet.R
@@ -38,9 +41,13 @@ class GameModeDialogFragment : BaseDialogFragment(width = 0.8f, roundEdges = fal
         ruleDescriptionTextView.text = viewModel.getRandomRule()
 
         gotItButton.setOnClickListener {
-            viewModel.callGroupMember(
+            val randomNumber = viewModel.getRandomNumber(
                 sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
             )
+            Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$randomNumber") // todo: confirm
+                ContextCompat.startActivity(requireContext(), this, null)
+            }
             dismiss()
         }
     }

@@ -3,6 +3,7 @@ package com.charlesawoodson.roolet.groupdetail
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,6 @@ import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
-import com.charlesawoodson.roolet.contacts.dialogs.ContactsTutorialDialogFragment
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
@@ -61,9 +61,13 @@ class GroupsDetailFragment : BaseFragment() {
             if (sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)) {
                 GameModeDialogFragment().show(childFragmentManager, null)
             } else {
-                viewModel.callGroupMember(
+                val randomNumber = viewModel.getRandomNumber(
                     sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
                 )
+                Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:$randomNumber") // todo: fix probably
+                    ContextCompat.startActivity(requireContext(), this, null)
+                }
             }
         }
 
@@ -97,7 +101,11 @@ class GroupsDetailFragment : BaseFragment() {
             requireActivity().finish()
         }
 
-        if (!sharedPreferences.getBoolean(getString(R.string.group_detail_tutorial_seen_pref), false)) {
+        if (!sharedPreferences.getBoolean(
+                getString(R.string.group_detail_tutorial_seen_pref),
+                false
+            )
+        ) {
             GroupDetailTutorialDialogFragment().show(childFragmentManager, null)
         }
     }

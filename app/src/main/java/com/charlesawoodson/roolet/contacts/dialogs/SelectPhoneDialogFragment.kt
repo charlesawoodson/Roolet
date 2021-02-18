@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_select_phone_dialog.*
 
 class SelectPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM) {
 
+    // todo: store args in view model | remove this
     private val arguments: SelectPhoneArgs by args()
 
     private val viewModel: ContactsViewModel by parentFragmentViewModel()

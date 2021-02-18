@@ -102,7 +102,7 @@ class ContactsViewModel(
 
             setState {
                 copy(allContacts = contacts
-                    .filter { it.phones.isNotEmpty() }
+                    .filter { it.phones.isNotEmpty() && it.selectedPhone != null }
                     .map {
                         SelectableListItem(
                             it,

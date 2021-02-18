@@ -1,7 +1,9 @@
 package com.charlesawoodson.roolet.groups
 
 import android.Manifest
+import android.app.ActivityManager
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle

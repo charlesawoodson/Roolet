@@ -45,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/row01"
         android:layout_marginEnd="@dimen/row01"
+        android:textColor="@color/black_60"
         android:textSize="@dimen/caption1"
         app:layout_constraintBottom_toBottomOf="@+id/groupMemberImageView"
         app:layout_constraintEnd_toEndOf="parent"
