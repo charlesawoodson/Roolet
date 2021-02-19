@@ -71,12 +71,6 @@ class GroupDetailAdapter :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    /*fun updateData(groupMembers: List<GroupMember>) {
-        data.clear()
-        data.addAll(groupMembers)
-        notifyDataSetChanged()
-    }*/
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val context: Context = itemView.context
 

@@ -57,7 +57,6 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
         }
 
         holder.groupMembersTextView.text = test
-
     }
 
     private fun setGroupMembersIcon(item: Group, holder: ViewHolder) {
