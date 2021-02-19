@@ -50,8 +50,7 @@ class GroupDetailAdapter :
         holder.numberTextView.text = item.number
 
         holder.lastCalledTextView.isVisible = item.timeElapsed != 0L
-        holder.lastCalledTextView.text =
-            TimeUnit.NANOSECONDS.toSeconds(item.timeElapsed).toString()
+        holder.lastCalledTextView.text = TimeUnit.NANOSECONDS.toSeconds(item.timeElapsed).toString()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -63,7 +62,7 @@ class GroupDetailAdapter :
             val timeElapsed = payload.getLong(ElAPSED_TIME_PAYLOAD)
 
             holder.lastCalledTextView.isVisible = timeElapsed != 0L
-            holder.lastCalledTextView.text = timeElapsed.toString()
+            holder.lastCalledTextView.text = TimeUnit.NANOSECONDS.toSeconds(timeElapsed).toString()
         }
     }
 
