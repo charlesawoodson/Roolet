@@ -30,6 +30,7 @@ class Converters {
         Gson().fromJson(value, Array<GroupMember>::class.java).toList()
 }
 
+// todo: remove user table and related classes
 @Entity
 data class User(
     @PrimaryKey val id: Long,

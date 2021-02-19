@@ -5,13 +5,16 @@ import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.api.RulesResponse
 import com.charlesawoodson.roolet.api.RulesService
 import com.charlesawoodson.roolet.api.RulesServiceFactory
+import com.charlesawoodson.roolet.contacts.model.GroupMember
 import com.charlesawoodson.roolet.db.DatabaseBuilder
 import com.charlesawoodson.roolet.db.DatabaseHelperImpl
 import com.charlesawoodson.roolet.db.Group
+import com.charlesawoodson.roolet.extensions.updateItems
 import io.reactivex.schedulers.Schedulers
 
 data class GroupDetailState(
-    val group: Async<Group> = Uninitialized
+    val group: Async<Group> = Uninitialized,
+    val groupMembers: List<GroupMember> = emptyList()
 ) : MvRxState
 
 class GroupsDetailViewModel(
@@ -29,7 +32,7 @@ class GroupsDetailViewModel(
             .subscribe { group ->
                 set = group.members.map { it.number }.toMutableSet()
                 setState {
-                    copy(group = Success(group))
+                    copy(group = Success(group), groupMembers = group.members)
                 }
             }.disposeOnClear()
 
@@ -59,6 +62,14 @@ class GroupsDetailViewModel(
 
     fun removeNumber(number: String) {
         set.remove(number)
+    }
+
+    fun setGroupMemberCalled(number: String) {
+        setState {
+            copy(groupMembers = groupMembers.updateItems({ it.number == number }, {
+                copy(beenCalled = true)
+            }))
+        }
     }
 
     private fun handleResponse(rulesResponse: RulesResponse) {

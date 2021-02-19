@@ -45,10 +45,12 @@ class GroupsDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.asyncSubscribe(GroupDetailState::group) { group ->
-            adapter.updateData(group.members)
             groupNameTextView.text = group.title
         }
 
+        viewModel.selectSubscribe(GroupDetailState::groupMembers) { members ->
+            adapter.updateData(members)
+        }
     }
 
     override fun onCreateView(

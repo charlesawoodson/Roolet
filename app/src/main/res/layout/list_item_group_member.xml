@@ -8,6 +8,7 @@
     android:layout_marginTop="@dimen/row005"
     android:layout_marginEnd="@dimen/row01"
     android:layout_marginBottom="@dimen/row005"
+    android:animateLayoutChanges="true"
     android:background="@drawable/rounded_bg_white"
     android:elevation="@dimen/row01">
 
@@ -44,14 +45,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/row01"
-        android:layout_marginEnd="@dimen/row01"
         android:textColor="@color/black_60"
         android:textSize="@dimen/caption1"
         app:layout_constraintBottom_toBottomOf="@+id/groupMemberImageView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lastCalledTextView"
         app:layout_constraintStart_toEndOf="@+id/groupMemberImageView"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
         tools:text="(919) 784-1987" />
+
+    <TextView
+        android:id="@+id/lastCalledTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/row005"
+        android:text="Called 1h ago"
+        android:textColor="@color/green"
+        android:textSize="@dimen/caption1"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

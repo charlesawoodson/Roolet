@@ -48,15 +48,14 @@ class CallPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM, rou
         callButton.text = "Call +1 $randomNumber"
 
         callButton.setOnClickListener {
-            if (!sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)) {
-                viewModel.removeNumber(randomNumber)
-            }
-            // todo: update groupItem with call time
-
             Intent(Intent.ACTION_CALL).apply {
                 data = Uri.parse("tel:$randomNumber") // todo: fix probably
                 ContextCompat.startActivity(requireContext(), this, null)
             }
+            if (!sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)) {
+                viewModel.removeNumber(randomNumber)
+            }
+            viewModel.setGroupMemberCalled(randomNumber)
             dismiss()
         }
 
