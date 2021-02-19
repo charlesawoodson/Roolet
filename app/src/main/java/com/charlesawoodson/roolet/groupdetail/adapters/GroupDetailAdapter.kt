@@ -1,6 +1,7 @@
 package com.charlesawoodson.roolet.groupdetail.adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
@@ -49,13 +51,31 @@ class GroupDetailAdapter :
         holder.lastCalledTextView.isVisible = item.beenCalled
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+            return
+        } else {
+            val payload = payloads[0] as Bundle
+            holder.lastCalledTextView.isVisible = payload.getBoolean(LAST_CALLED_PAYLOAD)
+        }
+    }
+
     override fun getItemCount(): Int = data.size
 
     fun updateData(groupMembers: List<GroupMember>) {
+        val diffCallback = GroupMembersDiffCallback(data, groupMembers)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        data.clear()
+        data.addAll(groupMembers)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    /*fun updateData(groupMembers: List<GroupMember>) {
         data.clear()
         data.addAll(groupMembers)
         notifyDataSetChanged()
-    }
+    }*/
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val context: Context = itemView.context
@@ -64,5 +84,9 @@ class GroupDetailAdapter :
         val numberTextView: TextView = itemView.numberTextView
         val groupMemberImageView: ImageView = itemView.groupMemberImageView
         val lastCalledTextView: TextView = itemView.lastCalledTextView
+    }
+
+    companion object {
+        const val LAST_CALLED_PAYLOAD = "last_called_payload"
     }
 }
