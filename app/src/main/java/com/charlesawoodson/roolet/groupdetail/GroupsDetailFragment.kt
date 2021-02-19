@@ -12,12 +12,15 @@ import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.mvrx.MvRx
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
+import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
+import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogFragment
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.groupdetail.dialogs.CallPhoneDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
@@ -133,8 +136,19 @@ class GroupsDetailFragment : BaseFragment() {
                 return
             }
             PERMISSIONS_REQUEST_CALL_PHONE -> {
-                // todo: check if call permissions were granted, if not show dialog
-                checkCallOrGameDialog()
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    checkCallOrGameDialog()
+                } else {
+                    ErrorDialogFragment().apply {
+                        arguments = Bundle().apply {
+                            putParcelable(
+                                KEY_ARG,
+                                ErrorDialogArgs(R.string.oooop, R.string.call_permissions_needed)
+                            )
+                        }
+                    }.show(childFragmentManager, null)
+                }
+                return
             }
         }
     }
