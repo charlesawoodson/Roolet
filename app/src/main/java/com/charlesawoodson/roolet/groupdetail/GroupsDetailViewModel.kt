@@ -65,9 +65,19 @@ class GroupsDetailViewModel(
     }
 
     fun setGroupMemberCalled(number: String) {
+        val calledAt = System.nanoTime()
         setState {
             copy(groupMembers = groupMembers.updateItems({ it.number == number }, {
-                copy(beenCalled = true)
+                copy(lastCalledAt = calledAt)
+            }))
+        }
+    }
+
+    fun updateElapsedTime() {
+        val elapsed = System.nanoTime()
+        setState {
+            copy(groupMembers = groupMembers.updateItems({ it.lastCalledAt != 0L }, {
+                copy(timeElapsed = elapsed - lastCalledAt)
             }))
         }
     }

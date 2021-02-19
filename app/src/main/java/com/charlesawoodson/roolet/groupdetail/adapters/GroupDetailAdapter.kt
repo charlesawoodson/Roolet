@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.model.GroupMember
 import kotlinx.android.synthetic.main.list_item_group_member.view.*
+import java.util.concurrent.TimeUnit
 
 class GroupDetailAdapter :
     RecyclerView.Adapter<GroupDetailAdapter.ViewHolder>() {
@@ -48,7 +49,9 @@ class GroupDetailAdapter :
         holder.nameTextView.text = item.name
         holder.numberTextView.text = item.number
 
-        holder.lastCalledTextView.isVisible = item.beenCalled
+        holder.lastCalledTextView.isVisible = item.timeElapsed != 0L
+        holder.lastCalledTextView.text =
+            TimeUnit.NANOSECONDS.toSeconds(item.timeElapsed).toString()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -57,7 +60,10 @@ class GroupDetailAdapter :
             return
         } else {
             val payload = payloads[0] as Bundle
-            holder.lastCalledTextView.isVisible = payload.getBoolean(LAST_CALLED_PAYLOAD)
+            val timeElapsed = payload.getLong(ElAPSED_TIME_PAYLOAD)
+
+            holder.lastCalledTextView.isVisible = timeElapsed != 0L
+            holder.lastCalledTextView.text = timeElapsed.toString()
         }
     }
 
@@ -81,6 +87,6 @@ class GroupDetailAdapter :
     }
 
     companion object {
-        const val LAST_CALLED_PAYLOAD = "last_called_payload"
+        const val ElAPSED_TIME_PAYLOAD = "elapsed_payload"
     }
 }

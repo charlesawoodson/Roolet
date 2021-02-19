@@ -21,5 +21,6 @@ data class GroupMember(
     val photoUri: String?,
     val number: String,
     val type: Int,
-    val beenCalled: Boolean = false
+    val lastCalledAt: Long = 0L,
+    val timeElapsed: Long = 0L
 ) : Parcelable

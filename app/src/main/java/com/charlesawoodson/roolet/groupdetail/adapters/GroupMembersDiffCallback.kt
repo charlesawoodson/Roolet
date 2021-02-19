@@ -3,7 +3,7 @@ package com.charlesawoodson.roolet.groupdetail.adapters
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.charlesawoodson.roolet.contacts.model.GroupMember
-import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter.Companion.LAST_CALLED_PAYLOAD
+import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter.Companion.ElAPSED_TIME_PAYLOAD
 
 class GroupMembersDiffCallback(
     private val oldList: List<GroupMember>,
@@ -20,12 +20,12 @@ class GroupMembersDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].beenCalled == newList[newItemPosition].beenCalled
+        return oldList[oldItemPosition].timeElapsed == newList[newItemPosition].timeElapsed
     }
 
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any {
         return Bundle().apply {
-            putBoolean(LAST_CALLED_PAYLOAD, newList[newItemPosition].beenCalled)
+            putLong(ElAPSED_TIME_PAYLOAD, newList[newItemPosition].timeElapsed)
         }
     }
 }

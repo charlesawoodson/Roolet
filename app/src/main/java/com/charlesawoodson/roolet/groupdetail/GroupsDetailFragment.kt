@@ -121,6 +121,11 @@ class GroupsDetailFragment : BaseFragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.updateElapsedTime()
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
