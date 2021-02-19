@@ -57,13 +57,13 @@
         android:id="@+id/lastCalledTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/row005"
-        android:text="Called 1h ago"
+        android:layout_margin="@dimen/row01"
         android:textColor="@color/green"
         android:textSize="@dimen/caption1"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Called 1h ago"
         tools:visibility="visible" />
 
 

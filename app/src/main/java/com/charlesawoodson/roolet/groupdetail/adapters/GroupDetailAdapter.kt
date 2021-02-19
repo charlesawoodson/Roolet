@@ -50,7 +50,8 @@ class GroupDetailAdapter :
         holder.numberTextView.text = item.number
 
         holder.lastCalledTextView.isVisible = item.timeElapsed != 0L
-        holder.lastCalledTextView.text = TimeUnit.NANOSECONDS.toSeconds(item.timeElapsed).toString()
+        holder.lastCalledTextView.text =
+            formatTimeElapsed(item.timeElapsed)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
@@ -62,7 +63,28 @@ class GroupDetailAdapter :
             val timeElapsed = payload.getLong(ElAPSED_TIME_PAYLOAD)
 
             holder.lastCalledTextView.isVisible = timeElapsed != 0L
-            holder.lastCalledTextView.text = TimeUnit.NANOSECONDS.toSeconds(timeElapsed).toString()
+            holder.lastCalledTextView.text =
+                formatTimeElapsed(timeElapsed)
+        }
+    }
+
+    private fun formatTimeElapsed(timeElapsed: Long): String {
+        val hr = TimeUnit.NANOSECONDS.toHours(timeElapsed)
+        val min = TimeUnit.NANOSECONDS.toMinutes(timeElapsed - TimeUnit.HOURS.toNanos(hr))
+        val sec = TimeUnit.NANOSECONDS.toSeconds(
+            timeElapsed - TimeUnit.HOURS.toNanos(hr) - TimeUnit.MINUTES.toNanos(min)
+        )
+
+        return when {
+            hr >= 1 -> {
+                "Called ${hr}h ago"
+            }
+            min >= 1 -> {
+                "Called ${min}m ago"
+            }
+            else -> {
+                "Called ${sec}s ago"
+            }
         }
     }
 
