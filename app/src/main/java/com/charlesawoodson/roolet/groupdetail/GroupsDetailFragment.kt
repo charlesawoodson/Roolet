@@ -3,7 +3,6 @@ package com.charlesawoodson.roolet.groupdetail
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.mvrx.MvRx
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -25,7 +23,6 @@ import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.groupdetail.dialogs.CallPhoneDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
-import com.charlesawoodson.roolet.groups.GroupsFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
 
@@ -70,7 +67,11 @@ class GroupsDetailFragment : BaseFragment() {
                     requireActivity(),
                     Manifest.permission.CALL_PHONE
                 ) -> {
-                    checkCallOrGameDialog()
+                    if (viewModel.getNumbersLeftSize() > 0) {
+                        checkCallOrGameDialog()
+                    } else {
+                        showErrorDialog(R.string.all_members_called)
+                    }
                 }
                 else -> {
                     // todo: Non deprecated version
@@ -144,20 +145,28 @@ class GroupsDetailFragment : BaseFragment() {
             }
             PERMISSIONS_REQUEST_CALL_PHONE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    checkCallOrGameDialog()
+                    if (viewModel.getNumbersLeftSize() > 0) {
+                        checkCallOrGameDialog()
+                    } else {
+                        showErrorDialog(R.string.all_members_called)
+                    }
                 } else {
-                    ErrorDialogFragment().apply {
-                        arguments = Bundle().apply {
-                            putParcelable(
-                                KEY_ARG,
-                                ErrorDialogArgs(R.string.oooop, R.string.call_permissions_needed)
-                            )
-                        }
-                    }.show(childFragmentManager, null)
+                    showErrorDialog(R.string.call_permissions_needed)
                 }
                 return
             }
         }
+    }
+
+    private fun showErrorDialog(messageRes: Int) {
+        ErrorDialogFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(
+                    KEY_ARG,
+                    ErrorDialogArgs(R.string.oooop, messageRes)
+                )
+            }
+        }.show(childFragmentManager, null)
     }
 
     private fun checkCallOrGameDialog() {

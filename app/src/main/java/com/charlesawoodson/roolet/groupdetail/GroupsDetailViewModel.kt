@@ -60,6 +60,8 @@ class GroupsDetailViewModel(
         return "No More Rules!"
     }
 
+    fun getNumbersLeftSize(): Int = set.size
+
     fun removeNumber(number: String) {
         set.remove(number)
     }
