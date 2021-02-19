@@ -19,6 +19,7 @@ import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
+import com.charlesawoodson.roolet.groupdetail.dialogs.CallPhoneDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
 import com.charlesawoodson.roolet.groups.GroupsFragment
@@ -58,33 +59,13 @@ class GroupsDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        callActionButton.setOnClickListener {
-//            if (sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)) {
-//                GameModeDialogFragment().show(childFragmentManager, null)
-//            } else {
-//                val randomNumber = viewModel.getRandomNumber(
-//                    sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-//                )
-//                Intent(Intent.ACTION_CALL).apply {
-//                    data = Uri.parse("tel:$randomNumber") // todo: fix probably
-//                    ContextCompat.startActivity(requireContext(), this, null)
-//                }
-//            }
-//        }
-
         callActionButton.setOnClickListener {
             when (PackageManager.PERMISSION_GRANTED) {
                 ContextCompat.checkSelfPermission(
                     requireActivity(),
                     Manifest.permission.CALL_PHONE
                 ) -> {
-                    val randomNumber = viewModel.getRandomNumber(
-                        sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-                    )
-                    Intent(Intent.ACTION_CALL).apply {
-                        data = Uri.parse("tel:$randomNumber") // todo: fix probably
-                        ContextCompat.startActivity(requireContext(), this, null)
-                    }
+                    checkCallOrGameDialog()
                 }
                 else -> {
                     // todo: Non deprecated version
@@ -152,14 +133,17 @@ class GroupsDetailFragment : BaseFragment() {
                 return
             }
             PERMISSIONS_REQUEST_CALL_PHONE -> {
-                val randomNumber = viewModel.getRandomNumber(
-                    sharedPreferences.getBoolean(getString(R.string.repeat_calls_pref), false)
-                )
-                Intent(Intent.ACTION_CALL).apply {
-                    data = Uri.parse("tel:$randomNumber") // todo: fix probably
-                    ContextCompat.startActivity(requireContext(), this, null)
-                }
+                // todo: check if call permissions were granted, if not show dialog
+                checkCallOrGameDialog()
             }
+        }
+    }
+
+    private fun checkCallOrGameDialog() {
+        if (sharedPreferences.getBoolean(getString(R.string.game_mode_pref), false)) {
+            GameModeDialogFragment().show(childFragmentManager, null)
+        } else {
+            CallPhoneDialogFragment().show(childFragmentManager, null)
         }
     }
 

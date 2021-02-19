@@ -39,15 +39,9 @@ class GroupsDetailViewModel(
             .disposeOnClear()
     }
 
-    fun getRandomNumber(allowRepeatCalls: Boolean): String {
-        if (set.size > 0) {
-            set.apply {
-                val number = random()
-                if (!allowRepeatCalls) {
-                    remove(number)
-                }
-                return number
-            }
+    fun getRandomNumber(): String {
+        if (set.isNotEmpty()) {
+            return set.random()
         }
         return "" // todo: drop down error when all calls have been made
     }
@@ -61,6 +55,10 @@ class GroupsDetailViewModel(
             }
         }
         return "No More Rules!"
+    }
+
+    fun removeNumber(number: String) {
+        set.remove(number)
     }
 
     private fun handleResponse(rulesResponse: RulesResponse) {
