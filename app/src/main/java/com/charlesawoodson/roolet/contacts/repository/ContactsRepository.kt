@@ -9,7 +9,7 @@ import com.charlesawoodson.roolet.contacts.model.Phone
 
 class ContactsRepository(private val applicationContext: Context) {
 
-    suspend fun getPhoneContacts(): ArrayList<Contact> {
+    fun getPhoneContacts(): ArrayList<Contact> {
         val contactsList = ArrayList<Contact>()
 
         val contactsCursor = applicationContext.contentResolver?.query(
@@ -37,7 +37,7 @@ class ContactsRepository(private val applicationContext: Context) {
         return contactsList
     }
 
-    suspend fun getContactNumbers(): HashMap<Long, ArrayList<Phone>> {
+    fun getContactNumbers(): HashMap<Long, ArrayList<Phone>> {
         val contactsNumberMap = HashMap<Long, ArrayList<Phone>>()
         val phoneCursor: Cursor? = applicationContext.contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -64,7 +64,7 @@ class ContactsRepository(private val applicationContext: Context) {
                 val phone = Phone(number, type)
 
                 // todo: does not currently support multiple contacts w same phone numbers (support?)
-                if (!numberSet.contains(number)) {
+                if (!numberSet.contains(number) && !number.startsWith("#")) {
                     if (contactsNumberMap.containsKey(contactId)) {
                         contactsNumberMap[contactId]?.add(phone)
                     } else {
@@ -79,7 +79,7 @@ class ContactsRepository(private val applicationContext: Context) {
         return contactsNumberMap
     }
 
-    suspend fun getContactEmails(): HashMap<String, ArrayList<String>> {
+    fun getContactEmails(): HashMap<String, ArrayList<String>> {
         val contactsEmailMap = HashMap<String, ArrayList<String>>()
         val emailCursor = applicationContext.contentResolver.query(
             ContactsContract.CommonDataKinds.Email.CONTENT_URI,

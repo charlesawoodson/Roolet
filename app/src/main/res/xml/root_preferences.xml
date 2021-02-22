@@ -42,13 +42,13 @@
                 android:data="http://www.twitter.com/letsroolet" />
         </Preference>
 
-        <Preference
-            android:icon="@drawable/roolet_icon_grey"
-            app:title="Instagram">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="http://www.instagram.com/letsroolet" />
-        </Preference>
+<!--        <Preference-->
+<!--            android:icon="@mipmap/ic_launcher_round"-->
+<!--            app:title="Instagram">-->
+<!--            <intent-->
+<!--                android:action="android.intent.action.VIEW"-->
+<!--                android:data="http://www.instagram.com/letsroolet" />-->
+<!--        </Preference>-->
 
     </PreferenceCategory>
 

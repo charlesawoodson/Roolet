@@ -45,7 +45,7 @@ class CallPhoneDialogFragment : BaseDialogFragment(gravity = Gravity.BOTTOM, rou
         requireDialog().window?.setWindowAnimations(R.style.DialogAnimation)
 
         val randomNumber = viewModel.getRandomNumber()
-        callButton.text = "Call +1 $randomNumber"
+        callButton.text = "Call $randomNumber"
 
         callButton.setOnClickListener {
             Intent(Intent.ACTION_CALL).apply {

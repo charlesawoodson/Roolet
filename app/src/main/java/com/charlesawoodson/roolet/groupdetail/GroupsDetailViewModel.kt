@@ -11,6 +11,7 @@ import com.charlesawoodson.roolet.db.DatabaseHelperImpl
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.extensions.updateItems
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 data class GroupDetailState(
     val group: Async<Group> = Uninitialized,
@@ -73,6 +74,17 @@ class GroupsDetailViewModel(
                 copy(lastCalledAt = calledAt)
             }))
         }
+    }
+
+    private var task = Timer()
+    fun startElapsedTimer() {
+        task.cancel()
+        task = Timer()
+        task.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                updateElapsedTime()
+            }
+        }, 5000, 5000)
     }
 
     fun updateElapsedTime() {

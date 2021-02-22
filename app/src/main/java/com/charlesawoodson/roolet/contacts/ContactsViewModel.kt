@@ -69,7 +69,7 @@ class ContactsViewModel(
                             contact.photoUri,
                             contact.selectedPhone?.number!!,
                             contact.selectedPhone?.type!!
-                        ) // todo: add phone to group member?
+                        )
                     }
 
                 setState {
@@ -160,14 +160,15 @@ class ContactsViewModel(
             viewModelContext: ViewModelContext,
             state: ContactsState
         ): ContactsViewModel {
+            val context = viewModelContext.activity.applicationContext
             val dbHelper =
-                DatabaseHelperImpl(DatabaseBuilder.getInstance(viewModelContext.activity.applicationContext))
+                DatabaseHelperImpl(DatabaseBuilder.getInstance(context))
 
             val group = viewModelContext.args<EditGroupArgs>()
 
             return ContactsViewModel(
                 state,
-                ContactsRepository(viewModelContext.activity.applicationContext),
+                ContactsRepository(context),
                 dbHelper,
                 group
             )
