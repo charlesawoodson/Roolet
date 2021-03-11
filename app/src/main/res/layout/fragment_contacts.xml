@@ -21,7 +21,7 @@
     <EditText
         android:id="@+id/groupTitleEditText"
         android:layout_width="0dp"
-        android:layout_height="@dimen/row04"
+        android:layout_height="@dimen/row05"
         android:layout_marginStart="@dimen/row04"
         android:layout_marginTop="@dimen/row02"
         android:layout_marginEnd="@dimen/row04"
@@ -34,7 +34,7 @@
         android:paddingStart="@dimen/row01"
         android:paddingEnd="@dimen/row01"
         android:textColor="@color/white"
-        android:textSize="@dimen/caption7"
+        android:textSize="@dimen/caption9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
