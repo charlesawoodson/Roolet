@@ -67,7 +67,6 @@ class GroupsActivity : AppCompatActivity() {
                         R.id.container
                     )
                 }
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 true
             }
             else -> {
@@ -77,7 +76,6 @@ class GroupsActivity : AppCompatActivity() {
     }
 
     private fun commitContactsFragment() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             addToBackStack(null)
@@ -92,16 +90,8 @@ class GroupsActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val displayBackArrow = supportFragmentManager.backStackEntryCount > 1
-        supportActionBar?.setDisplayHomeAsUpEnabled(displayBackArrow)
         onBackPressed()
         return super.onSupportNavigateUp()
-    }
-
-    override fun onBackPressed() {
-        val displayBackArrow = supportFragmentManager.backStackEntryCount > 1
-        supportActionBar?.setDisplayHomeAsUpEnabled(displayBackArrow)
-        super.onBackPressed()
     }
 
     override fun onRequestPermissionsResult(

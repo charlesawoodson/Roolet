@@ -24,6 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
+        (activity as GroupsActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as GroupsActivity).supportActionBar?.title = getString(R.string.settings)
         menu.findItem(R.id.action_add_group).isVisible = false
         menu.findItem(R.id.action_settings).isVisible = false

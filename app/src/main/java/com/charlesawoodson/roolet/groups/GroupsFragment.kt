@@ -3,6 +3,7 @@ package com.charlesawoodson.roolet.groups
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
@@ -46,12 +47,12 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_groups, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as GroupsActivity).supportActionBar?.title = getString(R.string.roolet)
         groupsRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
@@ -67,5 +68,11 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
             putExtra(KEY_ARG, group.groupId)
             startActivity(this)
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        (activity as GroupsActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        (activity as GroupsActivity).supportActionBar?.title = getString(R.string.roolet)
+        super.onPrepareOptionsMenu(menu)
     }
 }

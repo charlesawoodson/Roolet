@@ -199,9 +199,10 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
+        (activity as GroupsActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as GroupsActivity).supportActionBar?.title = getString(R.string.create_group)
-        if (arguments.group == null) {
-            menu.findItem(R.id.action_delete).isVisible = false
+        if (arguments.group != null) {
+            menu.findItem(R.id.action_delete).isVisible = true
         }
         super.onPrepareOptionsMenu(menu)
     }
