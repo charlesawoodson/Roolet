@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
@@ -83,9 +82,13 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerViews()
-        setOnClickListeners()
+
+        cancelTextView.setOnClickListener {
+            filterEditText.text.clear()
+            filterEditText.clearFocus()
+            closeKeyboard()
+        }
 
         filterEditText.doOnTextChanged { text, _, _, _ ->
             viewModel.setFilter(text.toString())
@@ -101,7 +104,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     }
 
     override fun onStart() {
-        super.onStart()
         when (PackageManager.PERMISSION_GRANTED) {
             ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -113,15 +115,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                 viewModel.setHasContactsPermissions(false)
             }
         }
-    }
-
-
-    private fun setOnClickListeners() {
-        cancelTextView.setOnClickListener {
-            filterEditText.text.clear()
-            filterEditText.clearFocus()
-            closeKeyboard()
-        }
+        super.onStart()
     }
 
     private fun setupRecyclerViews() {
@@ -213,12 +207,10 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_save -> {
-                Toast.makeText(requireContext(), "Save Action", Toast.LENGTH_SHORT).show()
                 saveGroup()
                 true
             }
             R.id.action_delete -> {
-                Toast.makeText(requireContext(), "Delete Action", Toast.LENGTH_SHORT).show()
                 DeleteGroupDialogFragment().show(childFragmentManager, null)
                 true
             }

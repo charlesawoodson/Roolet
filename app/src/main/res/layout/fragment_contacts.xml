@@ -129,15 +129,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/row04"
         android:layout_marginEnd="@dimen/row04"
+        android:elevation="@dimen/row04"
         android:gravity="center"
         android:text="@string/contact_permissions_needed"
+        android:textColor="@color/black"
         android:textSize="@dimen/caption10"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/filterContainer"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

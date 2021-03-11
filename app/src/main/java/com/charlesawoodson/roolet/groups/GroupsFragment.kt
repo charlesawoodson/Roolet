@@ -1,13 +1,10 @@
 package com.charlesawoodson.roolet.groups
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,15 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
-import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
-import com.charlesawoodson.roolet.settings.SettingsActivity
 import kotlinx.android.synthetic.main.fragment_groups.*
-import kotlinx.android.synthetic.main.fragment_groups.instructionsTextView
 
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
@@ -63,55 +57,9 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
         groupsRecyclerView.adapter = adapter
 
-
-        addGroupImageView.setOnClickListener {
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.READ_CONTACTS
-                ) -> {
-//                    Intent(context, ContactsActivity::class.java).apply {
-//                        putExtra(KEY_ARG, EditGroupArgs())
-//                        startActivity(this)
-//                    }
-                }
-                else -> {
-                    // todo: Non deprecated version
-                    requestPermissions(
-                        arrayOf(Manifest.permission.READ_CONTACTS),
-                        PERMISSIONS_REQUEST_READ_CONTACTS
-                    )
-                }
-            }
-        }
-
-        settingsImageView.setOnClickListener {
-            Intent(context, SettingsActivity::class.java).apply {
-                startActivity(this)
-            }
-        }
-
         if (!sharedPreferences.getBoolean(getString(R.string.groups_tutorial_seen_pref), false)) {
             GroupsTutorialDialogFragment().show(childFragmentManager, null)
         }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        when (requestCode) {
-            PERMISSIONS_REQUEST_READ_CONTACTS -> {
-//                Intent(context, ContactsActivity::class.java).apply {
-//                    putExtra(KEY_ARG, EditGroupArgs())
-//                    startActivity(this)
-//                }
-                return
-            }
-        }
-    }
-
-    companion object {
-        const val PERMISSIONS_REQUEST_READ_CONTACTS = 100
     }
 
     override fun onGroupItemClick(group: Group) {
@@ -120,5 +68,4 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
             startActivity(this)
         }
     }
-
 }
