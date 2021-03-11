@@ -24,6 +24,7 @@ import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
 import com.charlesawoodson.roolet.contacts.dialogs.*
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.db.Group
+import com.charlesawoodson.roolet.groups.GroupsActivity
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*
@@ -198,6 +199,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
+        (activity as GroupsActivity).supportActionBar?.title = getString(R.string.create_group)
         if (arguments.group == null) {
             menu.findItem(R.id.action_delete).isVisible = false
         }

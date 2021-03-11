@@ -1,13 +1,12 @@
 package com.charlesawoodson.roolet.groups
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.add
@@ -18,7 +17,7 @@ import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsFragment
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.extensions.changeToolbarFont
-import com.charlesawoodson.roolet.settings.SettingsActivity
+import com.charlesawoodson.roolet.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_container.*
 
 class GroupsActivity : AppCompatActivity() {
@@ -26,6 +25,7 @@ class GroupsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_container)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setSupportActionBar(toolbar)
         toolbar.changeToolbarFont()
 
@@ -60,9 +60,14 @@ class GroupsActivity : AppCompatActivity() {
                 true
             }
             R.id.action_settings -> {
-                Intent(applicationContext, SettingsActivity::class.java).apply {
-                    startActivity(this)
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    addToBackStack(null)
+                    replace<SettingsFragment>(
+                        R.id.container
+                    )
                 }
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 true
             }
             else -> {

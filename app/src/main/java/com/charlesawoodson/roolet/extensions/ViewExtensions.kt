@@ -54,7 +54,6 @@ fun Toolbar.changeToolbarFont() {
                 context,
                 R.font.chuck_five_font
             )
-
             break
         }
     }

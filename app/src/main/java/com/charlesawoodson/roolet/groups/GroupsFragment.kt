@@ -51,7 +51,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as GroupsActivity).supportActionBar?.title = getString(R.string.roolet)
         groupsRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
