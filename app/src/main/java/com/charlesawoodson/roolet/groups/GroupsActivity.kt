@@ -38,6 +38,12 @@ class GroupsActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {
+        val displayBackArrow = supportFragmentManager.backStackEntryCount > 1
+        supportActionBar?.setDisplayHomeAsUpEnabled(displayBackArrow)
+        super.onBackPressed()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true

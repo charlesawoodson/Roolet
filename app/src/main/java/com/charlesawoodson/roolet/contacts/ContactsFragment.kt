@@ -4,10 +4,9 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
@@ -56,6 +55,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         }
 
         viewModel.selectSubscribe(ContactsState::groupMembers) { groupMembers ->
+            groupMembersRecyclerView.isVisible = groupMembers.isNotEmpty()
             groupMembersAdapter.updateData(groupMembers)
         }
 
@@ -77,7 +77,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_contacts, container, false)
     }
 
@@ -94,9 +94,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         filterEditText.setOnFocusChangeListener { _, hasFocus ->
             cancelTextView.isVisible = hasFocus
         }
-
-        backImageView.isVisible = arguments.group == null
-        deleteGroupTextView.isGone = arguments.group == null
 
         arguments.group?.title?.also { title ->
             groupTitleEditText.setText(title.toSpannable())
@@ -120,18 +117,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
 
 
     private fun setOnClickListeners() {
-        saveGroupTextView.setOnClickListener {
-            saveGroup()
-        }
-
-        backImageView.setOnClickListener {
-            requireActivity().finish()
-        }
-
-        deleteGroupTextView.setOnClickListener {
-            DeleteGroupDialogFragment().show(childFragmentManager, null)
-        }
-
         cancelTextView.setOnClickListener {
             filterEditText.text.clear()
             filterEditText.clearFocus()
@@ -192,7 +177,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                         )
                     }
                     viewModel.saveGroup(group)
-                    requireActivity().finish()
+                    requireActivity().onBackPressed()
                 }
             }
         }
@@ -210,6 +195,37 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         val imm =
             activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.create_group_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        if (arguments.group == null) {
+            menu.findItem(R.id.action_delete).isVisible = false
+        }
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_save -> {
+                Toast.makeText(requireContext(), "Save Action", Toast.LENGTH_SHORT).show()
+                saveGroup()
+                true
+            }
+            R.id.action_delete -> {
+                Toast.makeText(requireContext(), "Delete Action", Toast.LENGTH_SHORT).show()
+                DeleteGroupDialogFragment().show(childFragmentManager, null)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
 }
