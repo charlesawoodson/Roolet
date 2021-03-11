@@ -1,13 +1,9 @@
 package com.charlesawoodson.roolet.groups
 
 import android.Manifest
-import android.app.ActivityManager
-import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
-import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
@@ -75,10 +70,10 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
                     requireActivity(),
                     Manifest.permission.READ_CONTACTS
                 ) -> {
-                    Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, EditGroupArgs())
-                        startActivity(this)
-                    }
+//                    Intent(context, ContactsActivity::class.java).apply {
+//                        putExtra(KEY_ARG, EditGroupArgs())
+//                        startActivity(this)
+//                    }
                 }
                 else -> {
                     // todo: Non deprecated version
@@ -106,10 +101,10 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
     ) {
         when (requestCode) {
             PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                Intent(context, ContactsActivity::class.java).apply {
-                    putExtra(KEY_ARG, EditGroupArgs())
-                    startActivity(this)
-                }
+//                Intent(context, ContactsActivity::class.java).apply {
+//                    putExtra(KEY_ARG, EditGroupArgs())
+//                    startActivity(this)
+//                }
                 return
             }
         }

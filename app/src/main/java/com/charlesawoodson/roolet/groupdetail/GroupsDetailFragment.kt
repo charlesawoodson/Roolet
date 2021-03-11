@@ -15,7 +15,6 @@ import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
-import com.charlesawoodson.roolet.contacts.ContactsActivity
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
 import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogArgs
 import com.charlesawoodson.roolet.contacts.dialogs.ErrorDialogFragment
@@ -95,12 +94,12 @@ class GroupsDetailFragment : BaseFragment() {
                     requireActivity(),
                     Manifest.permission.READ_CONTACTS
                 ) -> {
-                    withState(viewModel) { state ->
-                        Intent(context, ContactsActivity::class.java).apply {
-                            putExtra(KEY_ARG, EditGroupArgs(state.group()))
-                            startActivity(this)
-                        }
-                    }
+//                    withState(viewModel) { state ->
+//                        Intent(context, ContactsActivity::class.java).apply {
+//                            putExtra(KEY_ARG, EditGroupArgs(state.group()))
+//                            startActivity(this)
+//                        }
+//                    }
                 }
                 else -> {
                     requestPermissions(
@@ -137,12 +136,12 @@ class GroupsDetailFragment : BaseFragment() {
         when (requestCode) {
             PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 // If request is cancelled, the result arrays are empty.
-                withState(viewModel) { state ->
-                    Intent(context, ContactsActivity::class.java).apply {
-                        putExtra(KEY_ARG, EditGroupArgs(state.group()))
-                        startActivity(this)
-                    }
-                }
+//                withState(viewModel) { state ->
+//                    Intent(context, ContactsActivity::class.java).apply {
+//                        putExtra(KEY_ARG, EditGroupArgs(state.group()))
+//                        startActivity(this)
+//                    }
+//                }
                 return
             }
             PERMISSIONS_REQUEST_CALL_PHONE -> {
