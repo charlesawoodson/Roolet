@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/row08"
-    android:background="?attr/selectableItemBackground"
+    android:background="@color/white_100"
+    android:foreground="?attr/selectableItemBackground"
     tools:ignore="UseCompoundDrawables">
 
     <ImageView
@@ -24,9 +25,9 @@
         android:layout_marginEnd="@dimen/row02"
         android:layout_weight="1"
         android:gravity="start|center"
+        android:text="@string/someone_with_a_really_long_name"
         android:textColor="@color/black_80"
-        android:textSize="@dimen/caption7"
-        tools:text="Someone with a really long name" />
+        android:textSize="@dimen/caption7" />
 
     <ImageView
         android:id="@+id/selectedImageView"

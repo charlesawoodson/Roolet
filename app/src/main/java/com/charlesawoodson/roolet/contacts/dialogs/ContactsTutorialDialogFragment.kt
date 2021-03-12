@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
+import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
-import kotlinx.android.synthetic.main.view_groups_tutorial.*
+import kotlinx.android.synthetic.main.contact_list_item.view.*
+import kotlinx.android.synthetic.main.view_contacts_tutorial.*
+import kotlinx.android.synthetic.main.view_groups_tutorial.dialogContainer
 
 class ContactsTutorialDialogFragment : DialogFragment() {
 
@@ -33,11 +35,12 @@ class ContactsTutorialDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // requireDialog().window?.setWindowAnimations(R.style.DialogAnimationSlideUp)
-        setupTutorialScreen()
-    }
 
-    private fun setupTutorialScreen() {
+        Glide.with(requireContext())
+            .load(ContextCompat.getDrawable(requireContext(), R.drawable.roolet_icon_grey))
+            .circleCrop()
+            .into(contactListItem.contactImageView)
+
         dialogContainer.setOnClickListener {
             dismiss()
         }

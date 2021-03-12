@@ -4,29 +4,37 @@
     android:id="@+id/dialogContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_20">
+    android:background="@color/black_20"
+    android:fitsSystemWindows="true">
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/groupTitleEditText"
         android:layout_width="0dp"
-        android:layout_height="@dimen/row04"
-        android:layout_marginStart="@dimen/row09"
+        android:layout_height="@dimen/row05"
+        android:layout_marginStart="@dimen/row04"
         android:layout_marginTop="@dimen/row02"
-        android:layout_marginEnd="@dimen/row10"
+        android:layout_marginEnd="@dimen/row04"
         android:autofillHints="@null"
         android:background="@drawable/white_borders_off_white_bg_rounded"
         android:gravity="center"
         android:hint="@string/party_name"
         android:imeOptions="actionDone"
-        android:inputType="none"
+        android:inputType="textCapWords"
         android:paddingStart="@dimen/row01"
         android:paddingEnd="@dimen/row01"
         android:textColor="@color/white"
-        android:textSize="@dimen/caption7"
-        android:visibility="invisible"
+        android:textSize="@dimen/caption9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/space" />
 
     <ImageView
         android:id="@+id/tutorialArrowImageView"
@@ -53,6 +61,13 @@
         android:textSize="@dimen/subhead3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tutorialArrowImageView" />
+
+    <include
+        android:id="@+id/contactListItem"
+        layout="@layout/contact_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row08"
+        app:layout_constraintBottom_toTopOf="@id/secondaryTutorialArrowImageView" />
 
     <ImageView
         android:id="@+id/secondaryTutorialArrowImageView"
