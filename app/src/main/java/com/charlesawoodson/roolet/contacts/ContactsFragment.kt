@@ -137,17 +137,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         }
     }
 
-    private fun showPhoneSelectionDialog(contact: SelectableListItem<Contact>) {
-        SelectPhoneDialogFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(
-                    MvRx.KEY_ARG,
-                    SelectPhoneArgs(contact.data.id, contact.data.phones)
-                )
-            }
-        }.show(childFragmentManager, null)
-    }
-
     private fun saveGroup() {
         withState(viewModel) { state ->
             when {
@@ -158,16 +147,28 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                     showErrorDialog(R.string.no_party_name, R.string.add_name_for_party)
                 }
                 else -> {
-                    val group = Group(
-                        groupId = arguments.group?.groupId,
-                        title = groupTitleEditText.text.toString(),
-                        members = state.groupMembers
+                    viewModel.saveGroup(
+                        Group(
+                            arguments.group?.groupId,
+                            groupTitleEditText.text.toString(),
+                            state.groupMembers
+                        )
                     )
-                    viewModel.saveGroup(group)
                     requireActivity().onBackPressed()
                 }
             }
         }
+    }
+
+    private fun showPhoneSelectionDialog(contact: SelectableListItem<Contact>) {
+        SelectPhoneDialogFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(
+                    MvRx.KEY_ARG,
+                    SelectPhoneArgs(contact.data.id, contact.data.phones)
+                )
+            }
+        }.show(childFragmentManager, null)
     }
 
     private fun showErrorDialog(titleRes: Int, descriptionRes: Int) {
