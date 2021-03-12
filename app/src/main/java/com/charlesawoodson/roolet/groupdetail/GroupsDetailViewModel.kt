@@ -17,7 +17,7 @@ import java.util.*
 
 @Parcelize
 data class GroupDetailArgs(
-    val groupId: Long,
+    val groupId: Long?,
     val groupName: String
 ) : Parcelable
 

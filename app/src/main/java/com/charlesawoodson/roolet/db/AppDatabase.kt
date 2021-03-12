@@ -42,7 +42,7 @@ data class User(
 @Parcelize
 @Entity
 data class Group(
-    @PrimaryKey(autoGenerate = true) val groupId: Long = 0,
+    @PrimaryKey(autoGenerate = true) val groupId: Long? = null,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "members") val members: List<GroupMember>
 ) : Parcelable
@@ -79,7 +79,7 @@ interface GroupDao {
     suspend fun deleteGroup(group: Group)
 
     @Query("SELECT * FROM 'group' WHERE groupId=:id")
-    fun getGroupById(id: Long): Observable<Group>
+    fun getGroupById(id: Long?): Observable<Group>
 
     @Query("DELETE FROM 'group' WHERE groupId=:id")
     suspend fun deleteGroupById(id: Long)
@@ -94,7 +94,7 @@ interface DatabaseHelper {
     fun getGroups(): Observable<List<Group>>
     suspend fun insertGroup(group: Group)
     suspend fun deleteGroup(group: Group)
-    fun getGroupById(id: Long): Observable<Group>
+    fun getGroupById(id: Long?): Observable<Group>
     suspend fun deleteGroupById(id: Long)
 }
 
@@ -115,7 +115,7 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
 
     override suspend fun deleteGroup(group: Group) = appDatabase.groupDao().deleteGroup(group)
 
-    override fun getGroupById(id: Long): Observable<Group> = appDatabase.groupDao().getGroupById(id)
+    override fun getGroupById(id: Long?): Observable<Group> = appDatabase.groupDao().getGroupById(id)
 
     override suspend fun deleteGroupById(id: Long) = appDatabase.groupDao().deleteGroupById(id)
 }

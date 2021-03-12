@@ -158,19 +158,11 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                     showErrorDialog(R.string.no_party_name, R.string.add_name_for_party)
                 }
                 else -> {
-                    // todo: improve this
-                    val group = if (arguments.group?.groupId != null) {
-                        Group(
-                            groupId = arguments.group?.groupId!!,
-                            title = groupTitleEditText.text.toString(),
-                            members = state.groupMembers
-                        )
-                    } else {
-                        Group(
-                            title = groupTitleEditText.text.toString(),
-                            members = state.groupMembers
-                        )
-                    }
+                    val group = Group(
+                        groupId = arguments.group?.groupId,
+                        title = groupTitleEditText.text.toString(),
+                        members = state.groupMembers
+                    )
                     viewModel.saveGroup(group)
                     requireActivity().onBackPressed()
                 }
@@ -184,12 +176,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                 putParcelable(MvRx.KEY_ARG, ErrorDialogArgs(titleRes, descriptionRes))
             }
         }.show(childFragmentManager, null)
-    }
-
-    private fun closeKeyboard() {
-        val imm =
-            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -224,6 +210,12 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    private fun closeKeyboard() {
+        val imm =
+            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 
 }
