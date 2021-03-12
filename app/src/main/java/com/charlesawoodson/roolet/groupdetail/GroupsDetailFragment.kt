@@ -1,14 +1,10 @@
 package com.charlesawoodson.roolet.groupdetail
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,9 +20,8 @@ import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.groupdetail.dialogs.CallPhoneDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
-import com.charlesawoodson.roolet.groups.GroupsActivity
+import com.charlesawoodson.roolet.RooletActivity
 import com.charlesawoodson.roolet.mvrx.BaseFragment
-import com.charlesawoodson.roolet.settings.SettingsFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
 
 class GroupsDetailFragment : BaseFragment() {
@@ -47,7 +42,7 @@ class GroupsDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.asyncSubscribe(GroupDetailState::group) { group ->
-            (activity as GroupsActivity).supportActionBar?.title = group.title
+            (activity as RooletActivity).supportActionBar?.title = group.title
         }
 
         viewModel.selectSubscribe(GroupDetailState::groupMembers) { members ->
@@ -134,8 +129,8 @@ class GroupsDetailFragment : BaseFragment() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-        (activity as GroupsActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as GroupsActivity).supportActionBar?.title = arguments.groupName
+        (activity as RooletActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as RooletActivity).supportActionBar?.title = arguments.groupName
         super.onPrepareOptionsMenu(menu)
     }
 
@@ -148,14 +143,13 @@ class GroupsDetailFragment : BaseFragment() {
                         Manifest.permission.READ_CONTACTS
                     ) -> {
                         withState(viewModel) { state ->
-                            (activity as GroupsActivity).commitContactsFragment(EditGroupArgs(state.group()))
+                            (activity as RooletActivity).commitContactsFragment(EditGroupArgs(state.group()))
                         }
                     }
                     else -> {
-                        ActivityCompat.requestPermissions(
-                            requireActivity(),
+                        requestPermissions(
                             arrayOf(Manifest.permission.READ_CONTACTS),
-                            GroupsActivity.PERMISSIONS_REQUEST_READ_CONTACTS
+                            PERMISSIONS_REQUEST_READ_CONTACTS
                         )
                     }
                 }
@@ -175,7 +169,7 @@ class GroupsDetailFragment : BaseFragment() {
         when (requestCode) {
             PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 withState(viewModel) { state ->
-                    (activity as GroupsActivity).commitContactsFragment(EditGroupArgs(state.group()))
+                    (activity as RooletActivity).commitContactsFragment(EditGroupArgs(state.group()))
                 }
                 return
             }

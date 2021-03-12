@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.airbnb.mvrx.parentFragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsViewModel
-import com.charlesawoodson.roolet.groups.GroupsActivity
+import com.charlesawoodson.roolet.RooletActivity
 import com.charlesawoodson.roolet.mvrx.BaseDialogFragment
 import kotlinx.android.synthetic.main.fragment_delete_group_dialog.*
 
@@ -36,7 +36,7 @@ class DeleteGroupDialogFragment : BaseDialogFragment(width = 0.8f, roundEdges = 
             viewModel.selectedGroupId?.also {
                 viewModel.deleteGroup(it)
             }
-            Intent(requireContext(), GroupsActivity::class.java).apply {
+            Intent(requireContext(), RooletActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(this)
             }
