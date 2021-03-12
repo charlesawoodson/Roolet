@@ -72,6 +72,7 @@ class GroupsTutorialDialogFragment : DialogFragment() {
                     tapHereCreatePartyTextView.isVisible = true
                     tutorialArrowImageView.isVisible = true
                     addGroupImageView.isVisible = true
+                    settingsImageView.isVisible = true
                     skipTextView.isGone = true
                     tutorialPageCount++
                 }

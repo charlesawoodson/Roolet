@@ -46,7 +46,7 @@
     <string name="tap_anywhere_to_continue">Tap anywhere to continue</string>
     <string name="de_squaw">De Squaw</string>
     <string name="de_squaw_members">Terrance Diggs, Jorge Arnedo, Charlotte Kennedy and 8 Others</string>
-    <string name="tap_here_to_create_a_new_party">Tap here to create a new party</string>
+    <string name="tap_add_group_or_settings">Tap here to create a new party or change settings</string>
     <string name="tap_anywhere_to_dismiss">Tap anywhere to dismiss</string>
     <string name="edit_the_name_of_party_here">Edit the name of this party here</string>
     <string name="select_party_members_from_your_contacts">Select party members from your contacts</string>

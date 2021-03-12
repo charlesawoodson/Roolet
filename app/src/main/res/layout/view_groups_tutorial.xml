@@ -6,21 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/black_40">
+    android:background="@color/black_50">
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/addGroupImageView"
-        android:layout_width="@dimen/row05"
-        android:layout_height="@dimen/row05"
-        android:layout_marginTop="@dimen/row02"
-        android:layout_marginEnd="@dimen/row02"
+        android:layout_width="@dimen/row03"
+        android:layout_height="@dimen/row03"
+        android:layout_marginEnd="@dimen/row03"
         android:contentDescription="@null"
-        android:padding="@dimen/row005"
-        android:visibility="invisible"
-        tools:visibility="visible"
         android:src="@drawable/ic_outline_group_add_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/space"
+        app:layout_constraintEnd_toStartOf="@id/settingsImageView"
+        app:layout_constraintTop_toTopOf="@id/space"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/settingsImageView"
+        android:layout_width="@dimen/row03"
+        android:layout_height="@dimen/row03"
+        android:layout_marginEnd="@dimen/toolbar_icon_margin"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_outline_settings_24"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/space"
+        app:layout_constraintEnd_toEndOf="@id/space"
+        app:layout_constraintTop_toTopOf="@id/space"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/skipTextView"
@@ -32,20 +52,22 @@
         android:padding="@dimen/row01"
         android:text="@string/skip"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/caption12"
+        android:textSize="@dimen/subhead3"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/space"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/space" />
 
     <ImageView
         android:id="@+id/tutorialArrowImageView"
-        android:layout_width="@dimen/row08"
-        android:layout_height="@dimen/row08"
-        android:layout_marginEnd="@dimen/row06"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
+        android:layout_marginTop="@dimen/row02"
         android:contentDescription="@null"
         android:src="@drawable/ic_baseline_north_east_24"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addGroupImageView"
+        app:layout_constraintEnd_toStartOf="@id/addGroupImageView"
+        app:layout_constraintTop_toBottomOf="@+id/settingsImageView"
         tools:visibility="visible" />
 
     <TextView
@@ -54,9 +76,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/gochi_hand_regular"
-        android:text="@string/tap_here_to_create_a_new_party"
+        android:gravity="center"
+        android:text="@string/tap_add_group_or_settings"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption10"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +97,7 @@
         android:gravity="center"
         android:text="@string/roolet_uses_contacts_message"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption10"
         app:layout_constraintBottom_toTopOf="@+id/groupItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -4,7 +4,7 @@
     android:id="@+id/dialogContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_20"
+    android:background="@color/black_50"
     android:fitsSystemWindows="true">
 
     <Space
@@ -38,8 +38,8 @@
 
     <ImageView
         android:id="@+id/tutorialArrowImageView"
-        android:layout_width="@dimen/row08"
-        android:layout_height="@dimen/row08"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
         android:layout_marginTop="@dimen/row01"
         android:layout_marginEnd="@dimen/row10"
         android:contentDescription="@null"
@@ -58,7 +58,7 @@
         android:padding="@dimen/row01"
         android:text="@string/edit_the_name_of_party_here"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tutorialArrowImageView" />
 
@@ -71,8 +71,8 @@
 
     <ImageView
         android:id="@+id/secondaryTutorialArrowImageView"
-        android:layout_width="@dimen/row10"
-        android:layout_height="@dimen/row10"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
         android:layout_marginStart="@dimen/row14"
         android:layout_marginBottom="@dimen/row02"
         android:contentDescription="@null"
@@ -90,7 +90,7 @@
         android:gravity="center"
         android:text="@string/select_party_members_from_your_contacts"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption10"
         app:layout_constraintBottom_toTopOf="@id/tapAnywhereTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -105,7 +105,7 @@
         android:padding="@dimen/row01"
         android:text="@string/tap_anywhere_to_dismiss"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/caption10"
+        android:textSize="@dimen/caption12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

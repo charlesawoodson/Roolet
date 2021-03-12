@@ -4,7 +4,7 @@
     android:id="@+id/dialogContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_20">
+    android:background="@color/black_50">
 
     <Space
         android:id="@+id/space"
@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/toolbar_icon_margin"
         android:gravity="center"
-        android:textAllCaps="true"
         android:text="@string/edit"
+        android:textAllCaps="true"
         android:textColor="@color/white_100"
         android:textSize="@dimen/caption4"
         app:layout_constraintBottom_toBottomOf="@id/space"
@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/tutorialArrowImageView"
-        android:layout_width="@dimen/row08"
-        android:layout_height="@dimen/row08"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
         android:contentDescription="@null"
         android:src="@drawable/ic_baseline_north_east_24"
         app:layout_constraintEnd_toStartOf="@+id/editGroupImageView"
@@ -48,14 +48,14 @@
         android:padding="@dimen/row01"
         android:text="@string/tap_here_to_edit_your_party"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tutorialArrowImageView" />
 
     <ImageView
         android:id="@+id/secondaryTutorialArrowImageView"
-        android:layout_width="@dimen/row08"
-        android:layout_height="@dimen/row08"
+        android:layout_width="@dimen/row06"
+        android:layout_height="@dimen/row06"
         android:layout_marginBottom="@dimen/row01"
         android:contentDescription="@null"
         android:src="@drawable/ic_baseline_arrow_downward_24"
@@ -65,14 +65,16 @@
 
     <TextView
         android:id="@+id/secondaryInstructionsTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/row01"
         android:fontFamily="@font/gochi_hand_regular"
         android:gravity="center"
         android:text="@string/tap_this_button_to_call_a_random_member_from_this_party"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/subhead3"
+        android:textSize="@dimen/caption10"
+        android:layout_marginEnd="@dimen/row02"
+        android:layout_marginStart="@dimen/row02"
         app:layout_constraintBottom_toTopOf="@+id/secondaryTutorialArrowImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -100,7 +102,7 @@
         android:padding="@dimen/row01"
         android:text="@string/tap_anywhere_to_dismiss"
         android:textColor="@color/white_100"
-        android:textSize="@dimen/caption10"
+        android:textSize="@dimen/caption12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
