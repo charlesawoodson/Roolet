@@ -3,6 +3,7 @@ package com.charlesawoodson.roolet
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isVisible
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -70,6 +71,10 @@ class RooletActivity : AppCompatActivity() {
                 }
             )
         }
+    }
+
+    fun setProductionsVisibility(isVisible: Boolean) {
+        productionsContainer.isVisible = isVisible
     }
 
     override fun onSupportNavigateUp(): Boolean {
