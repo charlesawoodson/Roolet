@@ -19,8 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="@string/roolet"
-        app:titleTextColor="@color/white_100" />
+        app:titleTextColor="@color/white_100"
+        tools:title="@string/roolet" />
 
     <FrameLayout
         android:id="@+id/container"

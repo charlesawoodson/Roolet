@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.charlesawoodson.roolet.R
@@ -104,9 +105,11 @@ class GroupsAdapter(private val listener: OnGroupItemClickListener) :
     override fun getItemCount(): Int = data.size
 
     fun updateData(newGroups: List<Group>) {
+        val diffCallback = GroupsDiffCallback(data, newGroups)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         data.clear()
         data.addAll(newGroups)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class ViewHolder(

@@ -2,6 +2,7 @@ package com.charlesawoodson.roolet.settings
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceFragmentCompat
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.RooletActivity
@@ -17,7 +18,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val view = super.onCreateView(inflater, container, savedInstanceState)
+        view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+        return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

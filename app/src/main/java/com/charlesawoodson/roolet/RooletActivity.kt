@@ -1,10 +1,9 @@
 package com.charlesawoodson.roolet
 
 import android.os.Bundle
-import android.view.Menu
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.isVisible
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -31,7 +30,7 @@ class RooletActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<GroupsFragment>(R.id.container)
+                replace<GroupsFragment>(R.id.container)
             }
         }
     }
@@ -39,8 +38,8 @@ class RooletActivity : AppCompatActivity() {
     fun commitSettingsFragment() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack(null)
-            replace<SettingsFragment>(
+            addToBackStack("SettingsFragment")
+            add<SettingsFragment>(
                 R.id.container
             )
         }
@@ -49,7 +48,7 @@ class RooletActivity : AppCompatActivity() {
     fun commitContactsFragment(editGroupArgs: EditGroupArgs = EditGroupArgs()) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack(null)
+            addToBackStack("ContactsFragment")
             replace<ContactsFragment>(
                 R.id.container,
                 null,
@@ -63,8 +62,8 @@ class RooletActivity : AppCompatActivity() {
     fun commitGroupDetailFragment(group: Group) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack(null)
-            replace<GroupsDetailFragment>(
+            addToBackStack("GroupDetailFragment")
+            add<GroupsDetailFragment>(
                 R.id.container,
                 null,
                 Bundle().apply {
@@ -77,5 +76,16 @@ class RooletActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        hideSoftKeyboard()
+        super.onBackPressed()
+    }
+
+    fun hideSoftKeyboard() {
+        val inputMethodManager: InputMethodManager =
+            this.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 }

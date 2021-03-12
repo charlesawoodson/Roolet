@@ -88,7 +88,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
         cancelTextView.setOnClickListener {
             filterEditText.text.clear()
             filterEditText.clearFocus()
-            closeKeyboard()
+            (activity as RooletActivity).hideSoftKeyboard()
         }
 
         filterEditText.doOnTextChanged { text, _, _, _ ->
@@ -154,7 +154,7 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                             state.groupMembers
                         )
                     )
-                    requireActivity().onBackPressed()
+                    (activity as RooletActivity).onBackPressed()
                 }
             }
         }
@@ -211,12 +211,6 @@ class ContactsFragment : BaseFragment(), ContactsAdapter.OnContactsItemClickList
                 super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    private fun closeKeyboard() {
-        val imm =
-            activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 
 }
