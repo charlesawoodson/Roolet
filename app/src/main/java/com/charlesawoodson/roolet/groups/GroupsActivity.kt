@@ -16,7 +16,10 @@ import com.airbnb.mvrx.MvRx
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.contacts.ContactsFragment
 import com.charlesawoodson.roolet.contacts.EditGroupArgs
+import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.extensions.changeToolbarFont
+import com.charlesawoodson.roolet.groupdetail.GroupDetailArgs
+import com.charlesawoodson.roolet.groupdetail.GroupsDetailFragment
 import com.charlesawoodson.roolet.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_container.*
 
@@ -75,7 +78,7 @@ class GroupsActivity : AppCompatActivity() {
         }
     }
 
-    private fun commitContactsFragment() {
+    fun commitContactsFragment(editGroupArgs: EditGroupArgs = EditGroupArgs()) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             addToBackStack(null)
@@ -83,7 +86,21 @@ class GroupsActivity : AppCompatActivity() {
                 R.id.container,
                 null,
                 Bundle().apply {
-                    putParcelable(MvRx.KEY_ARG, EditGroupArgs())
+                    putParcelable(MvRx.KEY_ARG, editGroupArgs)
+                }
+            )
+        }
+    }
+
+    fun commitGroupDetailFragment(group: Group) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            addToBackStack(null)
+            replace<GroupsDetailFragment>(
+                R.id.container,
+                null,
+                Bundle().apply {
+                    putParcelable(MvRx.KEY_ARG, GroupDetailArgs(group.groupId, group.title))
                 }
             )
         }

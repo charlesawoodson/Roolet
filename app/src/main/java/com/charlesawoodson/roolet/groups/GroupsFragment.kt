@@ -1,6 +1,5 @@
 package com.charlesawoodson.roolet.groups
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -10,11 +9,9 @@ import androidx.core.view.isGone
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.mvrx.MvRx.KEY_ARG
 import com.airbnb.mvrx.fragmentViewModel
 import com.charlesawoodson.roolet.R
 import com.charlesawoodson.roolet.db.Group
-import com.charlesawoodson.roolet.groupdetail.GroupDetailActivity
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
@@ -64,10 +61,7 @@ class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
     }
 
     override fun onGroupItemClick(group: Group) {
-        Intent(context, GroupDetailActivity::class.java).apply {
-            putExtra(KEY_ARG, group.groupId)
-            startActivity(this)
-        }
+        (activity as GroupsActivity).commitGroupDetailFragment(group)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {

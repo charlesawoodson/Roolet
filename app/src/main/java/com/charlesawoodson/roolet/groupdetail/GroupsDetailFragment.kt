@@ -4,14 +4,16 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.mvrx.MvRx.KEY_ARG
+import com.airbnb.mvrx.args
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
@@ -22,7 +24,9 @@ import com.charlesawoodson.roolet.groupdetail.adapters.GroupDetailAdapter
 import com.charlesawoodson.roolet.groupdetail.dialogs.CallPhoneDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GameModeDialogFragment
 import com.charlesawoodson.roolet.groupdetail.dialogs.GroupDetailTutorialDialogFragment
+import com.charlesawoodson.roolet.groups.GroupsActivity
 import com.charlesawoodson.roolet.mvrx.BaseFragment
+import com.charlesawoodson.roolet.settings.SettingsFragment
 import kotlinx.android.synthetic.main.fragment_group_detail.*
 
 class GroupsDetailFragment : BaseFragment() {
@@ -30,6 +34,8 @@ class GroupsDetailFragment : BaseFragment() {
     private val sharedPreferences by lazy(mode = LazyThreadSafetyMode.NONE) {
         PreferenceManager.getDefaultSharedPreferences(requireActivity())
     }
+
+    private val arguments: GroupDetailArgs by args()
 
     private val viewModel: GroupsDetailViewModel by fragmentViewModel()
 
@@ -41,7 +47,7 @@ class GroupsDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.asyncSubscribe(GroupDetailState::group) { group ->
-            groupNameTextView.text = group.title
+            (activity as GroupsActivity).supportActionBar?.title = group.title
         }
 
         viewModel.selectSubscribe(GroupDetailState::groupMembers) { members ->
@@ -54,6 +60,7 @@ class GroupsDetailFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_group_detail, container, false)
     }
 
@@ -75,8 +82,7 @@ class GroupsDetailFragment : BaseFragment() {
                     }
                 }
                 else -> {
-                    // todo: Non deprecated version
-                    requestPermissions(
+                    activity?.requestPermissions(
                         arrayOf(Manifest.permission.CALL_PHONE),
                         PERMISSIONS_REQUEST_CALL_PHONE
                     )
@@ -87,32 +93,6 @@ class GroupsDetailFragment : BaseFragment() {
         groupsDetailRecyclerView.layoutManager =
             LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         groupsDetailRecyclerView.adapter = adapter
-
-        editGroupImageView.setOnClickListener {
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    requireActivity(),
-                    Manifest.permission.READ_CONTACTS
-                ) -> {
-//                    withState(viewModel) { state ->
-//                        Intent(context, ContactsActivity::class.java).apply {
-//                            putExtra(KEY_ARG, EditGroupArgs(state.group()))
-//                            startActivity(this)
-//                        }
-//                    }
-                }
-                else -> {
-                    requestPermissions(
-                        arrayOf(Manifest.permission.READ_CONTACTS),
-                        PERMISSIONS_REQUEST_READ_CONTACTS
-                    )
-                }
-            }
-        }
-
-        backImageView.setOnClickListener {
-            requireActivity().finish()
-        }
 
         if (!sharedPreferences.getBoolean(
                 getString(R.string.group_detail_tutorial_seen_pref),
@@ -126,37 +106,6 @@ class GroupsDetailFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         viewModel.updateElapsedTime()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            PERMISSIONS_REQUEST_READ_CONTACTS -> {
-                // If request is cancelled, the result arrays are empty.
-//                withState(viewModel) { state ->
-//                    Intent(context, ContactsActivity::class.java).apply {
-//                        putExtra(KEY_ARG, EditGroupArgs(state.group()))
-//                        startActivity(this)
-//                    }
-//                }
-                return
-            }
-            PERMISSIONS_REQUEST_CALL_PHONE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    if (viewModel.getNumbersLeftSize() > 0) {
-                        checkCallOrGameDialog()
-                    } else {
-                        showErrorDialog(R.string.all_members_called)
-                    }
-                } else {
-                    showErrorDialog(R.string.call_permissions_needed)
-                }
-                return
-            }
-        }
     }
 
     private fun showErrorDialog(messageRes: Int) {
@@ -175,6 +124,73 @@ class GroupsDetailFragment : BaseFragment() {
             GameModeDialogFragment().show(childFragmentManager, null)
         } else {
             CallPhoneDialogFragment().show(childFragmentManager, null)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.group_detail_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        (activity as GroupsActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as GroupsActivity).supportActionBar?.title = arguments.groupName
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_edit -> {
+                when (PackageManager.PERMISSION_GRANTED) {
+                    ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_CONTACTS
+                    ) -> {
+                        withState(viewModel) { state ->
+                            (activity as GroupsActivity).commitContactsFragment(EditGroupArgs(state.group()))
+                        }
+                    }
+                    else -> {
+                        ActivityCompat.requestPermissions(
+                            requireActivity(),
+                            arrayOf(Manifest.permission.READ_CONTACTS),
+                            GroupsActivity.PERMISSIONS_REQUEST_READ_CONTACTS
+                        )
+                    }
+                }
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            PERMISSIONS_REQUEST_READ_CONTACTS -> {
+                withState(viewModel) { state ->
+                    (activity as GroupsActivity).commitContactsFragment(EditGroupArgs(state.group()))
+                }
+                return
+            }
+            PERMISSIONS_REQUEST_CALL_PHONE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    if (viewModel.getNumbersLeftSize() > 0) {
+                        checkCallOrGameDialog()
+                    } else {
+                        showErrorDialog(R.string.all_members_called)
+                    }
+                } else {
+                    showErrorDialog(R.string.call_permissions_needed)
+                }
+                return
+            }
         }
     }
 

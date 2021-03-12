@@ -1,5 +1,6 @@
 package com.charlesawoodson.roolet.groupdetail
 
+import android.os.Parcelable
 import android.util.Log
 import com.airbnb.mvrx.*
 import com.charlesawoodson.roolet.api.RulesResponse
@@ -11,7 +12,14 @@ import com.charlesawoodson.roolet.db.DatabaseHelperImpl
 import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.extensions.updateItems
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.parcel.Parcelize
 import java.util.*
+
+@Parcelize
+data class GroupDetailArgs(
+    val groupId: Long,
+    val groupName: String
+) : Parcelable
 
 data class GroupDetailState(
     val group: Async<Group> = Uninitialized,
@@ -22,14 +30,14 @@ class GroupsDetailViewModel(
     initialState: GroupDetailState,
     rulesService: RulesService,
     dbHelper: DatabaseHelperImpl,
-    selectedGroupId: Long
+    args: GroupDetailArgs
 ) : BaseMvRxViewModel<GroupDetailState>(initialState, true) {
 
     private var set = mutableSetOf<String>()
     private var rules = mutableSetOf<String>()
 
     init {
-        dbHelper.getGroupById(selectedGroupId)
+        dbHelper.getGroupById(args.groupId)
             .subscribe { group ->
                 set = group.members.map { it.number }.toMutableSet()
                 setState {
