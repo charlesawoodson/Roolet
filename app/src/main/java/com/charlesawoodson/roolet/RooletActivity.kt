@@ -30,7 +30,7 @@ class RooletActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                replace<GroupsFragment>(R.id.container)
+                add<GroupsFragment>(R.id.container)
             }
         }
     }
@@ -38,7 +38,7 @@ class RooletActivity : AppCompatActivity() {
     fun commitSettingsFragment() {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack("SettingsFragment")
+            addToBackStack(null)
             add<SettingsFragment>(
                 R.id.container
             )
@@ -48,8 +48,8 @@ class RooletActivity : AppCompatActivity() {
     fun commitContactsFragment(editGroupArgs: EditGroupArgs = EditGroupArgs()) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack("ContactsFragment")
-            replace<ContactsFragment>(
+            addToBackStack(null)
+            add<ContactsFragment>(
                 R.id.container,
                 null,
                 Bundle().apply {
@@ -62,7 +62,7 @@ class RooletActivity : AppCompatActivity() {
     fun commitGroupDetailFragment(group: Group) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)
-            addToBackStack("GroupDetailFragment")
+            addToBackStack(null)
             add<GroupsDetailFragment>(
                 R.id.container,
                 null,
@@ -72,6 +72,7 @@ class RooletActivity : AppCompatActivity() {
             )
         }
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
