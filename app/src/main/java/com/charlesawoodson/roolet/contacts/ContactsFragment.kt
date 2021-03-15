@@ -1,11 +1,9 @@
 package com.charlesawoodson.roolet.contacts
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
@@ -19,12 +17,12 @@ import com.airbnb.mvrx.args
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.charlesawoodson.roolet.R
+import com.charlesawoodson.roolet.RooletActivity
 import com.charlesawoodson.roolet.contacts.adapters.ContactsAdapter
 import com.charlesawoodson.roolet.contacts.adapters.GroupMembersAdapter
 import com.charlesawoodson.roolet.contacts.dialogs.*
 import com.charlesawoodson.roolet.contacts.model.Contact
 import com.charlesawoodson.roolet.db.Group
-import com.charlesawoodson.roolet.RooletActivity
 import com.charlesawoodson.roolet.lists.SelectableListItem
 import com.charlesawoodson.roolet.mvrx.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contacts.*

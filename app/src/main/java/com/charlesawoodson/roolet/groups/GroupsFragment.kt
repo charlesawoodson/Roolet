@@ -16,7 +16,6 @@ import com.charlesawoodson.roolet.db.Group
 import com.charlesawoodson.roolet.groups.adapters.GroupsAdapter
 import com.charlesawoodson.roolet.groups.dialogs.GroupsTutorialDialogFragment
 import com.charlesawoodson.roolet.mvrx.BaseFragment
-import kotlinx.android.synthetic.main.activity_container.*
 import kotlinx.android.synthetic.main.fragment_groups.*
 
 class GroupsFragment : BaseFragment(), GroupsAdapter.OnGroupItemClickListener {
